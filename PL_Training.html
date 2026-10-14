@@ -431,6 +431,9 @@ input[type=range]{width:100%;accent-color:var(--lime)}
 .lb img{max-width:94vw;max-height:88vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:300}
 .devbadge{position:fixed;bottom:12px;left:12px;z-index:250;background:var(--pink);color:#fff;font-weight:800;font-size:12px;border-radius:999px;padding:6px 12px}
+.foot{max-width:1080px;margin:0 auto;padding:0 22px 26px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--dim)}
+.foot button{font-size:12.5px;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+.foot button:hover{color:var(--txt);border-color:var(--line2)}
 
 @media (max-width:900px){
   .cores,.grid2,.grid3,.mods,.myths,.trio,.vs,.facts,.steps3{grid-template-columns:1fr}
@@ -452,6 +455,7 @@ input[type=range]{width:100%;accent-color:var(--lime)}
 <div class="ovl" id="modal"></div>
 <div class="ovl lb" id="lb"><img id="lbImg" alt=""></div>
 <canvas id="confetti"></canvas>
+<footer class="foot"><span>kodland · Parallel Lessons Training</span><button id="devLink">🛠 Developer</button></footer>
 
 <script>
 'use strict';
@@ -462,7 +466,8 @@ const CONFIG = {
   PASS: 0.7,   // 70% to pass each module check
   CLASSROOM_SIM: 'https://agathiceras.github.io/PL_simulation_test/Classroom_Simulator.html',
   BO_SIM: 'BO_simulator/Simulacion_BO_PL.html',
-  VIDEO_ID: 'DDkHpfBujl0'
+  VIDEO_ID: 'DDkHpfBujl0',
+  DEV_CODE: 'PLDEV'   // code for the Developer options (not case-sensitive)
 };
 const PKEY = 'kl-newpl-progress-v1';
 const $ = (s, r = document) => r.querySelector(s);
@@ -742,8 +747,10 @@ stages:() => `
 
 video:() => `
   <p class="p">Before the final check, watch a parallel lesson in real life. <b>Turn on the subtitles</b> (the <b>CC</b> button in the player).</p>
-  <div class="video" id="video"><img src="https://i.ytimg.com/vi/${CONFIG.VIDEO_ID}/hqdefault.jpg" alt="Parallel lesson example video"><div class="play"><span>▶</span></div></div>
-  ${callout('tip', '💬', 'Subtitles: click <b>CC</b> in the video player, then ⚙️ to choose your language.')}`,
+  ${location.protocol === 'file:' ? callout('warn', '⚠️', '<b>You’re viewing this training as a local file.</b> YouTube doesn’t allow its player inside local files, so the video only plays here once the training is published on a website (like the Classroom simulator). Until then, use the link below the video.') : ''}
+  <div class="video"><iframe src="https://www.youtube.com/embed/${CONFIG.VIDEO_ID}?rel=0&cc_load_policy=1&cc_lang_pref=en&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy" title="Parallel lesson example"></iframe></div>
+  ${callout('tip', '💬', 'Subtitles: click <b>CC</b> in the video player, then ⚙️ to choose your language.')}
+  <p style="font-size:13px;color:var(--dim);margin-top:10px">Video not loading? <a href="https://www.youtube.com/watch?v=${CONFIG.VIDEO_ID}" target="_blank" rel="noopener">Watch it on YouTube</a>.</p>`,
 
 /* ---------------- Module 3 ---------------- */
 bo:() => `
@@ -1018,15 +1025,6 @@ function initWidgets(){
     };
     draw();
   }
-  // Video: lite embed (YouTube can't play from a local file, so it opens in a new tab there)
-  const v = $('#video');
-  if (v){
-    v.onclick = () => {
-      if (location.protocol === 'file:'){ window.open(`https://www.youtube.com/watch?v=${CONFIG.VIDEO_ID}`, '_blank', 'noopener'); return; }
-      v.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${CONFIG.VIDEO_ID}?autoplay=1&rel=0&cc_load_policy=1" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="Parallel lesson example"></iframe>`;
-      v.onclick = null;
-    };
-  }
   // Rules sorter (M3)
   $$('#sorter .srow').forEach(r => $$('[data-pick]', r).forEach(b => b.onclick = () => {
     const ok = b.dataset.pick === r.dataset.ans;
@@ -1281,20 +1279,55 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape'){ closeModal(); $('#lb').classList.remove('show'); }
 });
 
-/* Dev mode for reviewers: Shift+D three times quickly unlocks all modules (press again to reset) */
+/* =========================================================
+   DEVELOPER OPTIONS — for reviewers: unlock every built module without passing the checks.
+   Open with the "🛠 Developer" link at the bottom of the page (code: CONFIG.DEV_CODE),
+   or press Shift+D three times quickly.
+   ========================================================= */
+function setDev(on){
+  if (on){ MODULES.forEach(m => { if (!passed(m.id)) P[m.id] = { passed:true, score:100 }; }); P.flags = Object.assign({}, P.flags, { simClassroom:true, simBO:true }); P.dev = true; }
+  else delete P.dev;
+  saveP(); devBadge(); route();
+}
+function resetProgress(){ P = {}; saveP(); devBadge(); go(''); route(); }
+function devBadge(){
+  $$('.devbadge').forEach(x => x.remove());
+  if (P.dev) document.body.insertAdjacentHTML('beforeend', '<button class="devbadge" id="devBadge">🔓 DEV MODE · options</button>');
+}
+function openDev(unlockedPanel){
+  if (!unlockedPanel && !P.dev){
+    modal(`<div style="font-size:44px">🛠</div><h2>Developer options</h2><p>For reviewers only. Enter the developer code:</p>
+      <input id="devCode" type="password" autocomplete="off" style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #d5d9e5;font-size:16px;margin:4px 0 6px">
+      <p id="devErr" style="color:#c0303f;font-weight:600;min-height:20px;margin:4px 0"></p>
+      <div class="btn-row" style="justify-content:center"><button class="btn-g" style="color:var(--ink);border-color:#c9cdd8" onclick="closeModal()">Cancel</button><button class="btn-y" id="devGo">Continue</button></div>`);
+    const tryCode = () => { if ($('#devCode').value.trim().toUpperCase() === CONFIG.DEV_CODE) openDev(true); else $('#devErr').textContent = 'Wrong code.'; };
+    $('#devGo').onclick = tryCode; $('#devCode').onkeydown = e => { if (e.key === 'Enter') tryCode(); };
+    setTimeout(() => $('#devCode').focus(), 50);
+    return;
+  }
+  modal(`<div style="font-size:44px">🛠</div><h2>Developer options</h2>
+    <p>Developer mode is <b>${P.dev ? 'ON' : 'OFF'}</b>. ${P.dev ? 'All built modules are unlocked and both simulations are marked as done.' : 'Turn it on to unlock all built modules (Part 2 is still under construction).'}</p>
+    <div class="btn-row" style="justify-content:center;flex-direction:column;align-items:stretch;gap:8px;margin-top:14px">
+      <button class="btn-y" id="devToggle">${P.dev ? '🔒 Turn developer mode off' : '🔓 Unlock all built modules'}</button>
+      <button class="btn-g" style="color:var(--ink);border-color:#c9cdd8" id="devReset">♻️ Reset all progress</button>
+      <button class="btn-g" style="color:var(--ink);border-color:#c9cdd8" onclick="closeModal()">Close</button>
+    </div>
+    <p style="font-size:12.5px;margin-top:12px">Turning it off keeps the modules that were unlocked. Use “Reset all progress” to start from zero.</p>`);
+  $('#devToggle').onclick = () => { closeModal(); setDev(!P.dev); };
+  $('#devReset').onclick = () => { closeModal(); resetProgress(); };
+}
+document.addEventListener('click', e => {
+  if (e.target.closest('#devLink') || e.target.closest('#devBadge')) openDev(false);
+});
 let dk = [];
 document.addEventListener('keydown', e => {
   if (!(e.shiftKey && e.key.toLowerCase() === 'd')) return;
   const now = Date.now(); dk = dk.filter(x => now - x < 1200); dk.push(now);
-  if (dk.length >= 3){ dk = [];
-    if (P.dev){ P = {}; saveP(); } else { MODULES.forEach(m => P[m.id] = { passed:true, score:100 }); P.flags = { simClassroom:true, simBO:true }; P.dev = true; saveP(); }
-    document.querySelectorAll('.devbadge').forEach(x => x.remove());
-    if (P.dev) document.body.insertAdjacentHTML('beforeend', '<span class="devbadge">🔓 DEV MODE</span>');
-    route(); }
+  if (dk.length >= 3){ dk = []; openDev(true); }
 });
 
 loadP();
-if (P.dev) document.body.insertAdjacentHTML('beforeend', '<span class="devbadge">🔓 DEV MODE</span>');
+devBadge();
 route();
 </script>
 </body>
