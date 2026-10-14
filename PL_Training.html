@@ -1,0 +1,1301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parallel Lessons Training</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Same visual language as the Classroom Simulator: navy, lime, yellow, Unbounded + Inter */
+:root{
+  --bg:#232839; --bg2:#2b3144; --panel:#2f3650; --panel2:#363d55; --line:#454d6b; --line2:#5a6386;
+  --txt:#e8eaf1; --muted:#a9aec1; --dim:#7f87a8;
+  --lime:#cdf24a; --yellow:#ffd34d; --blue:#5b8cff; --pink:#ec5fa6; --red:#ff5d6c; --green:#3fd16b; --orange:#f5a623;
+  --ink:#1f2433; --paper:#ffffff; --paper2:#f4f6fa; --pmuted:#5a6075;
+  --r:18px; --rs:12px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;color:var(--txt);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
+  background:radial-gradient(1200px 600px at 15% -10%,#3b4570 0%,var(--bg) 60%) fixed,var(--bg)}
+button{font-family:inherit;color:inherit;border:0;background:none;cursor:pointer}
+h1,h2,h3,.disp{font-family:Unbounded,Inter,sans-serif;letter-spacing:-.01em}
+a{color:var(--lime)}
+img{max-width:100%}
+::selection{background:var(--lime);color:var(--ink)}
+
+/* ---------- Nav ---------- */
+.nav{position:sticky;top:0;z-index:50;height:60px;display:flex;align-items:center;gap:14px;padding:0 22px;background:rgba(35,40,57,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{font-family:Unbounded,sans-serif;font-weight:600;font-size:19px;letter-spacing:-.02em}
+.logo small{font-family:Inter,sans-serif;font-weight:600;font-size:12px;color:var(--lime);margin-left:10px;letter-spacing:.02em}
+.nav .sp{flex:1}
+.nbtn{background:var(--panel2);border:1px solid var(--line2);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600}
+.nbtn:hover{background:#434b6e}
+.npill{font-size:12.5px;font-weight:700;color:var(--ink);background:var(--lime);border-radius:999px;padding:5px 12px}
+
+main{max-width:1080px;margin:0 auto;padding:34px 22px 80px}
+
+/* ---------- Buttons ---------- */
+.btn-y{background:var(--yellow);color:#2a2410;border-radius:12px;padding:13px 24px;font-weight:800;font-size:15px;transition:transform .15s,filter .15s}
+.btn-y:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.btn-y:disabled{background:#4a5170;color:#9ea4bb;cursor:not-allowed;transform:none}
+.btn-l{background:var(--lime);color:var(--ink);border-radius:12px;padding:13px 24px;font-weight:800;font-size:15px}
+.btn-g{border:1px solid var(--line2);border-radius:12px;padding:11px 18px;font-weight:700;font-size:14px}
+.btn-g:hover{background:rgba(255,255,255,.06)}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* ---------- Hero / dashboard ---------- */
+.kicker{display:inline-block;background:var(--yellow);color:#2a2410;font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:6px 14px}
+.hero h1{font-size:46px;line-height:1.12;margin:18px 0 14px}
+.hl{background:var(--lime);color:var(--ink);padding:0 12px;border-radius:12px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.lead{font-size:17.5px;line-height:1.65;color:#cfd3e2;max-width:780px}
+.cores{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;margin-top:30px}
+.core{position:relative;border-radius:24px;padding:24px;background:var(--panel);border:1px solid var(--line);overflow:hidden;transition:transform .2s,border-color .2s}
+.core.open{cursor:pointer}
+.core.open:hover{transform:translateY(-4px);border-color:var(--lime)}
+.core .cn{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lime)}
+.core h2{font-size:24px;margin:8px 0 8px}
+.core p{color:var(--muted);line-height:1.6;margin:0 0 16px}
+.core .big{position:absolute;right:-6px;top:-8px;font-size:92px;opacity:.16;pointer-events:none}
+.core.soon{background:repeating-linear-gradient(135deg,var(--panel) 0 18px,#2b3149 18px 36px)}
+.core.soon .cn{color:var(--yellow)}
+.mods{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.mcard{position:relative;border-radius:20px;padding:20px;background:var(--panel);border:2px solid var(--line);display:flex;flex-direction:column;gap:8px;min-height:230px;transition:transform .2s,border-color .2s;text-align:left}
+.mcard:not(.locked):hover{transform:translateY(-4px);border-color:var(--lime)}
+.mcard .mn{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.mcard .me{font-size:42px;line-height:1}
+.mcard h3{font-size:17px;line-height:1.3;margin:2px 0}
+.mcard p{color:var(--muted);font-size:14px;line-height:1.5;margin:0;flex:1}
+.mcard .badge{align-self:flex-start;font-size:12.5px;font-weight:800;border-radius:999px;padding:5px 12px;background:var(--yellow);color:#2a2410}
+.mcard.done{border-color:var(--lime)}
+.mcard.done .badge{background:var(--lime);color:var(--ink)}
+.mcard.locked{opacity:.5;cursor:not-allowed}
+.mcard.locked .badge{background:var(--panel2);color:var(--muted)}
+.prog{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 18px;margin-top:22px}
+.prog b{font-family:Unbounded,sans-serif;font-size:20px}
+.ptrack{flex:1;height:12px;border-radius:999px;background:var(--panel2);overflow:hidden}
+.pfill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--lime),var(--yellow));transition:width .7s cubic-bezier(.34,1.56,.64,1)}
+
+/* ---------- Module page ---------- */
+.mhead .eyebrow{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lime)}
+.mhead h1{font-size:38px;line-height:1.15;margin:10px 0 12px}
+.mobj{background:var(--panel);border-left:5px solid var(--lime);border-radius:14px;padding:14px 18px;color:#d5d9e6;line-height:1.6}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
+.chip{background:var(--panel2);border:1px solid var(--line2);border-radius:999px;padding:7px 13px;font-size:13px;font-weight:600}
+.chip:hover{border-color:var(--lime);color:var(--lime)}
+.chip.ok::after{content:" ✓";color:var(--lime)}
+section.sec{margin-top:46px;scroll-margin-top:80px}
+.sh{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.sh .se{font-size:34px;line-height:1}
+.sh h2{font-size:24px;margin:0}
+.sh::after{content:"";flex:1;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--lime),transparent)}
+.p{color:#d5d9e6;line-height:1.7;font-size:16px;margin:0 0 14px;max-width:820px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px}
+.card + .card{margin-top:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.callout{display:flex;gap:14px;align-items:flex-start;border-radius:16px;padding:14px 18px;margin-top:16px;line-height:1.6;font-size:15px}
+.callout .ci{font-size:24px;line-height:1.1}
+.callout.tip{background:rgba(91,140,255,.14);border:1px solid rgba(91,140,255,.45)}
+.callout.warn{background:rgba(255,211,77,.12);border:1px solid rgba(255,211,77,.5)}
+.callout.bad{background:rgba(255,93,108,.12);border:1px solid rgba(255,93,108,.45)}
+.callout.good{background:rgba(205,242,74,.10);border:1px solid rgba(205,242,74,.45)}
+.fig{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#1b1f2d}
+.fig img{display:block;width:100%;cursor:zoom-in}
+.fig figcaption{padding:10px 14px;font-size:13px;color:var(--muted)}
+.wh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.wh b{font-size:15px}
+.wh .tag{margin-left:auto;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:var(--yellow);border-radius:999px;padding:4px 10px}
+.mcta{margin-top:54px;border-radius:24px;padding:26px;background:linear-gradient(135deg,rgba(205,242,74,.14),rgba(255,211,77,.10));border:1px solid rgba(205,242,74,.4);display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.mcta .e{font-size:48px}
+.mcta h3{margin:0 0 6px;font-size:20px}
+.mcta p{margin:0;color:#cfd3e2;line-height:1.55}
+.mcta .grow{flex:1;min-width:240px}
+
+/* ---------- Segmented control ---------- */
+.seg{display:inline-flex;gap:4px;padding:4px;border-radius:14px;background:var(--bg2);border:1px solid var(--line2);flex-wrap:wrap}
+.seg button{padding:8px 14px;border-radius:10px;font-size:13.5px;font-weight:700;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--lime);color:var(--ink)}
+
+/* ---------- M1: students slider ---------- */
+.slots{margin-top:14px;display:flex;flex-direction:column;gap:7px}
+.slot{display:grid;grid-template-columns:86px 1fr;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.slot .bar{position:relative;height:30px;border-radius:9px;background:rgba(255,255,255,.04)}
+.slot .fillb{position:absolute;top:0;bottom:0;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;color:var(--ink);background:var(--lime);transition:left .5s,width .5s}
+.slot.tutor .fillb{background:var(--yellow)}
+.bignum{font-family:Unbounded,sans-serif;font-size:44px;line-height:1;color:var(--yellow)}
+input[type=range]{width:100%;accent-color:var(--lime)}
+
+/* ---------- Flip cards ---------- */
+.flip{perspective:1000px;min-height:200px;cursor:pointer}
+.flip .in{position:relative;width:100%;height:100%;min-height:200px;transition:transform .6s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .fc{position:absolute;inset:0;border-radius:20px;padding:20px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.flip .front{background:var(--panel);border:1px solid var(--line);align-items:center;text-align:center}
+.flip .front .fe{font-size:52px;line-height:1}
+.flip .front b{font-size:17px}
+.flip .front small{color:var(--dim);font-size:12px;font-weight:600}
+.flip .back{background:var(--paper);color:var(--ink);transform:rotateY(180deg);font-size:14.5px;line-height:1.55}
+.flip .back b{font-size:15.5px}
+
+/* ---------- Persona carousel ---------- */
+.car{position:relative;border-radius:26px;overflow:hidden;background:var(--panel);border:1px solid var(--line)}
+.car .track{display:flex;transition:transform .7s cubic-bezier(.65,0,.35,1)}
+.slide{flex:0 0 100%;display:grid;grid-template-columns:1fr 1fr;min-height:330px}
+.scene{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.scene .av{font-size:96px;z-index:2;filter:drop-shadow(0 10px 18px rgba(0,0,0,.35));animation:bob 3s ease-in-out infinite}
+.scene .desk{position:absolute;bottom:38px;width:62%;height:16px;border-radius:8px;background:rgba(255,255,255,.18)}
+.scene .fl{position:absolute;font-size:30px;z-index:3}
+.stext{padding:30px 32px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.stext .who{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lime)}
+.stext h3{font-size:24px;margin:0}
+.stext p{margin:0;color:#d5d9e6;line-height:1.65;font-size:15.5px}
+.stext .quote{background:rgba(255,255,255,.06);border-left:4px solid var(--yellow);border-radius:10px;padding:10px 14px;font-style:italic;color:#e6e8f0}
+.car .dots{position:absolute;bottom:14px;right:22px;display:flex;gap:7px;z-index:5}
+.car .dots button{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.3);transition:width .3s,background .3s}
+.car .dots button.on{width:28px;border-radius:6px;background:var(--lime)}
+.car .arrows{position:absolute;bottom:8px;left:18px;display:flex;gap:6px;z-index:5}
+.car .arrows button{width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.28);font-size:16px}
+.car .arrows button:hover{background:rgba(0,0,0,.45)}
+.car .arrows .cp{width:auto;border-radius:999px;padding:0 14px;font-size:13px;font-weight:700}
+.car .arrows .cp.paused{background:var(--lime);color:var(--ink)}
+.car .timer{position:absolute;left:0;top:0;height:4px;background:var(--lime);z-index:6;width:0}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes pop{0%{transform:scale(1);opacity:1}80%{transform:scale(1.25);opacity:0}100%{opacity:0}}
+@keyframes rise{0%{transform:translateY(30px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(-120px);opacity:0}}
+@keyframes orbit{from{transform:rotate(0deg) translateX(110px) rotate(0deg)}to{transform:rotate(360deg) translateX(110px) rotate(-360deg)}}
+@keyframes blink{0%,100%{opacity:.25}50%{opacity:1}}
+@keyframes grow{from{width:0}to{width:100%}}
+@keyframes wave{0%,100%{transform:rotate(0)}25%{transform:rotate(18deg)}75%{transform:rotate(-12deg)}}
+.crowd{position:absolute;font-size:30px;animation:pop 3.2s ease-out infinite}
+.bubble{position:absolute;background:var(--paper);color:var(--ink);font-size:13px;font-weight:700;border-radius:14px;padding:8px 12px;z-index:4;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.bubble::after{content:"";position:absolute;bottom:-7px;left:22px;border:8px solid transparent;border-top-color:var(--paper);border-bottom:0}
+.minibar{position:absolute;bottom:20px;left:18%;width:64%;height:10px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden}
+.minibar i{display:block;height:100%;background:var(--lime);animation:grow 4.5s ease-in-out infinite}
+
+/* ---------- Myth / reveal cards ---------- */
+.myths{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.myth{border-radius:20px;padding:20px;background:var(--panel);border:1px solid var(--line);text-align:left;display:flex;flex-direction:column;gap:10px;min-height:190px;transition:border-color .2s,background .3s}
+.myth .mtag{align-self:flex-start;font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:4px 10px;background:rgba(255,93,108,.18);color:#ffb3bb}
+.myth .mq{font-size:16.5px;font-weight:700;line-height:1.4}
+.myth .ma{display:none;color:#d5d9e6;line-height:1.6;font-size:14.5px}
+.myth .mh{margin-top:auto;font-size:12.5px;font-weight:700;color:var(--dim)}
+.myth.on{border-color:var(--lime);background:#323a55}
+.myth.on .mtag{background:rgba(205,242,74,.2);color:var(--lime)}
+.myth.on .ma{display:block;animation:fadeUp .4s}
+.myth.on .mh{display:none}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- Big icon trio ---------- */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ti{border-radius:22px;padding:24px 20px;background:var(--panel);border:1px solid var(--line);text-align:center;transition:transform .2s,border-color .2s}
+.ti:hover{transform:translateY(-4px);border-color:var(--yellow)}
+.ti .tie{font-size:60px;line-height:1;display:inline-block}
+.ti:hover .tie{animation:wave .8s}
+.ti h3{font-size:17px;margin:12px 0 8px}
+.ti p{color:var(--muted);line-height:1.55;font-size:14.5px;margin:0}
+
+/* ---------- M2: animated lesson structure ---------- */
+.flow{position:relative;border-radius:24px;padding:20px 22px 22px;background:var(--panel);border:1px solid var(--line);overflow:hidden;opacity:.35;transition:opacity .5s}
+.flow.shown{opacity:1}
+.flow + .flow{margin-top:14px}
+.flow-pl{border-color:rgba(205,242,74,.45)}
+.flow-title{font-family:Unbounded,sans-serif;font-size:15px;margin-bottom:16px}
+.flow-pl .flow-title{color:var(--lime)}
+.flow-body{position:relative}
+.flow-row{display:flex;align-items:stretch;gap:0;position:relative}
+.stg.main .si{border-color:var(--pink)}
+.indep .sn{font-size:12.5px;font-weight:700;color:#dfe2ec;line-height:1.3;margin-top:22px}
+.ftag{font-size:10.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);background:var(--yellow);border-radius:999px;padding:3px 8px;line-height:1.3;max-width:130px}
+.ph4{background:rgba(236,95,166,.2);color:#f7a8cf}
+.diffs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.diffs div{display:flex;gap:12px;align-items:flex-start;border-radius:16px;padding:14px 16px;background:rgba(255,211,77,.10);border:1px solid rgba(255,211,77,.45);font-size:14.5px;line-height:1.55}
+.diffs .de{font-size:26px;line-height:1}
+.stg{flex:1;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;opacity:0;transform:translateY(16px) scale(.9);transition:opacity .45s,transform .45s}
+.stg.in{opacity:1;transform:none}
+.stg .si{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;font-size:32px;background:var(--bg2);border:3px solid var(--blue);position:relative;z-index:2}
+.stg.close .si{border-color:var(--orange)}
+.stg .sn{font-size:12.5px;font-weight:700;color:#dfe2ec;line-height:1.3;max-width:110px}
+.stg .sx{font-family:Unbounded,sans-serif;font-size:11px;color:var(--dim)}
+.indep{flex:1.3;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:10px;opacity:0;transition:opacity .5s}
+.indep.in{opacity:1}
+.indep .ib{height:68px;width:100%;border-radius:34px;background:repeating-linear-gradient(135deg,rgba(63,209,107,.35) 0 10px,rgba(63,209,107,.18) 10px 20px);border:3px dashed var(--green);display:grid;place-items:center;font-size:30px}
+.flow .line{position:absolute;left:5%;right:5%;top:32px;height:4px;border-radius:4px;background:var(--line);z-index:1}
+.flow .line i{display:block;height:100%;width:0;border-radius:4px;background:linear-gradient(90deg,var(--blue),var(--green),var(--orange));transition:width 4.2s linear}
+.flow .phases{display:grid;grid-template-columns:4fr 1.3fr 4fr;margin-top:20px;gap:8px;opacity:0;transition:opacity .6s}
+.flow .phases.in{opacity:1}
+.flow .phases span{text-align:center;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:7px}
+.ph1{background:rgba(91,140,255,.2);color:#a9c3ff}.ph2{background:rgba(63,209,107,.18);color:#8ce8aa}.ph3{background:rgba(245,166,35,.2);color:#ffc86b}
+
+/* ---------- M2: comparison ---------- */
+.cmp{border-radius:24px;background:var(--panel);border:1px solid var(--line);padding:20px}
+.cmp-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.cmp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.task{border-radius:18px;padding:16px 12px;text-align:center;background:var(--bg2);border:2px solid var(--line);transition:all .4s;position:relative}
+.task .te{font-size:36px;line-height:1;transition:filter .4s,opacity .4s}
+.task b{display:block;font-size:13.5px;margin-top:8px;line-height:1.3}
+.task .st{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:900;transition:all .4s}
+.task.yes{border-color:var(--lime);background:rgba(205,242,74,.08)}
+.task.yes .st{background:var(--lime);color:var(--ink)}
+.task.no .te{filter:grayscale(1);opacity:.35}
+.task.no b{color:var(--dim);text-decoration:line-through}
+.task.no .st{background:var(--panel2);color:var(--dim)}
+.task.diff{box-shadow:0 0 0 3px var(--yellow)}
+.cmp-out{margin-top:16px;border-radius:16px;padding:14px 18px;background:var(--bg2);line-height:1.6;font-size:15px;min-height:54px}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.vsc{border-radius:20px;padding:18px 20px}
+.vsc h3{margin:0 0 6px;font-size:16px}
+.vsc p{margin:0;line-height:1.6;font-size:14.5px}
+.vsc.pl{background:rgba(205,242,74,.10);border:1px solid rgba(205,242,74,.45)}
+.vsc.rg{background:rgba(91,140,255,.12);border:1px solid rgba(91,140,255,.4)}
+.rooms{display:flex;gap:10px;margin-top:12px}
+.room{flex:1;border-radius:12px;background:#1d2231;border:1px solid var(--line);padding:10px 6px;text-align:center;font-size:24px;position:relative}
+.room small{display:block;font-size:10.5px;color:var(--dim);margin-top:2px}
+.room.solo::after{content:"";position:absolute;inset:-1px;border-radius:12px;border:2px solid var(--lime);animation:blink 2.4s infinite}
+
+/* ---------- Simulator / video / link cards ---------- */
+.launch{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;border-radius:24px;padding:24px;background:linear-gradient(135deg,#3a4370,#2d3450);border:1px solid var(--line2)}
+.launch .le{font-size:70px;line-height:1}
+.launch h3{margin:0 0 8px;font-size:21px}
+.launch p{margin:0 0 14px;color:#d5d9e6;line-height:1.6}
+.steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 4px}
+.steps3 div{background:rgba(0,0,0,.18);border-radius:14px;padding:12px;font-size:13.5px;line-height:1.5;color:#dfe2ec}
+.steps3 b{display:block;font-family:Unbounded,sans-serif;color:var(--lime);font-size:18px;margin-bottom:4px}
+.confirm{display:flex;align-items:center;gap:12px;margin-top:16px;border-radius:14px;padding:14px 16px;background:var(--bg2);border:1px dashed var(--line2);cursor:pointer;user-select:none}
+.confirm .box{flex:0 0 28px;height:28px;border-radius:8px;border:2px solid var(--line2);display:grid;place-items:center;font-weight:900;color:var(--ink);transition:all .2s}
+.confirm.on{border-style:solid;border-color:var(--lime);background:rgba(205,242,74,.08)}
+.confirm.on .box{background:var(--lime);border-color:var(--lime)}
+.video{position:relative;border-radius:20px;overflow:hidden;background:#000;aspect-ratio:16/9;border:1px solid var(--line)}
+.video img{width:100%;height:100%;object-fit:cover;opacity:.75}
+.video .play{position:absolute;inset:0;display:grid;place-items:center}
+.video .play span{width:86px;height:86px;border-radius:50%;background:var(--red);display:grid;place-items:center;font-size:34px;box-shadow:0 10px 30px rgba(0,0,0,.4);transition:transform .2s}
+.video:hover .play span{transform:scale(1.08)}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* ---------- M2: stage carousel ---------- */
+.stc{display:grid;grid-template-columns:300px 1fr;border-radius:26px;overflow:hidden;background:var(--panel);border:1px solid var(--line);min-height:380px}
+.stc-l{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:26px;transition:background .5s}
+.stc-l .bi{font-size:110px;line-height:1;animation:bob 3s ease-in-out infinite}
+.stc-l .bn{font-family:Unbounded,sans-serif;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.stc-l .phase{font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:5px 12px;background:rgba(0,0,0,.25)}
+.stc-r{padding:26px 28px;display:flex;flex-direction:column;gap:12px}
+.stc-r h3{font-size:24px;margin:0}
+.stc-r .goal{color:#d5d9e6;line-height:1.65;font-size:15.5px;margin:0}
+.dolist{display:flex;flex-direction:column;gap:8px;margin:2px 0}
+.dolist div{display:flex;gap:10px;align-items:flex-start;background:var(--bg2);border-radius:12px;padding:10px 12px;font-size:14.5px;line-height:1.5;animation:fadeUp .4s both}
+.dolist div::before{content:"✓";flex:0 0 22px;height:22px;border-radius:50%;background:var(--lime);color:var(--ink);display:grid;place-items:center;font-weight:900;font-size:12px;margin-top:1px}
+.stc-nav{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:8px}
+.stc-dots{display:flex;gap:6px;flex-wrap:wrap}
+.stc-dots button{width:32px;height:32px;border-radius:50%;background:var(--bg2);border:2px solid var(--line2);font-size:15px;transition:all .2s}
+.stc-dots button.seen{border-color:var(--lime)}
+.stc-dots button.on{background:var(--lime);border-color:var(--lime);transform:scale(1.12)}
+.stc-nav .sp{flex:1}
+
+/* ---------- M3: timing scrubber ---------- */
+.scrub{border-radius:24px;background:var(--panel);border:1px solid var(--line);padding:20px}
+.scrub-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.clock{font-family:Unbounded,sans-serif;font-size:30px;color:var(--yellow);min-width:118px}
+.lanes{position:relative;margin-top:16px;display:flex;flex-direction:column;gap:7px}
+.lane{display:grid;grid-template-columns:96px 1fr 132px;align-items:center;gap:10px;font-size:13px}
+.lane .ln{color:var(--muted);font-weight:600}
+.lane .track{position:relative;height:28px;border-radius:8px;background:rgba(255,255,255,.04)}
+.lane .seg2{position:absolute;top:0;bottom:0;border-radius:6px}
+.s-on{background:var(--blue)}.s-ind{background:rgba(63,209,107,.55)}.s-off{background:var(--orange)}.s-tut{background:var(--yellow)}
+.lane .state{font-size:12.5px;font-weight:700;border-radius:999px;padding:4px 10px;text-align:center;background:var(--bg2);color:var(--dim)}
+.state.on{background:var(--blue);color:#fff}.state.ind{background:rgba(63,209,107,.3);color:#b6f3c8}.state.off{background:var(--orange);color:#2a1a00}.state.done{background:var(--panel2);color:var(--dim)}
+.playhead{position:absolute;top:-6px;bottom:-6px;width:3px;background:var(--txt);border-radius:3px;pointer-events:none;box-shadow:0 0 0 3px rgba(255,255,255,.12)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:12.5px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px}
+.ttable{width:100%;border-collapse:separate;border-spacing:0;margin-top:6px;font-size:14.5px}
+.ttable th,.ttable td{padding:12px 14px;text-align:left;vertical-align:top;line-height:1.5;border-bottom:1px solid var(--line)}
+.ttable th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ttable td:first-child{font-weight:700;color:var(--lime);white-space:nowrap}
+
+/* ---------- M3: do / don't sorter ---------- */
+.sorter{display:flex;flex-direction:column;gap:10px}
+.srow{display:flex;align-items:center;gap:14px;border-radius:16px;padding:14px 16px;background:var(--bg2);border:2px solid var(--line);transition:border-color .3s,background .3s}
+.srow .sei{font-size:30px}
+.srow .stx{flex:1;font-size:15px;line-height:1.5}
+.srow .sbtns{display:flex;gap:8px}
+.srow .sbtns button{border-radius:10px;padding:8px 12px;font-weight:800;font-size:13px;border:1px solid var(--line2)}
+.srow .sbtns button:hover{background:rgba(255,255,255,.06)}
+.srow .sfb{display:none;flex-basis:100%;font-size:14px;line-height:1.55;color:#d5d9e6;padding-left:44px}
+.srow{flex-wrap:wrap}
+.srow.ok{border-color:var(--lime);background:rgba(205,242,74,.06)}
+.srow.ko{border-color:var(--red);background:rgba(255,93,108,.06)}
+.srow.ok .sfb,.srow.ko .sfb{display:block;animation:fadeUp .35s}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+.fact{display:flex;gap:14px;align-items:center;border-radius:16px;padding:14px 16px;background:var(--bg2);border:1px solid var(--line)}
+.fact .fn{font-family:Unbounded,sans-serif;font-size:28px;color:var(--yellow);min-width:76px}
+.fact span{font-size:14.5px;line-height:1.5;color:#d5d9e6}
+
+/* ---------- Quiz ---------- */
+.quiz{max-width:760px;margin:0 auto}
+.qbar{height:8px;border-radius:999px;background:var(--panel2);overflow:hidden;margin-bottom:22px}
+.qbar i{display:block;height:100%;background:linear-gradient(90deg,var(--lime),var(--yellow));transition:width .4s}
+.qmeta{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lime)}
+.qq{font-family:Unbounded,sans-serif;font-size:23px;line-height:1.35;margin:10px 0 20px}
+.qopt{display:flex;gap:14px;align-items:center;width:100%;text-align:left;border-radius:16px;padding:15px 16px;margin:10px 0;background:var(--panel);border:2px solid var(--line);font-size:15.5px;line-height:1.5;transition:border-color .15s,background .15s}
+.qopt:hover{border-color:var(--line2);background:#343c58}
+.qopt .k{flex:0 0 32px;height:32px;border-radius:10px;background:var(--bg2);display:grid;place-items:center;font-weight:800;font-family:Unbounded,sans-serif;font-size:13px}
+.answered .qopt{pointer-events:none}
+.qopt.right{border-color:var(--lime);background:rgba(205,242,74,.12)}
+.qopt.right .k{background:var(--lime);color:var(--ink)}
+.qopt.wrong{border-color:var(--red);background:rgba(255,93,108,.12)}
+.qopt.wrong .k{background:var(--red);color:#fff}
+.qfb{display:none;border-radius:16px;padding:14px 18px;line-height:1.6;margin-top:6px;font-size:15px}
+.qfb.show{display:block;animation:fadeUp .35s}
+.qfb.ok{background:rgba(205,242,74,.12);border:1px solid rgba(205,242,74,.5)}
+.qfb.ko{background:rgba(255,93,108,.12);border:1px solid rgba(255,93,108,.45)}
+.qnext{display:none;margin-top:16px}
+.qnext.show{display:inline-block}
+
+/* ---------- Chat check ---------- */
+.chat{max-width:780px;margin:0 auto}
+.chat-head{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:20px 20px 0 0;padding:14px 18px}
+.chat-head .ca{width:46px;height:46px;border-radius:50%;background:var(--blue);display:grid;place-items:center;font-size:24px}
+.chat-head b{display:block}
+.chat-head small{color:var(--muted)}
+.chat-body{background:#262c40;border:1px solid var(--line);border-top:0;padding:18px;min-height:340px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:78%;border-radius:18px;padding:12px 15px;line-height:1.55;font-size:15px;animation:fadeUp .35s both}
+.msg.them{align-self:flex-start;background:var(--panel2);border-bottom-left-radius:6px}
+.msg.me{align-self:flex-end;background:var(--lime);color:var(--ink);border-bottom-right-radius:6px;font-weight:500}
+.msg.me.ko{background:#ffd2d7;color:#5c1018}
+.msg .nm{display:block;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.7;margin-bottom:3px}
+.typing{align-self:flex-start;background:var(--panel2);border-radius:18px;padding:12px 16px;display:flex;gap:5px}
+.typing i{width:8px;height:8px;border-radius:50%;background:var(--muted);animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+.chat-foot{background:var(--panel);border:1px solid var(--line);border-top:0;border-radius:0 0 20px 20px;padding:14px 18px}
+.chat-foot .pick{font-size:12.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--lime);margin-bottom:6px}
+.chat-foot .qopt{margin:8px 0;background:var(--bg2)}
+.cfb{border-radius:14px;padding:12px 16px;line-height:1.6;font-size:14.5px;animation:fadeUp .35s}
+.cfb.wait{background:var(--panel);border:1px solid var(--line)}
+/* phone */
+.chatwrap{display:grid;grid-template-columns:380px 1fr;gap:34px;align-items:start;max-width:1000px;margin:0 auto}
+.phone{position:relative;height:min(700px,calc(100vh - 110px));min-height:540px;border-radius:46px;background:#0d0f16;padding:12px;box-shadow:0 30px 70px rgba(0,0,0,.55),inset 0 0 0 2px #3a4160;display:flex;flex-direction:column;overflow:hidden}
+.phone>*{position:relative}
+.ph-status{display:flex;justify-content:space-between;align-items:center;padding:6px 22px 8px;font-size:13px;font-weight:700;color:#fff;background:#1d2232;border-radius:34px 34px 0 0}
+.ph-notch{width:96px;height:24px;border-radius:999px;background:#0d0f16}
+.ph-head{display:flex;align-items:center;gap:10px;padding:8px 14px 10px;background:#1d2232;border-bottom:1px solid #2b3146}
+.ph-back{font-size:26px;color:var(--lime);line-height:1}
+.ph-av{width:38px;height:38px;border-radius:50%;background:var(--blue);display:grid;place-items:center;font-size:20px}
+.ph-head b{display:block;font-size:15px}
+.ph-head small{font-size:12px;color:var(--lime)}
+.ph-icons{margin-left:auto;font-size:15px;opacity:.85;letter-spacing:6px}
+.ph-body{flex:1;min-height:0;overflow-y:auto;padding:12px 10px;display:flex;flex-direction:column;gap:7px;background:radial-gradient(circle at 20% 10%,#2a3150,#1a1e2c 70%)}
+.ph-body::-webkit-scrollbar{width:0}
+.ph-day{align-self:center;font-size:11px;font-weight:700;color:var(--muted);background:rgba(255,255,255,.07);border-radius:999px;padding:3px 10px;margin-bottom:4px}
+.ph-body .msg{max-width:86%;font-size:14px;padding:9px 12px 6px;border-radius:16px}
+.ph-body .msg.them{background:#343c58}
+.ph-body .msg.me{background:#d9f77a}
+.mt{display:block;text-align:right;font-size:10.5px;opacity:.6;margin-top:3px;font-weight:600}
+.ph-body .typing{padding:10px 14px}
+.ph-replies{background:#161a26;max-height:46%;overflow-y:auto;padding:0 10px}
+.ph-replies:not(:empty){padding:10px;border-top:1px solid #2b3146}
+.ph-pick{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--lime);margin:0 2px 6px}
+.ph-opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border-radius:14px;padding:10px 12px;margin:6px 0;background:#262c40;border:1.5px solid #3a4160;font-size:13.5px;line-height:1.45;animation:fadeUp .3s both}
+.ph-opt:hover{border-color:var(--lime);background:#2e3550}
+.ph-opt .k{flex:0 0 24px;height:24px;border-radius:7px;background:#3a4160;display:grid;place-items:center;font-weight:800;font-size:11.5px;font-family:Unbounded,sans-serif}
+.ph-input{display:flex;align-items:center;gap:8px;padding:10px 12px 16px;background:#161a26;border-radius:0 0 34px 34px}
+.ph-field{flex:1;background:#262c40;border-radius:999px;padding:9px 14px;font-size:13px;color:var(--dim)}
+.ph-send{width:36px;height:36px;border-radius:50%;background:var(--lime);color:var(--ink);display:grid;place-items:center;font-size:15px}
+.chat-side{padding-top:14px;position:sticky;top:80px}
+.cdots{display:flex;gap:8px;margin:4px 0 16px}
+.cdots i{width:34px;height:8px;border-radius:999px;background:var(--panel2)}
+.cdots i.cur{background:var(--yellow)}.cdots i.ok{background:var(--lime)}.cdots i.ko{background:var(--red)}
+#cnext.ready{animation:pulseBtn 1.6s ease-in-out 2}
+@keyframes pulseBtn{0%,100%{box-shadow:0 0 0 0 rgba(255,211,77,.6)}50%{box-shadow:0 0 0 10px rgba(255,211,77,0)}}
+@media (max-width:900px){.chatwrap{grid-template-columns:1fr}.phone{max-width:380px;width:100%;margin:0 auto}.chat-side{position:static}}
+.cfb.ok{background:rgba(205,242,74,.12);border:1px solid rgba(205,242,74,.5)}
+.cfb.ko{background:rgba(255,93,108,.12);border:1px solid rgba(255,93,108,.45)}
+
+/* ---------- Result / complete ---------- */
+.result{max-width:640px;margin:20px auto;text-align:center;border-radius:28px;padding:34px 30px;background:var(--panel);border:1px solid var(--line)}
+.result .re{font-size:70px;line-height:1}
+.result h1{font-size:30px;margin:14px 0 6px}
+.result .pct{font-family:Unbounded,sans-serif;font-size:58px;margin:8px 0}
+.result .pct.pass{color:var(--lime)}.result .pct.fail{color:var(--red)}
+.result p{color:#cfd3e2;line-height:1.6}
+.result .btn-row{justify-content:center;margin-top:20px}
+.soonbox{max-width:760px;margin:20px auto;text-align:center;border-radius:28px;padding:40px 30px;background:repeating-linear-gradient(135deg,var(--panel) 0 22px,#2b3149 22px 44px);border:1px solid var(--line)}
+.soonbox .re{font-size:80px;animation:bob 3s infinite}
+
+/* ---------- Modal / lightbox / confetti ---------- */
+.ovl{position:fixed;inset:0;z-index:200;background:rgba(10,12,22,.78);display:none;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(3px)}
+.ovl.show{display:flex}
+.mbox{background:var(--paper);color:var(--ink);border-radius:22px;padding:28px;max-width:520px;width:100%;text-align:center;border-top:8px solid var(--yellow)}
+.mbox h2{margin:8px 0;font-size:22px}
+.mbox p{color:var(--pmuted);line-height:1.6}
+.lb img{max-width:94vw;max-height:88vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:300}
+.devbadge{position:fixed;bottom:12px;left:12px;z-index:250;background:var(--pink);color:#fff;font-weight:800;font-size:12px;border-radius:999px;padding:6px 12px}
+
+@media (max-width:900px){
+  .cores,.grid2,.grid3,.mods,.myths,.trio,.vs,.facts,.steps3{grid-template-columns:1fr}
+  .slide{grid-template-columns:1fr}.scene{min-height:220px}
+  .stc{grid-template-columns:1fr}.stc-l{padding:20px}.stc-l .bi{font-size:76px}
+  .cmp-grid{grid-template-columns:repeat(2,1fr)}
+  .diffs{grid-template-columns:1fr}
+  .flow-row{flex-wrap:wrap;gap:14px}.stg,.indep{flex:0 0 28%}.flow .line{display:none}.flow .phases{grid-template-columns:1fr}
+  .launch{grid-template-columns:1fr}
+  .lane{grid-template-columns:70px 1fr}.lane .state{display:none}
+  .hero h1{font-size:34px}.mhead h1{font-size:28px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<nav class="nav" id="nav"></nav>
+<main id="view"></main>
+<div class="ovl" id="modal"></div>
+<div class="ovl lb" id="lb"><img id="lbImg" alt=""></div>
+<canvas id="confetti"></canvas>
+
+<script>
+'use strict';
+/* =========================================================
+   CONFIG
+   ========================================================= */
+const CONFIG = {
+  PASS: 0.7,   // 70% to pass each module check
+  CLASSROOM_SIM: 'https://agathiceras.github.io/PL_simulation_test/Classroom_Simulator.html',
+  BO_SIM: 'BO_simulator/Simulacion_BO_PL.html',
+  VIDEO_ID: 'DDkHpfBujl0'
+};
+const PKEY = 'kl-newpl-progress-v1';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+/* ---------- Progress (localStorage) ---------- */
+let P = {};
+function loadP(){ try { P = JSON.parse(localStorage.getItem(PKEY) || '{}') || {}; } catch(e){ P = {}; } }
+function saveP(){ try { localStorage.setItem(PKEY, JSON.stringify(P)); } catch(e){} }
+const passed = id => !!(P[id] && P[id].passed);
+function setResult(id, pct, ok){ const o = P[id] || {}; P[id] = Object.assign(o, { passed: ok || !!o.passed, score: Math.max(pct, o.score || 0) }); saveP(); }
+const flag = k => !!(P.flags && P.flags[k]);
+function setFlag(k, v){ P.flags = P.flags || {}; P.flags[k] = v; saveP(); }
+
+/* =========================================================
+   MODULES (Core 1 — The PL format)
+   ========================================================= */
+const MODULES = [
+  { id:'m1', n:1, e:'🌟', color:'#cdf24a', title:'Welcome to Parallel Lessons',
+    desc:'What the format is, why it exists, who the students are, and the mindset you bring to it.',
+    obj:'By the end of this module you’ll know what a Parallel Lesson is, why Kodland created it, which students it’s designed for, and how it expands your role as a tutor.',
+    sections:[ ['what','🧩','What is a Parallel Lesson?'], ['why','🚀','Why the format exists'], ['students','🧒','Meet the students'], ['role','🧭','Your role as a tutor'], ['mindset','🌱','A new mindset'] ] },
+  { id:'m2', n:2, e:'🎬', color:'#ffd34d', title:'How a Parallel Lesson Works',
+    desc:'The lesson structure, what changes for you, a full simulation and the moments that matter most.',
+    obj:'See the structure of a Kodland lesson, compare a parallel tutor with a regular tutor, live a parallel lesson in the simulator and learn what happens in each stage you still lead.',
+    sections:[ ['structure','🗺️','The lesson structure'], ['compare','⚖️','What a PL tutor does'], ['sim','🎮','Live a parallel lesson'], ['stages','🪜','The moments you lead'], ['video','🎥','A real example'] ] },
+  { id:'m3', n:3, e:'🖥️', color:'#5b8cff', title:'Technical Aspects of Parallel Lessons',
+    desc:'Parallel Groups in BO, communication and tracking rules, and how the timing works.',
+    obj:'Find your Parallel Groups in the Back Office, know the communication and tracking rules, and understand how one tutor session fits several 60-minute lessons.',
+    sections:[ ['bo','🗂️','Parallel Groups in BO'], ['rules','📏','Communication & tracking rules'], ['timing','⏱️','How the timing works'] ] }
+];
+const unlocked = m => { const i = MODULES.indexOf(m); return i <= 0 || passed(MODULES[i - 1].id); };
+const coreDone = () => MODULES.every(m => passed(m.id));
+
+/* =========================================================
+   CHECKS
+   ========================================================= */
+const QUIZ = {
+  m1:[
+    { q:'What is a Parallel Lesson?',
+      o:['One tutor teaches the same lesson to a group of students who all work together on one shared project.',
+         'One tutor supports 2–5 students in the same time slot, each on their own path and each with a full 60-minute lesson.',
+         'A recorded course that students follow on their own, with no tutor at any point.'],
+      a:1, e:'Each student has their own individual 60-minute lesson. What stretches to fit everyone is the tutor’s session.' },
+    { q:'Which student is this format designed for?',
+      o:['Students aged 10+ who can work independently, enjoy autonomy and like knowing an expert is there when they need help.',
+         'Young children who still need an adult beside them during the whole lesson.',
+         'Students who learn best by working in teams with their classmates.'],
+      a:0, e:'From around age 10, students can manage their own focus for stretches of time. Many already enjoy learning on their own, and some have used fully asynchronous formats before.' },
+    { q:'What does learning the PL format mean for you as a tutor?',
+      o:['From now on, all your courses will become parallel lessons.',
+         'You’ll have to teach in the parallel way in every group you have.',
+         'You expand your experience with a new educational format, which can also open the door to more groups.'],
+      a:2, e:'Learning the format doesn’t turn all your courses into parallel lessons, and your role only changes in your parallel groups. It adds a new format to your experience.' }
+  ],
+  m3:[
+    { q:'What is a “Parallel Group” in the Back Office?',
+      o:['A container that groups several individual student groups under one tutor.',
+         'A new course type with a different curriculum.',
+         'A shared group where all students join the same room.'],
+      a:0, e:'It’s just a container: each student still keeps their own individual group inside it, and the teacher link is the same for all of them.' },
+    { q:'Where are attendance and submitted projects tracked in a parallel group?',
+      o:['In the Parallel Group, as one shared record for the whole slot.',
+         'In each student’s individual group — exactly as before.',
+         'Nowhere: parallel lessons don’t track attendance.'],
+      a:1, e:'Nothing changes here: attendance, projects and other metrics are tracked per individual group.' },
+    { q:'How should you communicate with the students of a parallel group?',
+      o:['Create one WhatsApp group with all the students of the slot.',
+         'Only inside Classroom, never by message.',
+         'Individually, with direct messages to each student, the same as a 1:1 lesson.'],
+      a:2, e:'Parallel lessons are individualized learning: never create WhatsApp groups for the slot. Every student is contacted individually.' },
+    { q:'How early can you open the Classroom console?',
+      o:['From your Groups list, 60 minutes before the lesson. From your Schedule, 30 minutes before.',
+         'Only at the exact start time, from any page.',
+         'From your Schedule, 60 minutes before. From your Groups list, 10 minutes before.'],
+      a:0, e:'From the Parallel Group in your Groups list you can open it 60 minutes before (until the lesson ends). From your Schedule, 30 minutes before.' }
+  ]
+};
+
+// Module 2 check: a conversation with a tutor who doesn't know the format yet.
+// The correct answer is placed in a different position on purpose (C, A, B, C).
+const CHAT = [
+  { them:'This new format sounds interesting, but I’m confused. Wouldn’t it be a lot more work to teach the same thing to 5 kids separately?',
+    o:['Yes, it’s more work: you repeat the whole lesson, theory included, five times in a row.',
+       'Not really, because the students just watch a video and you only take attendance.',
+       'Not really! I only introduce each student to their learning and close their lesson. I don’t model or present theory — the cards do that. It’s a more mature way of learning.'],
+    a:2, ok:'Exactly: you lead the opening and closing for each student. The theory, the software explanations and the modeling are in the cards.',
+    ko:'Not quite. In a parallel lesson you don’t repeat the lesson for each student: you open and close each lesson, and the cards carry the theory and the modeling.' },
+  { them:'And don’t your students get upset that you leave them on their own?',
+    o:['Hmm, they already know how it works before they buy the course, and in the first lesson I explain the format and how long they’ll work on their own. They’re kids who know the work is independent.',
+       'Sometimes, but I just tell them that’s the way it is and go to the next student.',
+       'They don’t notice, because I keep my camera on in every room at the same time.'],
+    a:0, ok:'Right. The dynamic is clear before the purchase, and you explain it again in the first lesson, so the student knows what to expect.',
+    ko:'Not quite. Students already know the dynamic before they buy, and you explain the format and the independent-work time from the very first lesson.' },
+  { them:'But what if they get lost? Many need help, and what about technical problems?',
+    o:['Then they wait until the end of the lesson, when you can finally talk to them.',
+       'There are short moments to help whoever raises their hand. Also, the lesson on the platform already plans for this: there are help options and steps for technical problems right there. That’s why explaining the format matters.',
+       'You stay in the room of whoever has a problem until it’s solved, even if other students arrive.'],
+    a:1, ok:'Exactly. You help raised hands in the gaps, and the cards already include help and what to do with technical issues — that’s why a clear explanation of the format at the start is so important.',
+    ko:'Not quite. You can help raised hands in the short gaps, and the lesson on the platform already includes help options and guidance for technical problems.' },
+  { them:'Sounds interesting, that makes me feel calmer. So the content changed for this format?',
+    o:['No, it’s exactly the same content as the regular courses — you just teach it faster.',
+       'Only the order of the lessons changed; the activities are the same.',
+       'Yes, actually it’s very different: it’s designed precisely so the lessons can work “without a tutor” for most of the time.'],
+    a:2, ok:'Yes! The content was redesigned for this format, so the student can move forward on their own with the cards.',
+    ko:'Not quite. The content is very different: it was designed precisely so students can work through it on their own.' }
+];
+
+/* =========================================================
+   CONTENT — section bodies (HTML builders)
+   ========================================================= */
+const callout = (type, icon, html) => `<div class="callout ${type}"><span class="ci">${icon}</span><div>${html}</div></div>`;
+const fig = (src, alt, cap) => `<figure class="fig"><img src="${src}" alt="${alt}" data-zoom>${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>`;
+const flip = (e, t, back, hint = 'Tap to flip') => `<div class="flip" data-flip><div class="in"><div class="fc front"><span class="fe">${e}</span><b>${t}</b><small>${hint}</small></div><div class="fc back">${back}</div></div></div>`;
+
+// One lesson-structure diagram. Item kinds: open / main / indep / close. Numbering skips the independent-work block.
+function flowHTML(id, title, items, phases){
+  let n = 0;
+  const cells = items.map((s, i) => s.k === 'indep'
+    ? `<div class="indep" data-st="${i}"><span class="ib">${s.e}</span><span class="sn">${s.t}</span>${s.tag ? `<span class="ftag">${s.tag}</span>` : ''}</div>`
+    : `<div class="stg ${s.k}" data-st="${i}"><span class="si">${s.e}</span><span class="sx">${++n}</span><span class="sn">${s.t}</span>${s.tag ? `<span class="ftag">${s.tag}</span>` : ''}</div>`).join('');
+  return `<div class="flow flow-${id}" data-flow>
+    <div class="flow-title">${title}</div>
+    <div class="flow-body"><div class="line"><i></i></div><div class="flow-row">${cells}</div></div>
+    <div class="phases" style="grid-template-columns:${phases.map(p => p[2] + 'fr').join(' ')}">${phases.map(p => `<span class="${p[0]}">${p[1]}</span>`).join('')}</div>
+  </div>`;
+}
+
+const BODY = {
+/* ---------------- Module 1 ---------------- */
+what:() => `
+  <p class="p">In a <b>Parallel Lesson (PL)</b>, one tutor supports <b>2 to 5 students</b> in the same time slot. Each student follows their own path and gets a full, individual <b>60-minute</b> lesson. Students join one by one, so what stretches is the tutor’s session — not the student’s lesson.</p>
+  <div class="grid2">
+    <div class="card">
+      <div class="wh"><b>👇 Move the slider: how many students?</b><span class="tag">Try it</span></div>
+      <input type="range" min="2" max="5" value="3" id="nStud" aria-label="Number of students">
+      <div style="display:flex;align-items:flex-end;gap:16px;margin-top:10px">
+        <div><div class="bignum" id="tutMin">80</div><div style="font-size:13px;color:var(--muted)">minutes for you</div></div>
+        <div><div class="bignum" style="color:var(--lime)">60</div><div style="font-size:13px;color:var(--muted)">minutes for each student</div></div>
+      </div>
+      <div class="slots" id="slots"></div>
+    </div>
+    ${fig('images/Image1.png', 'Classroom console with a separate room for each student', 'The Classroom console: every student has their own room.')}
+  </div>`,
+
+why:() => `
+  <p class="p">Premium one-to-one courses often take a long time to start, because the student’s availability and the tutor’s schedule rarely match. Parallel Lessons solve that. Flip the cards:</p>
+  <div class="grid3">
+    ${flip('⚡', 'For students', '<b>They start much faster.</b><br>No waiting weeks for a one-to-one slot that fits: they can begin their course and learn at their own pace.')}
+    ${flip('🗓️', 'For tutors', '<b>More flexibility.</b><br>Several individual lessons fit in one slot of your schedule, and you discover a new way of teaching.')}
+    ${flip('🎯', 'For learning', '<b>Real autonomy.</b><br>Students build the feeling: <i>“I can create a working digital project on my own.”</i> Mistakes are part of the process.')}
+  </div>
+  ${callout('warn', '📌', '<b>Important scope:</b> Parallel Lessons don’t replace how Kodland teaches. They only replace the <b>premium format</b>, for selected courses.')}`,
+
+students:() => `
+  <p class="p">You might wonder: <i>“Will students like working on their own?”</i> The short answer: <b>these students chose it.</b> Meet them:</p>
+  <div class="car" id="car">
+    <div class="timer" id="carTimer"></div>
+    <div class="track" id="carTrack">
+      <div class="slide">
+        <div class="scene" style="background:radial-gradient(circle at 50% 60%,#4a5aa0,#2d3450)">
+          <span class="crowd" style="left:14%;top:18%">👥</span><span class="crowd" style="right:16%;top:24%;animation-delay:.8s">🗣️</span><span class="crowd" style="left:22%;bottom:30%;animation-delay:1.6s">👥</span><span class="crowd" style="right:20%;bottom:34%;animation-delay:2.2s">📢</span>
+          <span class="av">🧑‍💻</span><span class="fl" style="right:30%;top:30%;animation:bob 2s infinite">🎧</span><div class="desk"></div>
+        </div>
+        <div class="stext"><span class="who">Student 1 · The independent one</span><h3>Loves to focus alone</h3>
+          <p>Wants to learn and apply what the course teaches, but big classes full of kids just don’t work for them: too much noise, too much waiting.</p>
+          <p class="quote">“I learn better when I can concentrate on my own project.”</p></div>
+      </div>
+      <div class="slide">
+        <div class="scene" style="background:radial-gradient(circle at 50% 60%,#5a4a8f,#2d3450)">
+          <span class="fl" style="animation:orbit 7s linear infinite">📚</span><span class="fl" style="animation:orbit 7s linear infinite;animation-delay:-2.3s">💡</span><span class="fl" style="animation:orbit 7s linear infinite;animation-delay:-4.6s">🔍</span>
+          <span class="av">🧒</span>
+          <span class="bubble" style="right:12%;top:16%">Need help? ✋ Ask the expert</span>
+        </div>
+        <div class="stext"><span class="who">Student 2 · The self-taught one</span><h3>Learns on their own</h3>
+          <p>Already loves exploring and figuring things out alone. For them, this format is a bonus: the freedom to learn by themselves <b>and</b> an expert to ask whenever they need one.</p>
+          <p class="quote">“I like discovering things myself — and knowing someone can help if I get stuck.”</p></div>
+      </div>
+      <div class="slide">
+        <div class="scene" style="background:radial-gradient(circle at 50% 60%,#3f6b80,#2d3450)">
+          <span class="fl" style="left:18%;bottom:20%;animation:rise 4s ease-in infinite">⏯️</span><span class="fl" style="left:44%;bottom:18%;animation:rise 4s ease-in infinite;animation-delay:1.3s">💻</span><span class="fl" style="right:18%;bottom:22%;animation:rise 4s ease-in infinite;animation-delay:2.6s">✅</span>
+          <span class="av">👧</span>
+        </div>
+        <div class="stext"><span class="who">Student 3 · The async veteran</span><h3>Has learned online before</h3>
+          <p>Some students have already taken fully asynchronous courses, with no tutor at all. In a Parallel Lesson they get the same independence — plus a real person who welcomes them and gives them feedback.</p>
+          <p class="quote">“It’s like my online courses, but now someone looks at my work!”</p></div>
+      </div>
+      <div class="slide">
+        <div class="scene" style="background:radial-gradient(circle at 50% 60%,#4e7a45,#2d3450)">
+          <span class="av">🧑‍🎨</span><span class="fl" style="right:26%;top:26%;animation:wave 1.2s infinite">🛠️</span><span class="fl" style="left:24%;top:24%;animation:blink 1.6s infinite">✨</span>
+          <div class="minibar"><i></i></div>
+        </div>
+        <div class="stext"><span class="who">Why it works · Ages 10+</span><h3>Ready for independence</h3>
+          <p>Around ages 10–12, the skills to keep a goal in mind and manage your own focus take a big step forward. That’s what independent work runs on — and feeling trusted to work alone is a strong motivator.</p>
+          <p class="quote">“I can create a working digital project on my own.”</p></div>
+      </div>
+    </div>
+    <div class="arrows"><button data-car="-1" aria-label="Previous">‹</button><button class="cp" id="carPause" aria-label="Pause">⏸ Pause</button><button data-car="1" aria-label="Next">›</button></div>
+    <div class="dots" id="carDots"></div>
+  </div>
+  ${callout('good', '💚', '<b>Don’t be afraid they won’t like it.</b> These students know the format before they join, and many prefer it. Your job is to make their start and their finish great.')}`,
+
+role:() => `
+  <p class="p">In a Parallel Lesson you are not the one who explains everything. You’re the person who <b>opens the door to learning</b> and makes sure each student walks through it.</p>
+  <div class="trio">
+    <div class="ti"><span class="tie">🧭</span><h3>Platform guide</h3><p>You show each student around the Kodland platform, so they know where everything is and how to move on their own.</p></div>
+    <div class="ti"><span class="tie">🚀</span><h3>Learning starter</h3><p>With your opening, you set the tone, explain the goal and launch each student into their lesson.</p></div>
+    <div class="ti"><span class="tie">💬</span><h3>Feedback coach</h3><p>With constructive feedback, you guide every student — in parallel — through their own learning process.</p></div>
+  </div>`,
+
+mindset:() => `
+  <p class="p">Parallel Lessons are a new type of group at Kodland. Knowing the format <b>adds</b> to what you can do — it doesn’t take anything away. Tap each belief to see the reality:</p>
+  <div class="myths">
+    <button class="myth" data-myth><span class="mtag">Myth</span><span class="mq">“All my courses will become parallel from now on.”</span><span class="ma"><b>Not at all.</b> Learning the format doesn’t mean your groups change. Parallel Lessons are only for selected courses.</span><span class="mh">Tap to see the reality →</span></button>
+    <button class="myth" data-myth><span class="mtag">Myth</span><span class="mq">“My role as a tutor will change in every group.”</span><span class="ma"><b>No.</b> You teach the parallel way only in your parallel groups. Everywhere else, you keep doing what you already do well.</span><span class="mh">Tap to see the reality →</span></button>
+    <button class="myth" data-myth><span class="mtag">Myth</span><span class="mq">“It’s just one more thing to learn.”</span><span class="ma"><b>It’s an opportunity.</b> You broaden your experience with educational formats, and knowing more formats can open the door to more groups.</span><span class="mh">Tap to see the reality →</span></button>
+  </div>`,
+
+/* ---------------- Module 2 ---------------- */
+structure:() => {
+  const OPEN = [['🔌','Connection check'],['😊','Mood check'],['📓','Homework check'],['🎯','Lesson goal']];
+  return `
+  <p class="p">First, the structure of a <b>regular Kodland lesson</b>. Then the structure of a <b>parallel lesson</b>. Compare them:</p>
+  ${flowHTML('rg', '👩‍🏫 Regular Kodland lesson', [
+      ...OPEN.map(s => ({ e:s[0], t:s[1], k:'open' })),
+      { e:'🧑‍🏫', t:'Theory & practice', k:'main' },
+      { e:'🎬', t:'Wrapping up', k:'close' }, { e:'🪞', t:'Reflection', k:'close' }, { e:'📌', t:'Homework announced', k:'close' }
+    ], [['ph1','Opening',4], ['ph4','Main part',1], ['ph3','Closing',3]])}
+  ${flowHTML('pl', '⚡ Parallel lesson', [
+      ...OPEN.map(s => ({ e:s[0], t:s[1], k:'open' })),
+      { e:'🧑‍💻', t:'Independent work', k:'indep', tag:'Replaces theory & practice' },
+      { e:'🎬', t:'Wrapping up', k:'close', tag:'Feedback is here' }, { e:'🪞', t:'Reflection', k:'close' }, { e:'📌', t:'Homework announced', k:'close' }
+    ], [['ph1','Opening',4], ['ph2','Self-study',1.3], ['ph3','Closing',3]])}
+  <div class="diffs">
+    <div><span class="de">🔁</span><span><b>Theory & practice → independent work.</b> In a parallel lesson there’s no theory or modeling by the tutor: the student works with the cards.</span></div>
+    <div><span class="de">💬</span><span><b>Feedback moves to the closing.</b> There’s no separate demo & feedback stage: you give feedback on the project when you close the lesson.</span></div>
+  </div>
+  <div class="btn-row" style="margin-top:12px"><button class="btn-g" id="flowReplay">↻ Replay</button></div>`; },
+
+compare:() => `
+  <p class="p">Now compare the two roles. Switch between them and watch what changes:</p>
+  <div class="cmp">
+    <div class="cmp-top"><div class="seg" id="cmpSeg"><button data-k="rg" aria-pressed="true">👩‍🏫 Regular Kodland tutor</button><button data-k="pl" aria-pressed="false">⚡ Parallel Lessons tutor</button></div>
+      <button class="btn-g" id="cmpDiff" style="padding:8px 14px">✨ Highlight the differences</button></div>
+    <div class="cmp-grid" id="cmpGrid"></div>
+    <div class="cmp-out" id="cmpOut"></div>
+  </div>
+  <div class="vs">
+    <div class="vsc pl"><h3>⚡ In a parallel lesson</h3><p>Each student is in a <b>separate room</b>. Students don’t see each other, so there’s no need to promote participation or teamwork between them.</p>
+      <div class="rooms"><div class="room solo">🧑‍💻<small>Room 1</small></div><div class="room solo">👧<small>Room 2</small></div><div class="room solo">🧒<small>Room 3</small></div><div class="room solo">🧑‍🎨<small>Room 4</small></div></div></div>
+    <div class="vsc rg"><h3>👩‍🏫 In a regular lesson</h3><p>All students share <b>one room</b>. The tutor explains, models and encourages everyone to take part and work together.</p>
+      <div class="rooms"><div class="room" style="font-size:22px">🧑‍💻👧🧒🧑‍🎨<small>One shared room</small></div></div></div>
+  </div>`,
+
+sim:() => `
+  <p class="p">We’ve talked about the format, the mindset and your role. The best way to put it all together is to <b>be in a parallel lesson</b>. Use this simulator to live a lesson with 4 students, then come back here to continue.</p>
+  <div class="launch">
+    <span class="le">🎮</span>
+    <div>
+      <h3>Classroom Simulator</h3>
+      <p>A real parallel lesson in Classroom: a guided tour first, then 10 decisions with 3 lives.</p>
+      <div class="steps3"><div><b>1</b>Open the simulator in a new tab.</div><div><b>2</b>Complete the guided tour and the decision game.</div><div><b>3</b>Come back to this tab and confirm below.</div></div>
+      <div class="btn-row" style="margin-top:12px"><a class="btn-y" href="${CONFIG.CLASSROOM_SIM}" target="_blank" rel="noopener" style="text-decoration:none">🚀 Open the simulator</a></div>
+    </div>
+  </div>
+  ${callout('warn', '⚠️', '<b>This is only an example.</b> The simulation uses a <b>media course</b> adapted to the PL format. It isn’t necessarily the final course, or the one you’ll teach — especially if you’re a coding tutor or teach other media courses. You don’t need to study that lesson’s content to complete the simulation. The new course content will be covered in <b>Part 2</b> of this training.')}
+  <div class="confirm ${flag('simClassroom') ? 'on' : ''}" data-confirm="simClassroom"><span class="box">${flag('simClassroom') ? '✓' : ''}</span><span><b>I’ve completed the whole Classroom simulation</b> (guided tour + decision game).</span></div>`,
+
+stages:() => `
+  <p class="p">The middle of the lesson runs on its own, which makes the opening and the closing <b>more</b> important, not less: they’re the only moments each student has your full attention. Click through every stage:</p>
+  <div class="stc" id="stc">
+    <div class="stc-l" id="stcL"></div>
+    <div class="stc-r" id="stcR"></div>
+  </div>
+  ${callout('tip', '💡', 'Only stage 4 hands the student over to independent work. Everything before it, and stages 5 to 7 after it, is where your full attention belongs.')}`,
+
+video:() => `
+  <p class="p">Before the final check, watch a parallel lesson in real life. <b>Turn on the subtitles</b> (the <b>CC</b> button in the player).</p>
+  <div class="video" id="video"><img src="https://i.ytimg.com/vi/${CONFIG.VIDEO_ID}/hqdefault.jpg" alt="Parallel lesson example video"><div class="play"><span>▶</span></div></div>
+  ${callout('tip', '💬', 'Subtitles: click <b>CC</b> in the video player, then ⚙️ to choose your language.')}`,
+
+/* ---------------- Module 3 ---------------- */
+bo:() => `
+  <p class="p">A <b>Parallel Group</b> is a container that groups several individual student groups under one tutor. Each student still has their own individual group, just like in the premium format — the link to join as teacher is simply the same for all of them.</p>
+  <div class="grid2">
+    ${fig('images/Image2.png', 'A Parallel Group card in BO with the individual groups inside', 'The Parallel Group in BO: the groups inside it, and the console that launches the Classroom session.')}
+    <div class="card">
+      <div class="wh"><b>🔑 Opening the console</b></div>
+      <div class="facts" style="grid-template-columns:1fr;margin-top:0">
+        <div class="fact"><span class="fn">60′</span><span>From the <b>Parallel Group</b> in your Groups list: up to 60 minutes before the lesson, until it ends.</span></div>
+        <div class="fact"><span class="fn">30′</span><span>From your <b>Schedule</b>: up to 30 minutes before the lesson.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="launch" style="margin-top:16px">
+    <span class="le">🖥️</span>
+    <div>
+      <h3>Parallel Lessons BO Simulator</h3>
+      <p>A click-through replica of BO: find the Parallel Group, open the console in both ways, and see a PL course and its Teacher Notes.</p>
+      <div class="steps3"><div><b>1</b>Open the BO simulator in a new tab.</div><div><b>2</b>Follow every step until you see “Simulation complete”.</div><div><b>3</b>Close that tab, come back here and confirm below.</div></div>
+      <div class="btn-row" style="margin-top:12px"><a class="btn-y" href="${CONFIG.BO_SIM}" target="_blank" rel="noopener" style="text-decoration:none">🖥️ Open the BO simulator</a></div>
+    </div>
+  </div>
+  <div class="confirm ${flag('simBO') ? 'on' : ''}" data-confirm="simBO"><span class="box">${flag('simBO') ? '✓' : ''}</span><span><b>I’ve completed the BO simulation</b> and I’m back in the training.</span></div>`,
+
+rules:() => `
+  <p class="p">Parallel Lessons have their own communication rules, but tracking works exactly as before. Do or don’t? Decide for each one:</p>
+  <div class="sorter" id="sorter">
+    ${[
+      ['💬','Create a WhatsApp group with all the students of the parallel slot.','no','<b>Don’t.</b> Never create WhatsApp groups for a parallel slot: Parallel Lessons are individualized learning.'],
+      ['📱','Message each student (or their parent) individually, the same as a 1:1 lesson.','yes','<b>Do.</b> All communication is individual, through direct messages.'],
+      ['📊','Mark attendance and check projects in each student’s individual group.','yes','<b>Do.</b> Attendance, submitted projects and other metrics are tracked per individual group — nothing changes there.'],
+      ['🗂️','Track the whole slot as one shared record in the Parallel Group.','no','<b>Don’t.</b> The Parallel Group is only a container. Each student’s data stays in their own group.']
+    ].map((r, i) => `<div class="srow" data-ans="${r[2]}"><span class="sei">${r[0]}</span><span class="stx">${r[1]}</span><span class="sbtns"><button data-pick="yes">✅ Do</button><button data-pick="no">🚫 Don’t</button></span><span class="sfb">${r[3]}</span></div>`).join('')}
+  </div>`,
+
+timing:() => `
+  <p class="p">Students join one every 10 minutes, and each one gets 60 minutes. With 5 students, your session lasts <b>100 minutes</b>. Press play or drag the time to see what’s happening at each moment:</p>
+  <div class="scrub">
+    <div class="scrub-top"><button class="btn-y" id="tPlay" style="padding:10px 18px">▶ Play</button><span class="clock" id="tClock">min 0</span><input type="range" min="0" max="100" value="0" id="tRange" style="flex:1;min-width:200px" aria-label="Minute"></div>
+    <div class="lanes" id="lanes"></div>
+    <div class="legend"><span><i class="s-on"></i>Opening (with you)</span><span><i class="s-ind"></i>Independent work</span><span><i class="s-off"></i>Closing (with you)</span><span><i class="s-tut"></i>Your session</span></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <table class="ttable">
+      <tr><th></th><th>🧒 Student</th><th>🧑‍🏫 Tutor</th></tr>
+      <tr><td>Duration</td><td>Always 60 minutes</td><td>100 minutes in total (5 students)</td></tr>
+      <tr><td>First 50 min</td><td>Gets a personal welcome, then works mostly on their own</td><td>Welcomes one new student every 10 minutes</td></tr>
+      <tr><td>Last 50 min</td><td>Keeps working until their own hour is up</td><td>Helps raised hands and closes lessons — no new students join</td></tr>
+      <tr><td>End</td><td>Leaves 60 minutes after joining</td><td>Says goodbye to one student every 10 minutes, in the order they joined</td></tr>
+    </table>
+  </div>
+  ${callout('tip', '🧭', '<b>When things happen at once:</b> onboarding beats a raised hand, closing beats a raised hand, and onboarding beats closing.')}`
+};
+
+/* =========================================================
+   STAGES (Module 2 carousel)
+   ========================================================= */
+const STAGES = [
+  { e:'🔌', t:'Connection check', ph:'Opening', c:'#3e5bb5', goal:'Make sure you can both see and hear each other before anything else.',
+    d:['Check camera, microphone and sound — yours and the student’s.','Make sure the student is in their room and sees the lesson.','Serious technical issue? The cards include help, and you can contact technical support.'] },
+  { e:'😊', t:'Mood check', ph:'Opening', c:'#3e5bb5', goal:'A quick read on how the student is doing today.',
+    d:['Greet them by name and ask how their day is going.','Notice their energy: a student who feels seen works better on their own.','Keep it short and warm.'] },
+  { e:'📓', t:'Homework check', ph:'Opening', c:'#3e5bb5', goal:'Review what they worked on since last time.',
+    d:['Ask them to show what they did.','Name one specific thing that went well.','Connect it with today’s lesson.'] },
+  { e:'🎯', t:'Lesson goal', ph:'Opening → self-study', c:'#2f8a4f', goal:'Set what today’s lesson is aiming for. This is the last stage before independent work begins.',
+    d:['Explain the goal of today’s project in one or two sentences.','Ask the student to repeat the plan in their own words.','Remind them how to raise their hand ✋ if they need you.'] },
+  { e:'🎬', t:'Wrapping up', ph:'Closing', c:'#b36b12', goal:'The student shows their final project, you give feedback on it and close the loop on today’s work.',
+    d:['Ask them to share their screen and present their project.','Name one specific strength — not just “good job” — and point to one clear next step.','If something is unfinished, agree clearly what happens with it: the lesson still needs a real ending.'] },
+  { e:'🪞', t:'Reflection', ph:'Closing', c:'#b36b12', goal:'A moment for the student to think about what they learned.',
+    d:['Ask a short question: “What would you do differently next time?”','Let them answer — don’t answer for them.','This builds the self-assessment they use when they work alone.'] },
+  { e:'📌', t:'Homework announced', ph:'Closing', c:'#b36b12', goal:'Set up what comes next.',
+    d:['Explain the homework or the next step clearly.','Preview the next lesson so they arrive curious.','Say goodbye on a positive note.'] }
+];
+
+/* =========================================================
+   RENDERING
+   ========================================================= */
+const view = $('#view');
+function renderNav(kind){
+  const done = MODULES.filter(m => passed(m.id)).length;
+  $('#nav').innerHTML = `<span class="logo">kodland<small>Parallel Lessons Training</small></span><span class="sp"></span>
+    ${kind === 'home' ? `<span class="npill">${done}/${MODULES.length} modules</span>` : ''}
+    ${kind === 'core' ? '<button class="nbtn" data-go="">← Home</button>' : ''}
+    ${kind === 'module' ? '<button class="nbtn" data-go="core1">← Modules</button>' : ''}
+    ${kind === 'quiz' ? '<button class="nbtn" data-exit>← Back to the module</button>' : ''}`;
+}
+
+function renderHome(){
+  renderNav('home');
+  const done = MODULES.filter(m => passed(m.id)).length;
+  view.innerHTML = `
+  <div class="hero">
+    <span class="kicker">Tutor training · New version</span>
+    <h1>Parallel <span class="hl">Lessons</span></h1>
+    <p class="lead">A new way of running individual courses: one tutor, several students, each on their own path in the same time slot. This training has two parts. Start with the format, then the content.</p>
+  </div>
+  <div class="cores">
+    <div class="core open" data-go="core1" role="button" tabindex="0">
+      <span class="big">⚡</span>
+      <span class="cn">Part 1 · Core module</span>
+      <h2>The PL format</h2>
+      <p>What Parallel Lessons are, how a lesson works, and the technical side. 3 modules, each with a short check.</p>
+      <div class="prog" style="margin:0 0 16px;background:var(--bg2)"><b>${done}/3</b><div class="ptrack"><div class="pfill" style="width:${done / 3 * 100}%"></div></div></div>
+      <button class="btn-y">${done === 0 ? 'Start →' : done === 3 ? 'Review →' : 'Continue →'}</button>
+    </div>
+    <div class="core soon">
+      <span class="big">🧱</span>
+      <span class="cn">Part 2 · Coming soon</span>
+      <h2>The content</h2>
+      <p>The new course content designed for Parallel Lessons. This part is under construction.</p>
+      <button class="btn-g" data-go="core2">🚧 Under construction</button>
+    </div>
+  </div>`;
+}
+
+function renderCore1(){
+  renderNav('core');
+  const done = MODULES.filter(m => passed(m.id)).length;
+  view.innerHTML = `
+  <div class="hero"><span class="kicker">Part 1 · Core module</span><h1>The PL <span class="hl">format</span></h1>
+    <p class="lead">Three modules, in order. Each one ends with a short check: score 70% or more to unlock the next one.</p></div>
+  <div class="prog"><b>${done}/3</b><div class="ptrack"><div class="pfill" style="width:${done / 3 * 100}%"></div></div><span style="color:var(--muted);font-size:14px">${done === 3 ? 'Part 1 complete 🎉' : 'modules complete'}</span></div>
+  <div class="mods">
+    ${MODULES.map(m => {
+      const lock = !unlocked(m), ok = passed(m.id);
+      return `<button class="mcard ${lock ? 'locked' : ''} ${ok ? 'done' : ''}" ${lock ? 'data-locked' : `data-go="${m.id}"`} style="border-top:6px solid ${m.color}">
+        <span class="mn">Module ${m.n}</span><span class="me">${m.e}</span><h3>${m.title}</h3><p>${m.desc}</p>
+        <span class="badge">${ok ? `✓ Completed · ${P[m.id].score}%` : lock ? `🔒 Complete Module ${m.n - 1}` : 'Start →'}</span></button>`;
+    }).join('')}
+  </div>
+  ${done === 3 ? `<div class="mcta"><span class="e">🏆</span><div class="grow"><h3>Part 1 complete!</h3><p>You know the PL format. Part 2, the content, is under construction.</p></div><button class="btn-g" data-go="core2">See Part 2</button></div>` : ''}`;
+}
+
+function renderModule(m){
+  clearTimers();   // stops the carousel / animations of a previous render
+  renderNav('module');
+  const needs = { m2:'simClassroom', m3:'simBO' }[m.id];
+  const ready = !needs || flag(needs);
+  view.innerHTML = `
+  <div class="mhead"><span class="eyebrow">Part 1 · Module ${m.n} of 3</span><h1>${m.e} ${m.title}</h1><div class="mobj">${m.obj}</div></div>
+  <div class="chips">${m.sections.map(s => `<button class="chip" data-jump="${s[0]}">${s[1]} ${s[2]}</button>`).join('')}</div>
+  ${m.sections.map(s => `<section class="sec" id="sec-${s[0]}"><div class="sh"><span class="se">${s[1]}</span><h2>${s[2]}</h2></div>${BODY[s[0]]()}</section>`).join('')}
+  <div class="mcta" id="mcta">
+    <span class="e">${passed(m.id) ? '🏅' : '📝'}</span>
+    <div class="grow"><h3>${m.id === 'm2' ? 'Final check: a conversation with a colleague' : 'Module check'}</h3>
+      <p>${m.id === 'm2' ? 'A tutor who doesn’t know the format is curious about it. Help them with 4 answers.' : `${QUIZ[m.id].length} short questions.`} Score 70% or more to pass.</p>
+      ${ready ? '' : `<p style="margin-top:8px;color:var(--yellow)"><b>🔒 First, complete the ${m.id === 'm2' ? 'Classroom' : 'BO'} simulation and confirm it above.</b></p>`}</div>
+    <button class="btn-y" id="startCheck" ${ready ? '' : 'disabled'}>${passed(m.id) ? '🔁 Retake the check' : 'Start the check →'}</button>
+  </div>`;
+  initWidgets(m);
+}
+
+/* =========================================================
+   WIDGETS
+   ========================================================= */
+let timers = [];
+const later = (fn, ms) => { const t = setTimeout(fn, ms); timers.push(t); return t; };
+function clearTimers(){ timers.forEach(clearTimeout); timers.forEach(clearInterval); timers = []; }
+
+function initWidgets(){
+  // Students slider (M1)
+  const ns = $('#nStud');
+  if (ns){
+    const draw = () => {
+      const n = +ns.value, total = 60 + (n - 1) * 10;
+      $('#tutMin').textContent = total;
+      $('#slots').innerHTML = `<div class="slot tutor"><span>You</span><div class="bar"><div class="fillb" style="left:0;width:${total}%">${total} min</div></div></div>` +
+        Array.from({ length:n }, (_, i) => `<div class="slot"><span>Student ${i + 1}</span><div class="bar"><div class="fillb" style="left:${i * 10}%;width:60%">60 min</div></div></div>`).join('');
+    };
+    ns.oninput = draw; draw();
+  }
+  // Flip cards
+  $$('[data-flip]').forEach(f => f.onclick = () => f.classList.toggle('on'));
+  // Myths
+  $$('[data-myth]').forEach(b => b.onclick = () => { b.classList.add('on'); b.querySelector('.mtag').textContent = 'Reality ✓'; });
+  // Persona carousel: auto-advances every SLIDE_MS; Pause freezes it (and the progress bar) where it is
+  const car = $('#car');
+  if (car){
+    const SLIDE_MS = 14000;
+    const n = $$('.slide', car).length; let i = 0, paused = false, t = null, start = 0, left = SLIDE_MS;
+    $('#carDots').innerHTML = Array.from({ length:n }, (_, k) => `<button data-dot="${k}" aria-label="Slide ${k + 1}"></button>`).join('');
+    const tm = $('#carTimer'), pb = $('#carPause');
+    const run = ms => {   // runs the timer bar from where it is to the end, then moves on
+      clearTimeout(t); start = Date.now(); left = ms;
+      tm.style.transition = 'none'; tm.style.width = ((SLIDE_MS - ms) / SLIDE_MS * 100) + '%';
+      requestAnimationFrame(() => requestAnimationFrame(() => { tm.style.transition = `width ${ms}ms linear`; tm.style.width = '100%'; }));
+      t = setTimeout(() => go(i + 1), ms); timers.push(t);
+    };
+    const freeze = () => {
+      clearTimeout(t); left = Math.max(0, left - (Date.now() - start));
+      tm.style.transition = 'none'; tm.style.width = ((SLIDE_MS - left) / SLIDE_MS * 100) + '%';
+    };
+    const go = k => {
+      i = (k + n) % n;
+      $('#carTrack').style.transform = `translateX(-${i * 100}%)`;
+      $$('#carDots button').forEach((d, j) => d.classList.toggle('on', j === i));
+      if (paused){ clearTimeout(t); left = SLIDE_MS; tm.style.transition = 'none'; tm.style.width = '0'; }
+      else run(SLIDE_MS);
+    };
+    pb.onclick = () => {
+      paused = !paused;
+      pb.textContent = paused ? '▶ Play' : '⏸ Pause';
+      pb.setAttribute('aria-label', paused ? 'Play' : 'Pause');
+      pb.classList.toggle('paused', paused);
+      paused ? freeze() : run(left || SLIDE_MS);
+    };
+    $$('[data-car]', car).forEach(b => b.onclick = () => go(i + +b.dataset.car));
+    $$('[data-dot]', car).forEach(b => b.onclick = () => go(+b.dataset.dot));
+    go(0);
+  }
+  // Lesson structure diagrams (M2): the regular one builds first, then the parallel one below it
+  const flows = $$('[data-flow]');
+  if (flows.length){
+    const STEP = 380, SPAN = 8 * STEP + 400;   // time per stage, and per diagram
+    const playOne = (f, delay) => {
+      $$('[data-st]', f).forEach(s => s.classList.remove('in')); $('.phases', f).classList.remove('in'); f.classList.remove('shown');
+      const ln = $('.line i', f); ln.style.transition = 'none'; ln.style.width = '0';
+      later(() => { f.classList.add('shown'); ln.style.transition = `width ${8 * STEP}ms linear`; ln.style.width = '100%'; }, delay);
+      $$('[data-st]', f).forEach(s => later(() => s.classList.add('in'), delay + 150 + +s.dataset.st * STEP));
+      later(() => $('.phases', f).classList.add('in'), delay + 8 * STEP + 200);
+    };
+    const play = () => flows.forEach((f, k) => playOne(f, k * SPAN));
+    // Plays the first time the diagrams scroll into view
+    let played = false;
+    const check = () => { if (played || !document.body.contains(flows[0])) return; const r = flows[0].getBoundingClientRect();
+      if (r.top < innerHeight * .8 && r.bottom > 0){ played = true; play(); window.removeEventListener('scroll', check); } };
+    window.addEventListener('scroll', check, { passive:true });
+    later(check, 300);
+    $('#flowReplay').onclick = play;
+  }
+  // Role comparison (M2)
+  const cg = $('#cmpGrid');
+  if (cg){
+    const T = [
+      ['🎬','Opening of the lesson',1,1,'Both tutors lead the opening: connection, mood, homework and the lesson goal.'],
+      ['📖','Explaining theory',1,0,'In a PL, the theory is in the cards. You don’t present it.'],
+      ['🖥️','Explaining how to use the software',1,0,'The cards explain the software step by step. You only help if a student asks.'],
+      ['🧑‍🏫','Modeling step by step',1,0,'You don’t model the task. Students see a finished example in the cards and build their own.'],
+      ['💬','Feedback on the final work',1,1,'Both tutors give feedback on the student’s work — in a PL, during the closing.'],
+      ['🤝','Promoting participation & teamwork',1,0,'Each PL student is in a separate room: there are no classmates to work with.'],
+      ['🏁','Closing of the lesson',1,1,'Both tutors close the lesson: wrap-up, reflection and homework.'],
+      ['✋','Help when a student raises their hand',1,1,'Both tutors help students who need them — in a PL, in the gaps between openings and closings.']
+    ];
+    let mode = 'rg', diff = false;
+    const draw = () => {
+      cg.innerHTML = T.map((t, i) => { const on = mode === 'rg' ? t[2] : t[3];
+        return `<button class="task ${on ? 'yes' : 'no'} ${diff && t[2] !== t[3] ? 'diff' : ''}" data-t="${i}"><span class="st">${on ? '✓' : '–'}</span><span class="te">${t[0]}</span><b>${t[1]}</b></button>`; }).join('');
+      $('#cmpOut').innerHTML = mode === 'rg'
+        ? '👩‍🏫 <b>A regular Kodland tutor</b> follows the whole lesson structure: explains, models, gives feedback, leads the opening and closing, and promotes participation between students.'
+        : '⚡ <b>A Parallel Lessons tutor</b> leads the opening and the closing and gives feedback on the final work. They don’t explain theory, explain the software or model. Click any task to see why.';
+      $$('.task', cg).forEach(b => b.onclick = () => { $('#cmpOut').innerHTML = `${T[+b.dataset.t][0]} <b>${T[+b.dataset.t][1]}:</b> ${T[+b.dataset.t][4]}`; });
+    };
+    $$('#cmpSeg button').forEach(b => b.onclick = () => { mode = b.dataset.k; $$('#cmpSeg button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); draw(); });
+    $('#cmpDiff').onclick = () => { diff = !diff; $('#cmpDiff').textContent = diff ? '✨ Hide the differences' : '✨ Highlight the differences'; draw(); };
+    draw();
+  }
+  // Stage carousel (M2)
+  const stc = $('#stc');
+  if (stc){
+    let i = 0; const seen = new Set();
+    const draw = () => {
+      const s = STAGES[i]; seen.add(i);
+      $('#stcL').style.background = `radial-gradient(circle at 50% 40%,${s.c},#262c40)`;
+      $('#stcL').innerHTML = `<span class="phase">${s.ph}</span><span class="bi">${s.e}</span><span class="bn">Stage ${i + 1} of ${STAGES.length}</span>`;
+      $('#stcR').innerHTML = `<h3>${s.t}</h3><p class="goal">${s.goal}</p>
+        <div class="dolist">${s.d.map((x, k) => `<div style="animation-delay:${k * .12}s">${x}</div>`).join('')}</div>
+        <div class="stc-nav"><div class="stc-dots">${STAGES.map((x, k) => `<button class="${k === i ? 'on' : ''} ${seen.has(k) ? 'seen' : ''}" data-s="${k}" title="${x.t}">${x.e}</button>`).join('')}</div><span class="sp"></span>
+        <button class="btn-g" data-sd="-1" ${i === 0 ? 'disabled style="opacity:.4"' : ''}>←</button><button class="btn-y" data-sd="1" style="padding:11px 18px">${i === STAGES.length - 1 ? 'Back to stage 1' : 'Next stage →'}</button></div>`;
+      $$('[data-s]', stc).forEach(b => b.onclick = () => { i = +b.dataset.s; draw(); });
+      $$('[data-sd]', stc).forEach(b => b.onclick = () => { i = (i + +b.dataset.sd + STAGES.length) % STAGES.length; draw(); });
+    };
+    draw();
+  }
+  // Video: lite embed (YouTube can't play from a local file, so it opens in a new tab there)
+  const v = $('#video');
+  if (v){
+    v.onclick = () => {
+      if (location.protocol === 'file:'){ window.open(`https://www.youtube.com/watch?v=${CONFIG.VIDEO_ID}`, '_blank', 'noopener'); return; }
+      v.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${CONFIG.VIDEO_ID}?autoplay=1&rel=0&cc_load_policy=1" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="Parallel lesson example"></iframe>`;
+      v.onclick = null;
+    };
+  }
+  // Rules sorter (M3)
+  $$('#sorter .srow').forEach(r => $$('[data-pick]', r).forEach(b => b.onclick = () => {
+    const ok = b.dataset.pick === r.dataset.ans;
+    r.classList.remove('ok', 'ko'); void r.offsetWidth; r.classList.add(ok ? 'ok' : 'ko');
+    r.querySelector('.sfb').innerHTML = (ok ? '✓ ' : '✗ Not quite. ') + r.querySelector('.sfb').innerHTML.replace(/^(✓ |✗ Not quite\. )/, '');
+  }));
+  // Timing scrubber (M3)
+  const lanes = $('#lanes');
+  if (lanes){
+    const N = 5;
+    lanes.innerHTML = `<div class="lane"><span class="ln">🧑‍🏫 You</span><div class="track"><div class="seg2 s-tut" style="left:0;width:100%"></div></div><span class="state" id="stT"></span></div>` +
+      Array.from({ length:N }, (_, k) => `<div class="lane"><span class="ln">Student ${k + 1}</span><div class="track">
+        <div class="seg2 s-on" style="left:${k * 10}%;width:10%"></div><div class="seg2 s-ind" style="left:${k * 10 + 10}%;width:40%"></div><div class="seg2 s-off" style="left:${k * 10 + 50}%;width:10%"></div></div><span class="state" id="st${k}"></span></div>`).join('') +
+      '<div class="playhead" id="phd"></div>';
+    const range = $('#tRange');
+    const draw = () => {
+      const t = +range.value;
+      $('#tClock').textContent = `min ${t}`;
+      const tr = lanes.querySelector('.track'), lr = lanes.getBoundingClientRect(), r = tr.getBoundingClientRect();
+      $('#phd').style.left = (r.left - lr.left + r.width * t / 100) + 'px';
+      let tutor = 'Rotating';
+      for (let k = 0; k < N; k++){
+        const s = k * 10, el = $('#st' + k);
+        let c = '', txt = '';
+        if (t < s){ c = ''; txt = 'Not joined yet'; }
+        else if (t < s + 10){ c = 'on'; txt = 'Opening'; tutor = `Opening S${k + 1}`; }
+        else if (t < s + 50){ c = 'ind'; txt = 'Working alone'; }
+        else if (t < s + 60){ c = 'off'; txt = 'Closing'; if (!tutor.startsWith('Opening')) tutor = `Closing S${k + 1}`; }
+        else { c = 'done'; txt = 'Finished'; }
+        el.className = 'state ' + c; el.textContent = txt;
+      }
+      $('#stT').className = 'state ' + (tutor.startsWith('Opening') ? 'on' : tutor.startsWith('Closing') ? 'off' : 'ind');
+      $('#stT').textContent = t >= 100 ? 'Session over' : tutor;
+    };
+    range.oninput = draw; draw();
+    window.addEventListener('resize', draw);
+    let iv = null;
+    $('#tPlay').onclick = () => {
+      if (iv){ clearInterval(iv); iv = null; $('#tPlay').textContent = '▶ Play'; return; }
+      if (+range.value >= 100) range.value = 0;
+      $('#tPlay').textContent = '⏸ Pause';
+      iv = setInterval(() => { range.value = +range.value + 1; draw(); if (+range.value >= 100){ clearInterval(iv); iv = null; $('#tPlay').textContent = '▶ Replay'; } }, 120);
+      timers.push(iv);
+    };
+  }
+}
+
+/* =========================================================
+   QUIZ ENGINE (Modules 1 and 3)
+   ========================================================= */
+let QZ = null;
+function startQuiz(m){
+  clearTimers();
+  // Options are shuffled each run, so the correct answer moves around
+  QZ = { m, i:0, score:0, items:shuffle(QUIZ[m.id]).map(q => { const idx = shuffle(q.o.map((_, k) => k)); return { q:q.q, o:idx.map(k => q.o[k]), a:idx.indexOf(q.a), e:q.e }; }) };
+  renderQ();
+}
+function renderQ(){
+  renderNav('quiz');
+  const { items, i, m } = QZ, q = items[i];
+  view.innerHTML = `<div class="quiz">
+    <div class="qbar"><i style="width:${i / items.length * 100}%"></i></div>
+    <span class="qmeta">${m.e} Module ${m.n} check · Question ${i + 1} of ${items.length}</span>
+    <h2 class="qq">${q.q}</h2>
+    <div id="opts">${q.o.map((o, k) => `<button class="qopt" data-o="${k}"><span class="k">${'ABC'[k]}</span><span>${o}</span></button>`).join('')}</div>
+    <div class="qfb" id="qfb"></div>
+    <button class="btn-y qnext" id="qnext">${i === items.length - 1 ? 'See my result →' : 'Next question →'}</button>
+  </div>`;
+  $$('#opts .qopt').forEach(b => b.onclick = () => {
+    const k = +b.dataset.o, ok = k === q.a;
+    $('#opts').classList.add('answered');
+    b.classList.add(ok ? 'right' : 'wrong');
+    $(`#opts [data-o="${q.a}"]`).classList.add('right');
+    if (ok) QZ.score++;
+    const fb = $('#qfb'); fb.className = 'qfb show ' + (ok ? 'ok' : 'ko'); fb.innerHTML = (ok ? '✅ <b>Correct!</b> ' : '❌ <b>Not quite.</b> ') + q.e;
+    $('#qnext').classList.add('show'); $('#qnext').focus();
+  });
+  $('#qnext').onclick = () => { QZ.i++; if (QZ.i < QZ.items.length) renderQ(); else finishCheck(QZ.m, QZ.score, QZ.items.length); };
+}
+
+/* =========================================================
+   CHAT CHECK (Module 2)
+   ========================================================= */
+// The conversation happens on a phone; the side panel holds the instructions, the feedback and the Continue button
+function startChat(m){
+  clearTimers();
+  renderNav('quiz');
+  let i = 0, score = 0, clock = 8;
+  const now = () => `17:${String(clock++).padStart(2, '0')}`;
+  view.innerHTML = `<div class="chatwrap">
+    <div class="phone">
+      <div class="ph-status"><span>17:08</span><span class="ph-notch"></span><span>📶 🔋</span></div>
+      <div class="ph-head"><span class="ph-back">‹</span><span class="ph-av">🧑‍🏫</span><div><b>Alex</b><small id="phState">online</small></div><span class="ph-icons">📹 📞</span></div>
+      <div class="ph-body" id="cbody"><span class="ph-day">Today</span></div>
+      <div class="ph-replies" id="creplies"></div>
+      <div class="ph-input"><span class="ph-field" id="phField">Waiting for Alex…</span><span class="ph-send">➤</span></div>
+    </div>
+    <div class="chat-side">
+      <span class="qmeta">${m.e} Module 2 check · A conversation</span>
+      <h2 class="qq" style="font-size:20px;margin-bottom:12px">Help a curious colleague</h2>
+      <p class="p" style="font-size:15px">Your colleague <b>Alex</b> teaches regular groups and doesn’t know the PL format yet. You’ve studied it and you’re excited to start your parallel lessons — answer Alex’s questions on the phone.</p>
+      <div class="cdots" id="cdots">${CHAT.map(() => '<i></i>').join('')}</div>
+      <div id="cside"></div>
+    </div>
+  </div>`;
+  const body = $('#cbody'), replies = $('#creplies'), side = $('#cside');
+  const push = html => { body.insertAdjacentHTML('beforeend', html); body.scrollTo({ top:body.scrollHeight, behavior:'smooth' }); later(() => { body.scrollTop = body.scrollHeight; }, 450); };
+  const say = (text, then, wait = 1100) => {   // Alex types, then sends a message
+    $('#phState').textContent = 'typing…';
+    push('<div class="typing" id="typing"><i></i><i></i><i></i></div>');
+    later(() => { $('#typing').remove(); $('#phState').textContent = 'online';
+      push(`<div class="msg them">${text}<span class="mt">${now()}</span></div>`); then && then(); }, wait);
+  };
+  const dots = (k, cls) => { const d = $$('#cdots i')[k]; if (d) d.className = cls; };
+  const ask = () => {
+    const c = CHAT[i];
+    dots(i, 'cur');
+    replies.innerHTML = ''; $('#phField').textContent = 'Alex is typing…';
+    side.innerHTML = `<div class="cfb wait">💬 <b>Question ${i + 1} of ${CHAT.length}.</b> Read Alex’s message and choose your reply on the phone.</div>`;
+    say(c.them, () => {
+      $('#phField').textContent = 'Choose your reply ↑';
+      replies.innerHTML = `<div class="ph-pick">Tap your reply</div>${c.o.map((o, k) => `<button class="ph-opt" data-o="${k}"><span class="k">${'ABC'[k]}</span><span>${o}</span></button>`).join('')}`;
+      $$('[data-o]', replies).forEach(b => b.onclick = () => answer(+b.dataset.o));
+    });
+  };
+  const answer = k => {
+    const c = CHAT[i], ok = k === c.a, last = i === CHAT.length - 1;
+    if (ok) score++;
+    replies.innerHTML = ''; $('#phField').textContent = 'Message';
+    push(`<div class="msg me ${ok ? '' : 'ko'}">${c.o[k]}<span class="mt">${now()} ✓✓</span></div>`);
+    dots(i, ok ? 'ok' : 'ko');
+    side.innerHTML = `<div class="cfb ${ok ? 'ok' : 'ko'}">${ok ? '✅ <b>Great answer!</b> ' : '❌ <b>Not the best answer.</b> '}${ok ? c.ok : c.ko}${ok ? '' : `<br><br><b>A better reply:</b> “${c.o[c.a]}”`}</div>
+      ${last ? `<div class="cfb wait" style="margin-top:12px">🏁 <b>That was the last question.</b> You got <b>${score} of ${CHAT.length}</b> right.</div>` : ''}
+      <div class="btn-row" style="margin-top:14px"><button class="btn-y" id="cnext" disabled>${last ? 'See my result →' : 'Continue the conversation →'}</button></div>`;
+    // Short pause before the button is active, so the feedback gets read (and a fast double-click can't skip it)
+    later(() => { const b = $('#cnext'); if (b){ b.disabled = false; b.classList.add('ready'); } }, last ? 2200 : 1200);
+    $('#cnext').onclick = () => {
+      i++;
+      if (i < CHAT.length){ ask(); return; }
+      side.innerHTML = '';
+      say(score / CHAT.length >= CONFIG.PASS ? 'Thanks a lot! 🙌 Now I really want to try Parallel Lessons too.' : 'Thanks! I still have some doubts, but I’ll read more about it. 🙂',
+        () => later(() => finishCheck(m, score, CHAT.length), 1600), 900);
+    };
+  };
+  // Opening: Alex says hi first
+  say('Hi! 👋', () => say('I heard you’re starting Parallel Lessons. Can I ask you a few questions about it?', () => {
+    later(() => { push(`<div class="msg me">Hi Alex! Sure, ask me anything 😊<span class="mt">${now()} ✓✓</span></div>`); later(ask, 700); }, 700);
+  }, 1300), 900);
+}
+
+/* =========================================================
+   RESULT + CELEBRATION
+   ========================================================= */
+function finishCheck(m, score, n){
+  clearTimers();
+  const pct = Math.round(score / n * 100), ok = score / n >= CONFIG.PASS;
+  setResult(m.id, pct, ok);
+  renderNav('core');
+  const next = MODULES[MODULES.indexOf(m) + 1];
+  view.innerHTML = `<div class="result">
+    <div class="re">${ok ? '🎉' : '😅'}</div>
+    <h1>${ok ? 'You passed!' : 'Almost there'}</h1>
+    <div class="pct ${ok ? 'pass' : 'fail'}">${pct}%</div>
+    <p>You answered <b>${score} of ${n}</b> correctly. ${ok ? (next ? `<b>Module ${next.n}</b> is now unlocked.` : '<b>Part 1 of the training is complete!</b>') : 'You need 70% or more. Review the module and try again — you can retake it as many times as you need.'}</p>
+    <div class="btn-row">
+      ${ok ? (next ? `<button class="btn-y" data-go="${next.id}">Go to Module ${next.n} →</button>` : '<button class="btn-y" data-go="done">Finish Part 1 →</button>') : `<button class="btn-y" data-retake="${m.id}">🔁 Retake the check</button>`}
+      <button class="btn-g" data-go="${m.id}">📖 Review the module</button>
+    </div></div>`;
+  if (ok) confetti();
+}
+
+function renderDone(){
+  renderNav('core');
+  view.innerHTML = `<div class="result" style="max-width:720px">
+    <div class="re">🏆</div><h1>Part 1 complete!</h1>
+    <p>You’ve finished the core module on the PL format: what Parallel Lessons are, how a lesson works, and the technical side.</p>
+    <div class="mods" style="grid-template-columns:repeat(3,1fr);text-align:left">
+      ${MODULES.map(m => `<div class="mcard done" style="min-height:0"><span class="me">${m.e}</span><h3>${m.title}</h3><span class="badge">✓ ${P[m.id] ? P[m.id].score : 100}%</span></div>`).join('')}</div>
+    <p style="margin-top:18px"><b>Next:</b> Part 2, the content, is under construction. You’ll find it on the home page as soon as it’s ready.</p>
+    <div class="btn-row"><button class="btn-y" data-go="">Back to home</button><button class="btn-g" data-go="core1">Review the modules</button></div></div>`;
+  confetti(240);
+}
+
+function renderCore2(){
+  renderNav('core');
+  view.innerHTML = `<div class="soonbox"><div class="re">🚧</div><h1 style="font-size:30px">Part 2 · The content</h1>
+    <p class="lead" style="margin:0 auto">This part will cover the new course content designed for Parallel Lessons. It’s under construction — check back soon!</p>
+    <div class="btn-row" style="justify-content:center;margin-top:20px"><button class="btn-y" data-go="">Back to home</button></div></div>`;
+}
+
+/* ---------- Confetti (no library) ---------- */
+function confetti(count = 160){
+  const cv = $('#confetti'), cx = cv.getContext('2d');
+  cv.width = innerWidth; cv.height = innerHeight;
+  const colors = ['#cdf24a', '#ffd34d', '#5b8cff', '#ec5fa6', '#3fd16b', '#ffffff'];
+  const ps = Array.from({ length:count }, () => ({
+    x:innerWidth / 2 + (Math.random() - .5) * 200, y:innerHeight * .35,
+    vx:(Math.random() - .5) * 16, vy:-Math.random() * 15 - 6, r:Math.random() * 360, vr:(Math.random() - .5) * 18,
+    w:6 + Math.random() * 7, h:8 + Math.random() * 10, c:colors[Math.floor(Math.random() * colors.length)] }));
+  let f = 0;
+  const tick = () => {
+    cx.clearRect(0, 0, cv.width, cv.height);
+    ps.forEach(p => { p.vy += .38; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r * Math.PI / 180); cx.fillStyle = p.c; cx.globalAlpha = Math.max(0, 1 - f / 170); cx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); cx.restore(); });
+    if (++f < 180) requestAnimationFrame(tick); else cx.clearRect(0, 0, cv.width, cv.height);
+  };
+  tick();
+}
+
+/* ---------- Modal ---------- */
+function modal(html){ const m = $('#modal'); m.innerHTML = `<div class="mbox">${html}</div>`; m.classList.add('show'); }
+function closeModal(){ $('#modal').classList.remove('show'); }
+
+/* =========================================================
+   ROUTER
+   ========================================================= */
+const go = path => { location.hash = '#/' + path; };
+function route(){
+  clearTimers(); closeModal(); QZ = null;
+  const parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
+  const id = parts[0];
+  const m = MODULES.find(x => x.id === id);
+  if (!id) renderHome();
+  else if (id === 'core1') renderCore1();
+  else if (id === 'core2') renderCore2();
+  else if (id === 'done' && coreDone()) renderDone();
+  else if (m){
+    if (!unlocked(m)){ go('core1'); setTimeout(() => modal(`<div style="font-size:48px">🔒</div><h2>Still locked</h2><p>Pass the check of Module ${m.n - 1} first.</p><button class="btn-y" onclick="closeModal()">OK</button>`), 50); return; }
+    renderModule(m);
+  } else renderHome();
+  window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', route);
+
+document.addEventListener('click', e => {
+  const t = e.target;
+  const g = t.closest('[data-go]'); if (g && !t.closest('a')){ go(g.dataset.go); return; }
+  if (t.closest('[data-locked]')){ modal('<div style="font-size:48px">🔒</div><h2>Still locked</h2><p>Complete the previous module’s check to unlock this one.</p><button class="btn-y" onclick="closeModal()">OK</button>'); return; }
+  const j = t.closest('[data-jump]'); if (j){ $('#sec-' + j.dataset.jump).scrollIntoView({ behavior:'smooth' }); return; }
+  const z = t.closest('[data-zoom]'); if (z){ $('#lbImg').src = z.src; $('#lb').classList.add('show'); return; }
+  if (t.closest('#lb')){ $('#lb').classList.remove('show'); return; }
+  if (t.id === 'modal') closeModal();
+  const c = t.closest('[data-confirm]');
+  if (c){ const k = c.dataset.confirm, on = !flag(k); setFlag(k, on); c.classList.toggle('on', on); c.querySelector('.box').textContent = on ? '✓' : '';
+    const m = MODULES.find(x => location.hash.includes(x.id)); if (m){ const y = scrollY; renderModule(m); scrollTo(0, y); } if (on) confetti(70); return; }
+  if (t.closest('#startCheck') && !t.closest('#startCheck').disabled){ const m = MODULES.find(x => location.hash.includes(x.id)); m.id === 'm2' ? startChat(m) : startQuiz(m); window.scrollTo(0, 0); return; }
+  const r = t.closest('[data-retake]'); if (r){ const m = MODULES.find(x => x.id === r.dataset.retake); m.id === 'm2' ? startChat(m) : startQuiz(m); return; }
+  if (t.closest('[data-exit]')){ const m = MODULES.find(x => location.hash.includes(x.id)) || MODULES[0]; renderModule(m); window.scrollTo(0, 0); }
+});
+document.addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('[role=button]')){ e.preventDefault(); e.target.click(); }
+  if (e.key === 'Escape'){ closeModal(); $('#lb').classList.remove('show'); }
+});
+
+/* Dev mode for reviewers: Shift+D three times quickly unlocks all modules (press again to reset) */
+let dk = [];
+document.addEventListener('keydown', e => {
+  if (!(e.shiftKey && e.key.toLowerCase() === 'd')) return;
+  const now = Date.now(); dk = dk.filter(x => now - x < 1200); dk.push(now);
+  if (dk.length >= 3){ dk = [];
+    if (P.dev){ P = {}; saveP(); } else { MODULES.forEach(m => P[m.id] = { passed:true, score:100 }); P.flags = { simClassroom:true, simBO:true }; P.dev = true; saveP(); }
+    document.querySelectorAll('.devbadge').forEach(x => x.remove());
+    if (P.dev) document.body.insertAdjacentHTML('beforeend', '<span class="devbadge">🔓 DEV MODE</span>');
+    route(); }
+});
+
+loadP();
+if (P.dev) document.body.insertAdjacentHTML('beforeend', '<span class="devbadge">🔓 DEV MODE</span>');
+route();
+</script>
+</body>
+</html>
