@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parallel Lessons — BO Simulation — Kodland Training</title>
+<style>
+:root{
+  --bg:#211E33; --sidebar:#1B1830; --card:#2C2846; --card2:#342E56; --card3:#3A3460;
+  --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.12);
+  --text:#EDEAF9; --text2:#C3BEDA; --muted:#8B85A6;
+  --accent:#7B87F5; --accent-d:#6067D8; --accent-bg:rgba(123,135,245,.15);
+  --green:#34D399; --green-bg:rgba(52,211,153,.15);
+  --orange:#F2A93B; --orange-bg:rgba(242,169,59,.18);
+  --red:#F2716D; --red-bg:rgba(242,113,109,.15); --grey-bg:#413A66; --grey-t:#B4AFC9;
+  --r:14px; --rs:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Inter,system-ui,sans-serif;min-height:100vh;font-size:14px}
+button{font-family:inherit;cursor:pointer}
+a{color:#8FA0F5;text-decoration:none;cursor:pointer}
+a:hover{text-decoration:underline}
+select,input{font-family:inherit}
+.app{display:flex;min-height:100vh}
+.sidebar{width:72px;background:var(--sidebar);display:flex;flex-direction:column;align-items:center;padding:20px 0;flex-shrink:0;border-right:1px solid var(--border);position:sticky;top:0;height:100vh}
+.side-logo{font-size:24px;font-weight:800;color:var(--accent);margin-bottom:28px;letter-spacing:-1px}
+.side-icon{width:44px;height:44px;border-radius:12px;background:transparent;border:none;color:var(--muted);display:flex;align-items:center;justify-content:center;margin-bottom:10px;transition:all .15s;position:relative}
+.side-icon:hover{background:var(--card2);color:var(--text)}
+.side-icon.active{background:var(--accent);color:#fff}
+.tour-hl{box-shadow:0 0 0 3px #FFD166 !important;animation:pulse 1.4s infinite;position:relative;z-index:30}
+.tour-hl::after{content:'';position:absolute;inset:-5px;border-radius:16px;border:2px solid #FFD166;box-shadow:0 0 0 4px rgba(255,209,102,.25);animation:pulse 1.4s infinite;pointer-events:none}
+.side-bottom{margin-top:auto}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border)}
+.sim-badge{background:var(--orange-bg);color:var(--orange);font-weight:700;font-size:12px;padding:6px 14px;border-radius:999px;border:1px solid rgba(242,169,59,.35)}
+.topbar-right{display:flex;gap:8px;align-items:center}
+.tourbtn{background:#FFD166;color:#2a2205;border:none;border-radius:999px;padding:9px 16px;font-weight:800;font-size:12.5px}
+.ticon{width:36px;height:36px;border-radius:10px;background:transparent;border:none;color:var(--muted);display:flex;align-items:center;justify-content:center}
+.ticon:hover{background:var(--card2);color:var(--text)}
+.langwrap{position:relative}
+.langmenu{display:none;position:absolute;top:44px;right:0;background:#fff;color:#2a2540;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.4);z-index:200;overflow:hidden;min-width:140px}
+.langmenu.open{display:block}
+.langmenu button{display:block;width:100%;text-align:left;padding:10px 16px;background:none;border:none;font-size:13.5px;font-weight:600;color:#2a2540}
+.langmenu button:hover{background:#f0f0f5}
+.langmenu button.active{color:var(--accent-d);font-weight:800}
+.content{flex:1;padding:26px 32px 90px;overflow-x:hidden}
+h1.pagetitle{font-size:26px;font-weight:700;margin-bottom:18px}
+.row3{display:grid;grid-template-columns:1.1fr 1.3fr 1fr;gap:16px;margin-bottom:18px}
+@media(max-width:980px){.row3{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px}
+.card h3{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;justify-content:space-between;flex-wrap:wrap}
+.profile-name{font-size:19px;font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.field{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:13.5px;color:var(--text2);border-bottom:1px solid var(--border)}
+.field:last-child{border-bottom:none}
+.field .ic{color:var(--muted);flex-shrink:0}
+.course-item{padding:12px 14px;background:var(--card2);border-radius:10px;margin-bottom:10px;font-size:13.5px;color:var(--text2)}
+.course-item:last-child{margin-bottom:0}
+.availrow{display:flex;justify-content:space-between;padding:6px 0;font-size:13.5px}
+.availrow .day{color:var(--text2)}
+.availrow .val{color:var(--muted);font-style:italic}
+.availrow .val.set{background:var(--accent-bg);color:#AEB8FA;font-style:normal;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600}
+.tabrow{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:9px 18px;background:var(--card);border:1px solid var(--border2);color:var(--text2);font-weight:700;font-size:13px;border-radius:8px}
+.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tab.ghost{opacity:.55;cursor:default}
+.tablewrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;overflow-x:auto;position:relative}
+table{width:100%;border-collapse:collapse}
+thead th{text-align:left;font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);padding:12px 16px;background:var(--card2);white-space:nowrap}
+tbody td{padding:13px 16px;font-size:13.5px;color:var(--text2);border-top:1px solid var(--border);vertical-align:top;white-space:nowrap}
+tbody tr:hover{background:rgba(255,255,255,.02)}
+.pill{display:inline-block;padding:3px 12px;border-radius:999px;font-size:11.5px;font-weight:700}
+.pill-green{background:var(--green-bg);color:var(--green)}
+.pill-blue{background:var(--accent-bg);color:#AEB8FA}
+.pill-grey{background:var(--grey-bg);color:var(--grey-t)}
+.pill-orange{background:var(--orange-bg);color:var(--orange)}
+.tbl-foot{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 18px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+.empty-row td{text-align:center;color:var(--muted);padding:26px;font-style:italic;white-space:normal}
+.iconbtn{width:36px;height:36px;border-radius:10px;background:var(--card2);border:1px solid var(--border2);color:var(--text2);display:flex;align-items:center;justify-content:center}
+.iconbtn:hover{background:var(--card3);color:var(--text)}
+.icontip{position:relative;display:inline-flex}
+.icontip .bubble{
+  display:none;position:absolute;top:44px;right:0;background:#fff;color:#2a2540;border-radius:8px;
+  padding:8px 12px;font-size:12.5px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.4);white-space:nowrap;z-index:80;
+}
+.icontip .bubble:before{content:'';position:absolute;top:-5px;right:14px;width:10px;height:10px;background:#fff;transform:rotate(45deg)}
+.icontip:hover .bubble{display:block}
+.icontip.tour-hl .bubble{display:block}
+.btn{border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer}
+.btn-accent{background:var(--accent);color:#fff}
+.btn-accent:hover{background:var(--accent-d)}
+.btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--text2)}
+.detailhead{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:18px;flex-wrap:wrap}
+.detailhead h2{font-size:19px;font-weight:700;display:flex;align-items:center;gap:8px}
+.detailhead-actions{display:flex;gap:8px;align-items:center}
+.backlink{display:inline-flex;align-items:center;gap:6px;color:var(--text2);font-size:13px;font-weight:700;margin-bottom:16px}
+.sched-nav{display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:6px}
+.sched-range{text-align:center;color:var(--accent);font-size:12.5px;margin-bottom:16px}
+.arrowbtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--border2);background:transparent;color:var(--accent);display:flex;align-items:center;justify-content:center}
+.gridcal{display:grid;grid-template-columns:70px repeat(7,1fr);border-top:1px solid var(--border);border-left:1px solid var(--border)}
+.gridcal .hd{padding:10px 6px;text-align:center;font-size:12px;font-weight:700;color:var(--text2);border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--card2)}
+.gridcal .hourlbl{padding:4px 8px;font-size:11px;color:var(--muted);border-right:1px solid var(--border);border-bottom:1px solid var(--border);height:50px}
+.gridcal .cell{border-right:1px solid var(--border);border-bottom:1px solid var(--border);height:50px;position:relative}
+.evt{position:absolute;inset:2px;border-radius:8px;padding:5px 7px;font-size:10px;font-weight:700;line-height:1.25;overflow:hidden;cursor:pointer}
+.evt.avail{background:rgba(52,211,153,.18);color:#7FE8BE;border:1px solid rgba(52,211,153,.35);cursor:default}
+.evt.pl{background:rgba(52,211,211,.85);color:#04302e}
+.evt.pl:hover{background:#3ad9d4}
+.evt.pl2{background:rgba(52,211,211,.55);color:#04302e;left:52%}
+.modal-back{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;align-items:center;justify-content:center;padding:16px}
+.modal-box{background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:26px;width:min(420px,94vw)}
+.modal-box h3{font-size:16px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.modal-grouplist{list-style:none;margin:2px 0 18px;padding-left:0}
+.modal-grouplist li{padding:8px 0 8px 26px;font-size:13.5px;color:var(--text2);border-bottom:1px solid var(--border)}
+.modal-grouplist li:last-child{border-bottom:none}
+.modal-actions{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#2C2846;border:1px solid var(--accent);color:var(--text);padding:12px 20px;border-radius:10px;font-size:13.5px;z-index:1000;box-shadow:0 8px 26px rgba(0,0,0,.4);max-width:460px;text-align:center}
+.reflect{background:var(--accent-bg);border:1px solid rgba(123,135,245,.35);border-radius:12px;padding:16px 18px;margin-top:16px;font-size:13.5px;color:#D6DCFC;line-height:1.6}
+/* TOUR */
+.tour-card{position:fixed;bottom:20px;right:20px;width:min(360px,90vw);background:#221F3A;border:2px solid #FFD166;border-radius:16px;padding:16px 18px;box-shadow:0 10px 40px rgba(0,0,0,.5);z-index:999;display:flex;flex-direction:column;gap:9px;max-height:70vh;overflow-y:auto}
+.tour-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tour-step{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#FFD166}
+.tour-x{background:var(--card2);border:none;color:var(--text2);font-size:11px;font-weight:800;padding:5px 11px;border-radius:999px;white-space:nowrap}
+.tour-x:hover{background:var(--card3);color:#fff}
+.tour-title{font-size:15px;font-weight:800}
+.tour-body{font-size:13px;color:var(--text2);line-height:1.55}
+.tour-body b{color:#FFD166}
+.tour-progress{height:5px;background:var(--card2);border-radius:999px;overflow:hidden}
+.tour-progress i{display:block;height:100%;background:#FFD166;border-radius:999px;transition:width .3s}
+.tour-actions{display:flex;justify-content:flex-end;align-items:center;margin-top:2px}
+.tour-next{background:#FFD166;color:#2a2205;border:none;border-radius:8px;padding:9px 18px;font-weight:800;font-size:13px}
+/* LESSON VIEWER */
+.lesson-shell{background:#2A2C3D;border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.lesson-top{display:flex;align-items:center;justify-content:space-between;padding:12px 22px;background:#31344A;border-bottom:1px solid var(--border2)}
+.lesson-brand{font-weight:800;font-size:16px;display:flex;align-items:center;gap:14px;color:#fff}
+.lesson-crumb{color:var(--muted);font-size:13px}
+.lesson-top-right{display:flex;align-items:center;gap:12px}
+.lesson-lang{border:1px solid var(--border2);border-radius:8px;padding:6px 12px;font-size:12.5px;font-weight:700;color:var(--text2)}
+.lesson-avatar{width:30px;height:30px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:13px}
+.lesson-body{display:flex}
+.lesson-rail{width:52px;background:#25273A;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding-top:16px}
+.lesson-rail .dot{width:34px;height:34px;border-radius:10px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center}
+.lesson-content{flex:1;padding:28px 30px 20px;max-height:600px;overflow-y:auto}
+.studentblock{background:#31344A;border-radius:12px;padding:24px 26px;margin-bottom:16px}
+.studentblock h2{font-size:21px;font-weight:800;color:#fff;margin-bottom:12px}
+.studentblock p.lead{color:var(--text2);line-height:1.65;margin-bottom:18px}
+.studentblock h4{font-size:14.5px;font-weight:800;color:#fff;margin:16px 0 8px}
+.studentblock ul{margin:0 0 8px 20px;color:var(--text2);line-height:1.7}
+.tipbox{background:#2B3350;border-left:3px solid var(--accent);border-radius:8px;padding:14px 16px;margin-top:16px}
+.tipbox .lbl{color:#AEB8FA;font-weight:800;font-size:11.5px;letter-spacing:.05em;margin-bottom:4px}
+.tipbox p{color:var(--text2);font-size:13.5px;line-height:1.6}
+.notecard{background:#2E2A22;border:1.5px dashed var(--orange);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.notecard .notelbl{color:var(--orange);font-weight:800;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.notecard h2{font-size:22px;font-weight:800;color:#fff;margin-bottom:16px;line-height:1.3}
+.notecard h3{font-size:15px;font-weight:800;color:#fff;margin:18px 0 8px}
+.notecard p{color:var(--text2);line-height:1.65;margin-bottom:6px;font-size:14px}
+.notecard ul{margin:6px 0 6px 20px;color:var(--text2);line-height:1.65;font-size:14px}
+.notecard b{color:#fff}
+.note-callout{background:#333654;border-left:3px solid var(--accent);border-radius:8px;padding:12px 16px;margin:14px 0;font-size:13.5px}
+.note-callout .lbl{color:#AEB8FA;font-weight:800;font-size:11.5px;letter-spacing:.05em;margin-bottom:4px}
+.videobox{background:linear-gradient(135deg,#dfe6f5,#c3d0ef);border-radius:10px;padding:22px;margin:14px 0;color:#20233a}
+.videobox .tag{background:#e2e7fb;display:inline-block;padding:2px 10px;border-radius:6px;font-size:11px;font-weight:800;margin-bottom:10px}
+.videobox h4{font-size:19px;font-weight:800;margin-bottom:8px}
+.videobox p{font-size:12.5px;color:#454866}
+.lesson-foot{display:flex;align-items:center;justify-content:center;gap:14px;padding:10px;background:#25273A;border-top:1px solid var(--border);color:var(--muted);font-size:13px}
+@media(max-width:760px){.gridcal{font-size:11px}}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-logo">K</div>
+    <button class="side-icon" data-page="profile" onclick="goPage('profile')"></button>
+    <button class="side-icon" data-page="courses" onclick="goPage('courses')"></button>
+    <button class="side-icon" data-page="groups" onclick="goPage('groups')"></button>
+    <div class="side-bottom">
+      <button class="side-icon"></button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <span class="sim-badge" id="simBadge"></span>
+      <div class="topbar-right">
+        <button class="tourbtn" id="tourBtnTop" onclick="startTour()"></button>
+        <div class="langwrap">
+          <button class="ticon" id="langBtn" onclick="toggleLangMenu()">文A</button>
+          <div class="langmenu" id="langMenu">
+            <button onclick="setLang('en')" data-lang="en">English</button>
+            <button onclick="setLang('pl')" data-lang="pl">Polski</button>
+            <button onclick="setLang('tr')" data-lang="tr">Türkçe</button>
+            <button onclick="setLang('it')" data-lang="it">Italiano</button>
+          </div>
+        </div>
+        <button class="ticon" id="darkIcon"></button>
+        <button class="ticon" id="logoutIcon" onclick="location.reload()"></button>
+      </div>
+    </header>
+    <main class="content" id="content"></main>
+  </div>
+</div>
+
+<div class="modal-back" id="consoleModal">
+  <div class="modal-box">
+    <h3 id="modalTitle">🕐 DEMO_PARALLEL_POLAND</h3>
+    <div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px" id="modalGroupsLbl"></div>
+    <ul class="modal-grouplist">
+      <li>DEMO_PARALLEL_POL_G1</li>
+      <li>DEMO_PARALLEL_POL_G2</li>
+      <li>DEMO_PARALLEL_POL_G3</li>
+      <li>DEMO_PARALLEL_POL_G4</li>
+    </ul>
+    <div class="modal-actions">
+      <a onclick="closeConsoleModal()" id="modalExit"></a>
+      <button class="btn btn-accent" id="consoleModalOpenBtn" onclick="openConsoleFromModal()"></button>
+    </div>
+  </div>
+</div>
+
+<div class="tour-card" id="tourCard" style="display:none">
+  <div class="tour-top">
+    <span class="tour-step" id="tourStepLbl">Step 1</span>
+    <button class="tour-x" id="tourMinBtn" onclick="minimizeTour()"></button>
+  </div>
+  <div class="tour-progress"><i id="tourBar" style="width:3%"></i></div>
+  <div class="tour-title" id="tourTitle"></div>
+  <div class="tour-body" id="tourBody"></div>
+  <div class="tour-actions">
+    <button class="tour-next" id="tourNextBtn" onclick="nextStep()">Next →</button>
+  </div>
+</div>
+<button id="tourReopenBtn" onclick="reopenTour()" style="display:none;position:fixed;bottom:20px;right:20px;background:#FFD166;color:#2a2205;border:none;border-radius:999px;padding:12px 20px;font-weight:800;font-size:13px;z-index:999;box-shadow:0 8px 26px rgba(0,0,0,.4)"></button>
+
+<script>
+/* ---------- ICONS ---------- */
+const ICONS = {
+ person:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg>',
+ users:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.3"/><path d="M2.5 21c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6"/><circle cx="17.5" cy="8.5" r="2.6"/><path d="M15 15.3c2.7.4 4.8 2.3 5.5 5.7"/></svg>',
+ book:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5c2-1 5-1 7 0v14c-2-1-5-1-7 0V5Z"/><path d="M20 5c-2-1-5-1-7 0v14c2-1 5-1 7 0V5Z"/></svg>',
+ monitor:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>',
+ moon:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>',
+ logout:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>',
+ mail:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>',
+ phone:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1.1.4 2.2.7 3.2a2 2 0 0 1-.5 2.1L8 10.5a16 16 0 0 0 6 6l1.5-1.5a2 2 0 0 1 2-.5c1 .3 2.1.6 3.2.7a2 2 0 0 1 1.7 2Z"/></svg>',
+ flag:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V4c3-1.5 6-1.5 9 0s6 1.5 9 0v12c-3 1.5-6 1.5-9 0s-6-1.5-9 0Z"/></svg>',
+ clock:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+ back:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
+ arrow:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>',
+ pencil:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+ gear:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>',
+};
+document.querySelector('[data-page="profile"]').innerHTML = ICONS.person;
+document.querySelector('[data-page="courses"]').innerHTML = ICONS.book;
+document.querySelector('[data-page="groups"]').innerHTML = ICONS.users;
+document.getElementById('langBtn').innerHTML = '文A';
+document.getElementById('darkIcon').innerHTML = ICONS.moon;
+document.getElementById('logoutIcon').innerHTML = ICONS.logout;
+document.querySelector('.side-bottom .side-icon').innerHTML = ICONS.person;
+
+/* ---------- I18N STRINGS ---------- */
+const STR = {
+en:{
+  simBadge:'🧪 SIMULATION — Kodland Training (fictional data)',
+  tourBtn:'🚀 Start guided walkthrough',
+  tourMinimize:'Minimize ▾', tourResume:'📍 Resume guided walkthrough',
+  stepOf:'Step {n} of {total}', nextArrow:'Next →', finish:'Finish ✓',
+  groupsTitle:'Groups', tabExtra:'Extra Lessons', tabParallel:'Parallel Groups', tabRegular:'Regular Groups',
+  emptyRegular:'No regular groups to show. This tutor\'s only assignment is a Parallel Group — click <b>Parallel Groups</b> above.',
+  colID:'ID', colTitle:'Title', colTutor:'Tutor', colType:'Type', colCurrentCourse:'Current course', colStart:'Start',
+  colStudentsPaid:'Students/Paid', colPreviousLesson:'Previous lesson', colNextLesson:'Next lesson', colPremium:'Premium',
+  containerType:'Parallel group', no:'No', yes:'Yes',
+  itemsPage100_1:'Items per page: 100 &nbsp;|&nbsp; 1-1 of 1', itemsPage10_4:'Items per page: 10 &nbsp;|&nbsp; 1-4 of 4',
+  itemsPage100_19:'Items per page: 100 &nbsp;|&nbsp; 1-19 of 19',
+  backToGroups:'Back to Groups', backToCourses:'Back to Courses', backToAssignments:'Back to Assignments',
+  tutorLabel:'Tutor:', openConsoleTip:'Open console', colLessonTime:'Lesson time', colCourse:'Course', colNextTopic:'Next lesson topic',
+  simOpenCourseFromDetail:'Open the course record from here too',
+  teacherName:'Poland Demo Teacher', teacherCountry:'🇵🇱 Poland',
+  profileTitle:'Profile', teacherCoursesH:'Teacher courses', availabilityH:'Availability hours', notAssigned:'Not assigned',
+  groupsTabLbl:'Groups', scheduleTabLbl:'Schedule', regularGroupsNote:'Your regular groups list — see the Groups page in the sidebar for Parallel Groups.',
+  currentWeek:'Current Week', available:'Available',
+  days:['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+  coursesTitle:'Courses', colBusinessBranch:'Business branch', colActive:'Active', colNumberOfLessons:'Number of lessons',
+  badgeActive:'Active', fieldBranch:'Business branch: ENG', fieldLanguage:'Language: English 🇬🇧', fieldCourseType:'Course type: Paid courses',
+  fieldCourseGroup:'Course group: Digital Creativity lvl 2', fieldLessons:'Number of lessons: 40', fieldModules:'Number of modules: 10',
+  fieldExcluded:'Excluded from overbooking: No', fieldCertificate:'Certificate: —',
+  lessonsTab:'Lessons', assignmentsTab:'Assignments', moduleFirstSteps:'M1. First steps', viewAssignments:'View assignments →',
+  colNo:'Nº', colActions:'Actions',
+  lessonSelectLbl:'Lesson', lessonOption:'L1. Introduction. Animation of your name in FlipAnim',
+  inClassH:'In-class assignments', homeworkH:'Homework assignments', studyGuidesH:'Study guides',
+  colNumber:'Number', colAssignmentTitle:'Assignment title', colTheory:'Theory', colProject:'Project', colMaxScore:'Max score',
+  interactive:'INTERACTIVE', noData:'No data available',
+  noWikiNote:'No wiki links here — that\'s intentional. In Parallel-Lessons-format courses, the tutor\'s guide lives inside the activities themselves, as Teacher Notes, not as a separate wiki document.',
+  lessonCrumb:'My courses &gt; Get ready for your first cr...', teacherNoteBadge:'👁 Teacher note — only tutors see this block',
+  modalGroups:'GROUPS', modalExit:'Exit', modalOpenConsole:'Open Console',
+  toastConsoleDetail:'🔗 This opens the Classroom link for DEMO_PARALLEL_POLAND. It becomes active 60 minutes before the lesson starts.',
+  toastConsoleModal:'🔗 This is the same Classroom link, reached from your Schedule. It becomes active 30 minutes before the lesson starts.',
+  toastSimClick:'🧪 This is a simulation — in the real BO, this would: "{label}".',
+  toastBlocked:'👉 Follow the highlighted step to continue — the walkthrough is required the first time through.',
+  reflect:'🎉 <strong>Walkthrough complete!</strong> You now know where your Parallel Groups live, both ways to open the Classroom link (60 min from the group, 30 min from your Schedule), what a PL-format course looks like in Courses, and where to find your Teacher Notes inside each activity. Feel free to keep exploring this replica on your own.',
+  lessonTitle:'Preparing for the lesson: Animating a Name in FlipAnim',
+  hOverview:'Lesson overview',
+  pOverview:'This is the first lesson in the Digital Creativity lvl 2 programme, delivered in a parallel format. The student works one-to-one with the tutor at the beginning and end of the lesson, then completes the main practical tasks independently using the cards. The lesson project is a GIF animation of the student\'s own name.',
+  hMission:'Lesson Story Mission',
+  pMission:'The student begins working in Creativia Studio as a digital animator. Their first mission is to bring their name to life by making the letters appear one by one.',
+  hGoal:'Main Lesson Goal',
+  pGoal:'Help the student understand the principle of frame-by-frame animation and use it to create their own GIF.',
+  hResult:'Key Result',
+  resultItems:['Created a GIF animation of their own name.','Made the letters appear in sequence across different frames.','Saved and downloaded their finished GIF.'],
+  calloutLbl:'Please note!', callout:'References to group activities are not relevant to this lesson format.',
+  videoTag:'LESSON 1', videoTitle:'Digital Creativity: A Gentle Introduction to the World of Animation',
+  videoDesc:'The first lesson as a laboratory: a complete animation creation cycle in one hour — without overwhelming theory or complex interfaces. ▶ 10:38',
+  hRole:'The tutor\'s role',
+  pRole1:'In the synchronous parts, the tutor sets the tone, explains the goal, and checks that the technical setup is ready. During self-study, the tutor does not lead the lesson for the student, but provides focused help when asked. The cards include reminders to call the tutor before saving and at key steps.',
+  pRole2:'Key support algorithm: <b>one new letter — one new frame.</b> Start with a minimum working result, then add decorations.',
+  hFocus:'Teaching Focus',
+  pFocus1:'The lesson follows a deductive approach: the student first sees a finished animation, then explores how it was made and applies the principle to their own project.',
+  pFocus2:'Feedback: <b>Tutor + Self.</b> There is no peer feedback. AI is not used in this lesson (N/A); in later lessons of the module, AI is added as a third feedback channel where appropriate.',
+  pFocus3:'The main focus is the feeling: "I can create a working digital project on my own." Mistakes are a normal part of the creative process.',
+  hImportant:'Important points',
+  importantItems:['The student may draw their whole name on one frame — remind them to duplicate the frame before adding each new letter.','Leave time for saving, and check that the GIF has downloaded successfully and opens correctly.','Support students who are unhappy with their drawing: the idea, independence, and a working animation matter more than perfect lines.'],
+  hEnding:'Lesson ending',
+  pEnding:'The student shows their animation to the tutor by sharing their screen. The tutor highlights one specific strength and helps the student identify the next step for improvement.',
+  hNext:'Next lesson',
+  pNext:'In the next lesson, the student will explore Canva and begin creating a video introduction, where they can use the GIF of their name. For Canva registration, prepare an email address in advance: the student\'s own or a parent\'s.',
+  studentTitle:'Get ready for your first creative mission 🚀',
+  studentLead:'In just a few minutes, you\'ll enter Creativia Studio and create your first animation — bringing your own name to life! Check that everything is ready for a comfortable start.',
+  hEquip:'⚙️ Check your equipment', equipItems:['Your sound is on and you can hear the lesson clearly;','Your microphone is working;','The camera turns on and shows your picture.'],
+  hSpace:'✨ Get your space ready', spaceItems:['Find a quiet place where you won\'t be distracted;','Put a glass of water nearby;','Sit comfortably and get ready to create!'],
+  tipLbl:'💡 The structure of the lesson', tipBody:'First, you\'ll work with your tutor for a little while. Then you\'ll work through the cards on your own. You can ask your tutor for help if something is unclear or isn\'t working.',
+  steps:[
+    {title:'1 · Finding your Parallel Groups',body:'Parallel Groups don\'t show up by default. Next to <b>Extra Lessons</b> there\'s one more button — right now it reads <b>Parallel Groups</b>.'},
+    {title:'2 · Click Parallel Groups',body:'Click that button. It will reveal your parallel group and relabel itself to <b>Regular Groups</b>, so you can click it again to go back.'},
+    {title:'3 · The parent group, not each student',body:'This shows only the <b>one big group</b> that unites everyone — <b>DEMO_PARALLEL_POLAND</b>. You won\'t see each student\'s individual group at this level yet.'},
+    {title:'4 · Open it',body:'Click on <b>DEMO_PARALLEL_POLAND</b> to open it.'},
+    {title:'5 · Inside a Parallel Group',body:'This is where you actually see each student: a Parallel Group unites several individual groups, one per student, each with its own lesson time.'},
+    {title:'6 · First way to enter the class',body:'This icon is <b>Open console</b> — hover or click it to go straight to the Classroom link for this parallel group.'},
+    {title:'7 · 60 minutes before the lesson',body:'This link becomes <b>active 60 minutes before</b> the lesson starts. This is one of two ways to get into the class.'},
+    {title:'8 · The second way: from your profile',body:'There\'s a second way to reach the same class. Click <b>Profile</b> in the sidebar.'},
+    {title:'9 · Your profile',body:'Same profile page you already know: your info, your courses, your availability.'},
+    {title:'10 · Open your Schedule',body:'Click the <b>Schedule</b> tab.'},
+    {title:'11 · Your weekly schedule',body:'Green blocks are your available hours. The teal blocks are your Parallel Lesson slots — click one.'},
+    {title:'12 · Same group, same console',body:'This lists the same groups you saw before. Click <b>Open Console</b>.'},
+    {title:'13 · 30 minutes before the lesson',body:'From here, the link becomes <b>active 30 minutes before</b> the lesson — a bit earlier than from the Groups page.'},
+    {title:'14 · The new PL-format course',body:'Now let\'s look at how a course adapted for Parallel Lessons looks. To see a course\'s content, you go through <b>Courses</b>, not through Groups. Click it.'},
+    {title:'15 · Open the course',body:'Click on <b>[2079] Digital Creativity. Level 2</b>.'},
+    {title:'16 · The course record',body:'Business branch, language, number of lessons and modules — same fields as any course.'},
+    {title:'17 · Open Assignments',body:'Click the <b>Assignments</b> tab.'},
+    {title:'18 · The lesson\'s activities',body:'These 19 interactive cards ARE the lesson content — instructions, tips, images and videos, all inside each card. No separate manual needed.'},
+    {title:'19 · No wiki link — on purpose',body:'The <b>Study guides</b> table is empty. That\'s not a bug: in PL-format courses, the guide for the tutor lives inside the activities themselves as Teacher Notes — not as a separate wiki document.'},
+    {title:'20 · Open the first activity',body:'Click on <b>Get ready for your first creative mission</b> to see what a Teacher Note looks like from the inside.'},
+    {title:'21 · The tutor\'s note, right inside the card',body:'There\'s no separate "tutor" tab — it\'s the same scrollable card. This dashed, orange-bordered block is a <b>Teacher Note</b>: overview, story mission, goal, your role, teaching focus, important points. Only tutors ever see this block.'},
+    {title:'22 · Scroll down: what the student sees',body:'Right below it, in the same card, is what the student actually sees: the equipment checklist and the lesson-structure tip. No Teacher Note, no toggle — the platform simply never shows that block to a student account.'}
+  ],
+  inClass:['Get ready for your first creative mission 🚀','Welcome to Creativia Studio! ✨',"Let's get to know each other! 🤝",'How will the lesson work? 🧭','What can your name tell people about you? ✨','Opening the animation workshop 🎬','First letter — first version of your project ✏️','Explore the drawing tools 🎨','Move, rotate and resize 🖼️','How can you make the second letter appear later? 🤔','Add more letters to your name 🔤','Bring your letters to life ✨','Check your progress so far 👀','Check your animation ✅','Save and submit your animation 💾','How does your animation work? 🔍','Mini Animation Premiere! 🎬','What did you discover today? ✨','Get ready to use Canva 📷'],
+  homework:['Prepare an email account for Canva 📧',"Check that you're ready for the next lesson ✅"]
+},
+pl:{
+  simBadge:'🧪 SYMULACJA — Szkolenie Kodland (dane fikcyjne)',
+  tourBtn:'🚀 Rozpocznij przewodnik krok po kroku',
+  tourMinimize:'Minimalizuj ▾', tourResume:'📍 Wznów przewodnik',
+  stepOf:'Krok {n} z {total}', nextArrow:'Dalej →', finish:'Zakończ ✓',
+  groupsTitle:'Grupy', tabExtra:'Dodatkowe lekcje', tabParallel:'Grupy równoległe', tabRegular:'Zwykłe grupy',
+  emptyRegular:'Brak zwykłych grup do pokazania. Jedynym przypisaniem tego trenera jest Grupa równoległa — kliknij <b>Grupy równoległe</b> powyżej.',
+  colID:'ID', colTitle:'Nazwa', colTutor:'Trener', colType:'Typ', colCurrentCourse:'Aktualny kurs', colStart:'Start',
+  colStudentsPaid:'Uczniowie/Opłacone', colPreviousLesson:'Poprzednia lekcja', colNextLesson:'Następna lekcja', colPremium:'Premium',
+  containerType:'Grupa równoległa', no:'Nie', yes:'Tak',
+  itemsPage100_1:'Wyników na stronę: 100 &nbsp;|&nbsp; 1-1 z 1', itemsPage10_4:'Wyników na stronę: 10 &nbsp;|&nbsp; 1-4 z 4',
+  itemsPage100_19:'Wyników na stronę: 100 &nbsp;|&nbsp; 1-19 z 19',
+  backToGroups:'Wróć do Grup', backToCourses:'Wróć do Kursów', backToAssignments:'Wróć do Zadań',
+  tutorLabel:'Trener:', openConsoleTip:'Otwórz konsolę', colLessonTime:'Czas lekcji', colCourse:'Kurs', colNextTopic:'Temat następnej lekcji',
+  simOpenCourseFromDetail:'Otwórz kartę kursu również stąd',
+  teacherName:'Trener Demo Polska', teacherCountry:'🇵🇱 Polska',
+  profileTitle:'Profil', teacherCoursesH:'Kursy trenera', availabilityH:'Godziny dostępności', notAssigned:'Nieprzypisane',
+  groupsTabLbl:'Grupy', scheduleTabLbl:'Harmonogram', regularGroupsNote:'Twoja lista zwykłych grup — Grupy równoległe znajdziesz na stronie Grupy w panelu bocznym.',
+  currentWeek:'Bieżący tydzień', available:'Dostępny',
+  days:['Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota','Niedziela'],
+  coursesTitle:'Kursy', colBusinessBranch:'Oddział biznesowy', colActive:'Aktywny', colNumberOfLessons:'Liczba lekcji',
+  badgeActive:'Aktywny', fieldBranch:'Oddział biznesowy: ENG', fieldLanguage:'Język: angielski 🇬🇧', fieldCourseType:'Typ kursu: kursy płatne',
+  fieldCourseGroup:'Grupa kursów: Digital Creativity lvl 2', fieldLessons:'Liczba lekcji: 40', fieldModules:'Liczba modułów: 10',
+  fieldExcluded:'Wykluczony z overbookingu: Nie', fieldCertificate:'Certyfikat: —',
+  lessonsTab:'Lekcje', assignmentsTab:'Zadania', moduleFirstSteps:'M1. Pierwsze kroki', viewAssignments:'Zobacz zadania →',
+  colNo:'Nr', colActions:'Akcje',
+  lessonSelectLbl:'Lekcja', lessonOption:'L1. Wprowadzenie. Animacja twojego imienia w FlipAnim',
+  inClassH:'Zadania na lekcji', homeworkH:'Zadania domowe', studyGuidesH:'Materiały do nauki',
+  colNumber:'Numer', colAssignmentTitle:'Nazwa zadania', colTheory:'Teoria', colProject:'Projekt', colMaxScore:'Maks. punkty',
+  interactive:'INTERAKTYWNE', noData:'Brak danych',
+  noWikiNote:'Nie ma tu linków do wiki — to celowe. W kursach w formacie Lekcji równoległych przewodnik dla trenera znajduje się wewnątrz samych aktywności, jako Notatki dla trenera, a nie jako osobny dokument wiki.',
+  lessonCrumb:'Moje kursy &gt; Przygotuj się na swoją pierwszą kr...', teacherNoteBadge:'👁 Notatka dla trenera — widzi ją tylko trener',
+  modalGroups:'GRUPY', modalExit:'Wyjście', modalOpenConsole:'Otwórz konsolę',
+  toastConsoleDetail:'🔗 To otwiera link do Classroom dla DEMO_PARALLEL_POLAND. Staje się aktywny 60 minut przed rozpoczęciem lekcji.',
+  toastConsoleModal:'🔗 To ten sam link do Classroom, tym razem z Harmonogramu. Staje się aktywny 30 minut przed rozpoczęciem lekcji.',
+  toastSimClick:'🧪 To symulacja — w prawdziwym BO to by zrobiło: „{label}”.',
+  toastBlocked:'👉 Podążaj za podświetlonym krokiem, aby kontynuować — przewodnik jest wymagany przy pierwszym przejściu.',
+  reflect:'🎉 <strong>Przewodnik zakończony!</strong> Wiesz już, gdzie znajdują się twoje Grupy równoległe, znasz oba sposoby otwarcia linku do Classroom (60 min od strony grupy, 30 min od Harmonogramu), wiesz, jak wygląda kurs w formacie LR w sekcji Kursy, i gdzie znaleźć Notatki dla trenera wewnątrz każdej aktywności. Możesz teraz swobodnie eksplorować tę replikę samodzielnie.',
+  lessonTitle:'Przygotowanie do lekcji: Animowanie imienia w FlipAnim',
+  hOverview:'Przegląd lekcji',
+  pOverview:'To pierwsza lekcja w programie Digital Creativity poziom 2, prowadzona w formacie równoległym. Uczeń pracuje jeden na jeden z trenerem na początku i na końcu lekcji, a następnie wykonuje główne zadania praktyczne samodzielnie, korzystając z kart. Projektem lekcji jest animacja GIF z imieniem ucznia.',
+  hMission:'Misja fabularna lekcji',
+  pMission:'Uczeń zaczyna pracę w Creativia Studio jako animator cyfrowy. Jego pierwszą misją jest ożywienie swojego imienia — sprawienie, by litery pojawiały się jedna po drugiej.',
+  hGoal:'Główny cel lekcji',
+  pGoal:'Pomóż uczniowi zrozumieć zasadę animacji klatka po klatce i wykorzystać ją do stworzenia własnego GIF-a.',
+  hResult:'Kluczowy rezultat',
+  resultItems:['Stworzył/a animację GIF ze swoim imieniem.','Sprawił/a, że litery pojawiają się kolejno w różnych klatkach.','Zapisał/a i pobrał/a gotowego GIF-a.'],
+  calloutLbl:'Uwaga!', callout:'Odniesienia do aktywności grupowych nie mają znaczenia w tym formacie lekcji.',
+  videoTag:'LEKCJA 1', videoTitle:'Digital Creativity: łagodne wprowadzenie do świata animacji',
+  videoDesc:'Pierwsza lekcja jako laboratorium: pełny cykl tworzenia animacji w jedną godzinę — bez przytłaczającej teorii czy skomplikowanych interfejsów. ▶ 10:38',
+  hRole:'Rola trenera',
+  pRole1:'W częściach synchronicznych trener nadaje ton, wyjaśnia cel i sprawdza, czy konfiguracja techniczna jest gotowa. Podczas pracy samodzielnej trener nie prowadzi lekcji za ucznia, lecz udziela ukierunkowanej pomocy tylko wtedy, gdy uczeń o nią poprosi. Karty przypominają uczniowi, aby zawołał trenera przed zapisaniem pracy i w kluczowych momentach.',
+  pRole2:'Kluczowy algorytm wsparcia: <b>jedna nowa litera — jedna nowa klatka.</b> Zacznij od minimalnego działającego rezultatu, potem dodawaj dekoracje.',
+  hFocus:'Podejście dydaktyczne',
+  pFocus1:'Lekcja stosuje podejście dedukcyjne: uczeń najpierw widzi gotową animację, potem odkrywa, jak została zrobiona, i stosuje tę zasadę we własnym projekcie.',
+  pFocus2:'Feedback: <b>Trener + Samoocena.</b> Nie ma feedbacku rówieśniczego. AI nie jest używane w tej lekcji (nie dotyczy); w kolejnych lekcjach modułu AI dodawane jest jako trzeci kanał feedbacku, tam gdzie to zasadne.',
+  pFocus3:'Głównym celem jest poczucie: „Potrafię samodzielnie stworzyć działający projekt cyfrowy”. Błędy są normalną częścią procesu twórczego.',
+  hImportant:'Ważne punkty',
+  importantItems:['Uczeń może narysować całe swoje imię na jednej klatce — przypomnij mu, aby zduplikował klatkę przed dodaniem każdej nowej litery.','Zostaw czas na zapisanie i sprawdź, czy GIF pobrał się poprawnie i się otwiera.','Wspieraj uczniów niezadowolonych ze swojego rysunku: pomysł, samodzielność i działająca animacja liczą się bardziej niż idealne linie.'],
+  hEnding:'Zakończenie lekcji',
+  pEnding:'Uczeń pokazuje swoją animację trenerowi, udostępniając ekran. Trener podkreśla jedną konkretną mocną stronę i pomaga uczniowi określić kolejny krok do poprawy.',
+  hNext:'Następna lekcja',
+  pNext:'Na następnej lekcji uczeń pozna Canvę i zacznie tworzyć wprowadzenie wideo, w którym może wykorzystać GIF ze swoim imieniem. Do rejestracji w Canvie warto wcześniej przygotować adres e-mail: własny ucznia lub rodzica.',
+  studentTitle:'Przygotuj się na swoją pierwszą kreatywną misję 🚀',
+  studentLead:'Za chwilę wejdziesz do Creativia Studio i stworzysz swoją pierwszą animację — ożywiając własne imię! Sprawdź, czy wszystko jest gotowe na komfortowy start.',
+  hEquip:'⚙️ Sprawdź swój sprzęt', equipItems:['Dźwięk jest włączony i wyraźnie słyszysz lekcję;','Twój mikrofon działa;','Kamera się włącza i pokazuje twój obraz.'],
+  hSpace:'✨ Przygotuj swoją przestrzeń', spaceItems:['Znajdź spokojne miejsce, gdzie nic cię nie rozproszy;','Postaw obok szklankę wody;','Usiądź wygodnie i przygotuj się do tworzenia!'],
+  tipLbl:'💡 Struktura lekcji', tipBody:'Najpierw popracujesz chwilę ze swoim trenerem. Potem przejdziesz przez karty samodzielnie. Możesz poprosić trenera o pomoc, jeśli coś jest niejasne albo nie działa.',
+  steps:[
+    {title:'1 · Znajdowanie twoich Grup równoległych',body:'Grupy równoległe domyślnie się nie pokazują. Obok <b>Dodatkowych lekcji</b> jest jeszcze jeden przycisk — teraz brzmi on <b>Grupy równoległe</b>.'},
+    {title:'2 · Kliknij Grupy równoległe',body:'Kliknij ten przycisk. Odkryje twoją grupę równoległą i zmieni etykietę na <b>Zwykłe grupy</b>, żebyś mógł/mogła kliknąć ponownie, by wrócić.'},
+    {title:'3 · Grupa nadrzędna, nie każdy uczeń z osobna',body:'To pokazuje tylko <b>jedną dużą grupę</b>, która łączy wszystkich — <b>DEMO_PARALLEL_POLAND</b>. Na tym poziomie nie zobaczysz jeszcze indywidualnej grupy każdego ucznia.'},
+    {title:'4 · Otwórz ją',body:'Kliknij <b>DEMO_PARALLEL_POLAND</b>, aby ją otworzyć.'},
+    {title:'5 · Wewnątrz Grupy równoległej',body:'Tutaj widzisz już każdego ucznia: Grupa równoległa łączy kilka indywidualnych grup, po jednej na ucznia, każda z własnym czasem lekcji.'},
+    {title:'6 · Pierwszy sposób wejścia na lekcję',body:'Ta ikona to <b>Otwórz konsolę</b> — najedź lub kliknij, aby przejść bezpośrednio do linku Classroom dla tej grupy równoległej.'},
+    {title:'7 · 60 minut przed lekcją',body:'Ten link staje się <b>aktywny 60 minut przed</b> rozpoczęciem lekcji. To jeden z dwóch sposobów wejścia na zajęcia.'},
+    {title:'8 · Drugi sposób: z twojego profilu',body:'Istnieje drugi sposób, by dotrzeć do tej samej lekcji. Kliknij <b>Profil</b> w panelu bocznym.'},
+    {title:'9 · Twój profil',body:'Ta sama strona profilu, którą już znasz: twoje dane, kursy, dostępność.'},
+    {title:'10 · Otwórz swój Harmonogram',body:'Kliknij zakładkę <b>Harmonogram</b>.'},
+    {title:'11 · Twój tygodniowy harmonogram',body:'Zielone bloki to twoje godziny dostępności. Turkusowe bloki to twoje sloty Lekcji równoległej — kliknij jeden.'},
+    {title:'12 · Ta sama grupa, ta sama konsola',body:'Tu widnieją te same grupy, które widziałeś/aś wcześniej. Kliknij <b>Otwórz konsolę</b>.'},
+    {title:'13 · 30 minut przed lekcją',body:'Stąd link staje się <b>aktywny 30 minut przed</b> lekcją — trochę wcześniej niż ze strony Grupy.'},
+    {title:'14 · Nowy kurs w formacie LR',body:'Zobaczmy teraz, jak wygląda kurs dostosowany do Lekcji równoległych. Aby zobaczyć treść kursu, wchodzisz przez <b>Kursy</b>, nie przez Grupy. Kliknij tam.'},
+    {title:'15 · Otwórz kurs',body:'Kliknij <b>[2079] Digital Creativity. Level 2</b>.'},
+    {title:'16 · Karta kursu',body:'Oddział biznesowy, język, liczba lekcji i modułów — te same pola co w każdym kursie.'},
+    {title:'17 · Otwórz Zadania',body:'Kliknij zakładkę <b>Zadania</b>.'},
+    {title:'18 · Aktywności lekcji',body:'Te 19 interaktywnych kart TO JEST treść lekcji — instrukcje, wskazówki, obrazy i filmy, wszystko wewnątrz każdej karty. Osobny podręcznik nie jest potrzebny.'},
+    {title:'19 · Brak linku do wiki — celowo',body:'Tabela <b>Materiały do nauki</b> jest pusta. To nie błąd: w kursach w formacie LR przewodnik dla trenera znajduje się wewnątrz samych aktywności, jako Notatki dla trenera — a nie jako osobny dokument wiki.'},
+    {title:'20 · Otwórz pierwszą aktywność',body:'Kliknij <b>Przygotuj się na swoją pierwszą kreatywną misję</b>, aby zobaczyć, jak wygląda Notatka dla trenera od środka.'},
+    {title:'21 · Notatka trenera, prosto wewnątrz karty',body:'Nie ma osobnej zakładki „trener” — to ta sama przewijana karta. Ten przerywany, pomarańczowo obramowany blok to <b>Notatka dla trenera</b>: przegląd, misja fabularna, cel, twoja rola, podejście dydaktyczne, ważne punkty. Ten blok widzi wyłącznie trener.'},
+    {title:'22 · Przewiń niżej: co widzi uczeń',body:'Zaraz pod nim, w tej samej karcie, jest to, co faktycznie widzi uczeń: checklista sprzętu i wskazówka o strukturze lekcji. Brak Notatki dla trenera, brak przełącznika — platforma po prostu nigdy nie pokazuje tego bloku na koncie ucznia.'}
+  ],
+  inClass:['Przygotuj się na swoją pierwszą kreatywną misję 🚀','Witaj w Creativia Studio! ✨','Poznajmy się! 🤝','Jak będzie wyglądać lekcja? 🧭','Co twoje imię mówi o tobie ludziom? ✨','Otwieranie warsztatu animacji 🎬','Pierwsza litera — pierwsza wersja twojego projektu ✏️','Poznaj narzędzia do rysowania 🎨','Przesuwanie, obracanie i zmiana rozmiaru 🖼️','Jak sprawić, by druga litera pojawiła się później? 🤔','Dodaj więcej liter do swojego imienia 🔤','Ożyw swoje litery ✨','Sprawdź swój dotychczasowy postęp 👀','Sprawdź swoją animację ✅','Zapisz i prześlij swoją animację 💾','Jak działa twoja animacja? 🔍','Mini premiera animacji! 🎬','Co dziś odkryłeś/aś? ✨','Przygotuj się do korzystania z Canvy 📷'],
+  homework:['Przygotuj konto e-mail do Canvy 📧','Sprawdź, czy jesteś gotowy/a na następną lekcję ✅']
+},
+tr:{
+  simBadge:'🧪 SİMÜLASYON — Kodland Eğitimi (kurgusal veri)',
+  tourBtn:'🚀 Rehberli turu başlat',
+  tourMinimize:'Küçült ▾', tourResume:'📍 Rehberli tura devam et',
+  stepOf:'Adım {n} / {total}', nextArrow:'İleri →', finish:'Bitir ✓',
+  groupsTitle:'Gruplar', tabExtra:'Ekstra Dersler', tabParallel:'Parallel Gruplar', tabRegular:'Normal Gruplar',
+  emptyRegular:'Gösterilecek normal grup yok. Bu eğitmenin tek ataması bir Parallel Group — yukarıdaki <b>Parallel Gruplar</b>\'a tıklayın.',
+  colID:'ID', colTitle:'Başlık', colTutor:'Eğitmen', colType:'Tür', colCurrentCourse:'Güncel kurs', colStart:'Başlangıç',
+  colStudentsPaid:'Öğrenci/Ödeme', colPreviousLesson:'Önceki ders', colNextLesson:'Sonraki ders', colPremium:'Premium',
+  containerType:'Parallel group', no:'Hayır', yes:'Evet',
+  itemsPage100_1:'Sayfa başına: 100 &nbsp;|&nbsp; 1-1 / 1', itemsPage10_4:'Sayfa başına: 10 &nbsp;|&nbsp; 1-4 / 4',
+  itemsPage100_19:'Sayfa başına: 100 &nbsp;|&nbsp; 1-19 / 19',
+  backToGroups:'Gruplara Dön', backToCourses:'Kurslara Dön', backToAssignments:'Ödevlere Dön',
+  tutorLabel:'Eğitmen:', openConsoleTip:'Konsolu Aç', colLessonTime:'Ders saati', colCourse:'Kurs', colNextTopic:'Sonraki ders konusu',
+  simOpenCourseFromDetail:'Kurs kaydını buradan da aç',
+  teacherName:'Polonya Demo Eğitmen', teacherCountry:'🇵🇱 Polonya',
+  profileTitle:'Profil', teacherCoursesH:'Eğitmen kursları', availabilityH:'Uygunluk saatleri', notAssigned:'Atanmadı',
+  groupsTabLbl:'Gruplar', scheduleTabLbl:'Takvim', regularGroupsNote:'Normal gruplar listeniz — Parallel Gruplar için kenar çubuğundaki Gruplar sayfasına bakın.',
+  currentWeek:'Bu Hafta', available:'Uygun',
+  days:['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'],
+  coursesTitle:'Kurslar', colBusinessBranch:'İş birimi', colActive:'Aktif', colNumberOfLessons:'Ders sayısı',
+  badgeActive:'Aktif', fieldBranch:'İş birimi: ENG', fieldLanguage:'Dil: İngilizce 🇬🇧', fieldCourseType:'Kurs türü: Ücretli kurslar',
+  fieldCourseGroup:'Kurs grubu: Digital Creativity lvl 2', fieldLessons:'Ders sayısı: 40', fieldModules:'Modül sayısı: 10',
+  fieldExcluded:'Overbooking\'den hariç: Hayır', fieldCertificate:'Sertifika: —',
+  lessonsTab:'Dersler', assignmentsTab:'Ödevler', moduleFirstSteps:'M1. İlk adımlar', viewAssignments:'Ödevleri görüntüle →',
+  colNo:'No', colActions:'İşlemler',
+  lessonSelectLbl:'Ders', lessonOption:'L1. Giriş. FlipAnim\'de isminizin animasyonu',
+  inClassH:'Ders içi ödevler', homeworkH:'Ev ödevleri', studyGuidesH:'Çalışma kılavuzları',
+  colNumber:'Numara', colAssignmentTitle:'Ödev başlığı', colTheory:'Teori', colProject:'Proje', colMaxScore:'Maks. puan',
+  interactive:'İNTERAKTİF', noData:'Veri yok',
+  noWikiNote:'Burada wiki linki yok — bu kasıtlı. Parallel Lessons formatındaki kurslarda, eğitmenin kılavuzu ayrı bir wiki belgesi olarak değil, Eğitmen Notları olarak etkinliklerin içinde yer alır.',
+  lessonCrumb:'Kurslarım &gt; İlk yaratıcı görevine hazırlan...', teacherNoteBadge:'👁 Eğitmen notu — bunu yalnızca eğitmenler görür',
+  modalGroups:'GRUPLAR', modalExit:'Çıkış', modalOpenConsole:'Konsolu Aç',
+  toastConsoleDetail:'🔗 Bu, DEMO_PARALLEL_POLAND için Classroom linkini açar. Ders başlamadan 60 dakika önce aktif hale gelir.',
+  toastConsoleModal:'🔗 Bu, Takviminizden ulaşılan aynı Classroom linkidir. Ders başlamadan 30 dakika önce aktif hale gelir.',
+  toastSimClick:'🧪 Bu bir simülasyon — gerçek BO\'da bu şunu yapardı: "{label}".',
+  toastBlocked:'👉 Devam etmek için vurgulanan adımı takip edin — tur ilk seferde zorunludur.',
+  reflect:'🎉 <strong>Tur tamamlandı!</strong> Artık Parallel Gruplarınızın nerede olduğunu, Classroom linkini açmanın iki yolunu (gruptan 60 dk, Takvimden 30 dk), Kurslar\'da bir PL-formatı kursunun nasıl göründüğünü ve Eğitmen Notlarınızı her etkinliğin içinde nerede bulacağınızı biliyorsunuz. Bu replikayı kendi başınıza keşfetmeye devam edebilirsiniz.',
+  lessonTitle:'Derse hazırlık: FlipAnim\'de İsim Canlandırma',
+  hOverview:'Ders özeti',
+  pOverview:'Bu, Digital Creativity seviye 2 programındaki ilk derstir ve paralel formatta verilir. Öğrenci, dersin başında ve sonunda eğitmenle birebir çalışır, ardından ana pratik görevleri kartları kullanarak bağımsız olarak tamamlar. Ders projesi, öğrencinin kendi isminin GIF animasyonudur.',
+  hMission:'Ders hikaye görevi',
+  pMission:'Öğrenci, Creativia Studio\'da dijital animatör olarak çalışmaya başlar. İlk görevi, harflerin birer birer belirmesini sağlayarak ismini canlandırmaktır.',
+  hGoal:'Ana ders hedefi',
+  pGoal:'Öğrencinin kare kare animasyon ilkesini anlamasına ve bunu kendi GIF\'ini oluşturmak için kullanmasına yardımcı olun.',
+  hResult:'Temel sonuç',
+  resultItems:['Kendi isminin GIF animasyonunu oluşturdu.','Harflerin farklı karelerde sırayla belirmesini sağladı.','Bitmiş GIF\'ini kaydetti ve indirdi.'],
+  calloutLbl:'Lütfen dikkat!', callout:'Grup etkinliklerine yapılan atıflar bu ders formatıyla ilgili değildir.',
+  videoTag:'DERS 1', videoTitle:'Digital Creativity: Animasyon Dünyasına Nazik Bir Giriş',
+  videoDesc:'İlk ders bir laboratuvar gibidir: bunaltıcı teori veya karmaşık arayüzler olmadan, bir saat içinde eksiksiz bir animasyon oluşturma döngüsü. ▶ 10:38',
+  hRole:'Eğitmenin rolü',
+  pRole1:'Eşzamanlı bölümlerde eğitmen tonu belirler, hedefi açıklar ve teknik kurulumun hazır olduğunu kontrol eder. Bireysel çalışma sırasında eğitmen dersi öğrenci adına yönetmez, yalnızca öğrenci istediğinde hedefe yönelik yardım sağlar. Kartlar, öğrenciye kaydetmeden önce ve önemli adımlarda eğitmeni çağırmasını hatırlatır.',
+  pRole2:'Temel destek algoritması: <b>bir yeni harf — bir yeni kare.</b> Önce minimum çalışan bir sonuçla başlayın, sonra süslemeler ekleyin.',
+  hFocus:'Öğretim odağı',
+  pFocus1:'Ders tümdengelimli bir yaklaşım izler: öğrenci önce bitmiş bir animasyonu görür, sonra nasıl yapıldığını keşfeder ve ilkeyi kendi projesine uygular.',
+  pFocus2:'Geri bildirim: <b>Eğitmen + Kendi Kendine.</b> Akran geri bildirimi yoktur. Bu derste AI kullanılmaz (uygun değil); modüldeki sonraki derslerde, uygun olduğunda AI üçüncü bir geri bildirim kanalı olarak eklenir.',
+  pFocus3:'Ana odak şu duygudur: "Çalışan bir dijital projeyi kendi başıma oluşturabilirim." Hatalar, yaratıcı sürecin normal bir parçasıdır.',
+  hImportant:'Önemli noktalar',
+  importantItems:['Öğrenci tüm ismini tek bir karede çizebilir — her yeni harfi eklemeden önce kareyi çoğaltmasını hatırlatın.','Kaydetmek için zaman bırakın ve GIF\'in başarıyla indirildiğini ve doğru açıldığını kontrol edin.','Çizimlerinden memnun olmayan öğrencileri destekleyin: fikir, bağımsızlık ve çalışan bir animasyon, kusursuz çizgilerden daha önemlidir.'],
+  hEnding:'Ders kapanışı',
+  pEnding:'Öğrenci, ekranını paylaşarak animasyonunu eğitmene gösterir. Eğitmen belirli bir güçlü yönü vurgular ve öğrencinin gelişim için bir sonraki adımı belirlemesine yardımcı olur.',
+  hNext:'Sonraki ders',
+  pNext:'Bir sonraki derste öğrenci Canva\'yı keşfedecek ve isim GIF\'ini kullanabileceği bir video girişi oluşturmaya başlayacak. Canva kaydı için önceden bir e-posta adresi hazırlayın: öğrencinin kendisininki ya da bir velisininki.',
+  studentTitle:'İlk yaratıcı görevine hazırlan 🚀',
+  studentLead:'Birkaç dakika içinde Creativia Studio\'ya gireceksin ve kendi ismini canlandırarak ilk animasyonunu oluşturacaksın! Rahat bir başlangıç için her şeyin hazır olduğundan emin ol.',
+  hEquip:'⚙️ Ekipmanını kontrol et', equipItems:['Sesin açık ve dersi net duyuyorsun;','Mikrofonun çalışıyor;','Kamera açılıyor ve görüntünü gösteriyor.'],
+  hSpace:'✨ Alanını hazırla', spaceItems:['Dikkatinin dağılmayacağı sessiz bir yer bul;','Yanına bir bardak su koy;','Rahatça otur ve yaratmaya hazırlan!'],
+  tipLbl:'💡 Dersin yapısı', tipBody:'Önce kısa bir süre eğitmeninle çalışacaksın. Sonra kartları kendin ilerleteceksin. Bir şey belirsizse ya da çalışmıyorsa eğitmeninden yardım isteyebilirsin.',
+  steps:[
+    {title:'1 · Parallel Gruplarınızı bulma',body:'Parallel Gruplar varsayılan olarak görünmez. <b>Ekstra Dersler</b>\'in yanında bir düğme daha var — şu anda üzerinde <b>Parallel Gruplar</b> yazıyor.'},
+    {title:'2 · Parallel Gruplar\'a tıklayın',body:'O düğmeye tıklayın. Parallel grubunuzu ortaya çıkaracak ve kendini <b>Normal Gruplar</b> olarak yeniden etiketleyecek, böylece geri dönmek için tekrar tıklayabilirsiniz.'},
+    {title:'3 · Üst grup, her öğrenci değil',body:'Bu yalnızca herkesi birleştiren <b>tek büyük grubu</b> gösterir — <b>DEMO_PARALLEL_POLAND</b>. Bu seviyede henüz her öğrencinin bireysel grubunu göremezsiniz.'},
+    {title:'4 · Açın',body:'Açmak için <b>DEMO_PARALLEL_POLAND</b>\'a tıklayın.'},
+    {title:'5 · Bir Parallel Group\'un içinde',body:'Burada her öğrenciyi gerçekten görürsünüz: bir Parallel Group, her biri kendi ders saatine sahip, öğrenci başına bir tane olmak üzere birkaç bireysel grubu birleştirir.'},
+    {title:'6 · Derse girmenin ilk yolu',body:'Bu simge <b>Konsolu Aç</b>\'tır — bu parallel group için doğrudan Classroom linkine gitmek üzere üzerine gelin veya tıklayın.'},
+    {title:'7 · Dersten 60 dakika önce',body:'Bu link, ders başlamadan <b>60 dakika önce aktif</b> hale gelir. Derse girmenin iki yolundan biri budur.'},
+    {title:'8 · İkinci yol: profilinizden',body:'Aynı derse ulaşmanın ikinci bir yolu var. Kenar çubuğundan <b>Profil</b>\'e tıklayın.'},
+    {title:'9 · Profiliniz',body:'Zaten bildiğiniz aynı profil sayfası: bilgileriniz, kurslarınız, uygunluğunuz.'},
+    {title:'10 · Takviminizi açın',body:'<b>Takvim</b> sekmesine tıklayın.'},
+    {title:'11 · Haftalık takviminiz',body:'Yeşil bloklar uygun olduğunuz saatlerdir. Turkuaz bloklar Parallel Lesson slotlarınızdır — birine tıklayın.'},
+    {title:'12 · Aynı grup, aynı konsol',body:'Burada daha önce gördüğünüz aynı gruplar listelenir. <b>Konsolu Aç</b>\'a tıklayın.'},
+    {title:'13 · Dersten 30 dakika önce',body:'Buradan, link Gruplar sayfasına göre biraz daha erken, ders başlamadan <b>30 dakika önce aktif</b> hale gelir.'},
+    {title:'14 · Yeni PL formatlı kurs',body:'Şimdi Parallel Lessons için uyarlanmış bir kursun nasıl göründüğüne bakalım. Bir kursun içeriğini görmek için Gruplar değil, <b>Kurslar</b>\'a gidersiniz. Tıklayın.'},
+    {title:'15 · Kursu açın',body:'<b>[2079] Digital Creativity. Level 2</b>\'ye tıklayın.'},
+    {title:'16 · Kurs kaydı',body:'İş birimi, dil, ders ve modül sayısı — herhangi bir kursla aynı alanlar.'},
+    {title:'17 · Ödevleri açın',body:'<b>Ödevler</b> sekmesine tıklayın.'},
+    {title:'18 · Dersin etkinlikleri',body:'Bu 19 interaktif kart, ders içeriğinin KENDİSİDİR — talimatlar, ipuçları, görseller ve videolar, hepsi her kartın içinde. Ayrı bir kılavuza gerek yok.'},
+    {title:'19 · Wiki linki yok — kasıtlı olarak',body:'<b>Çalışma kılavuzları</b> tablosu boş. Bu bir hata değil: PL formatındaki kurslarda, eğitmenin kılavuzu ayrı bir wiki belgesi olarak değil, Eğitmen Notları olarak etkinliklerin içinde yer alır.'},
+    {title:'20 · İlk etkinliği açın',body:'Bir Eğitmen Notu\'nun içeriden nasıl göründüğünü görmek için <b>İlk yaratıcı görevine hazırlan</b>\'a tıklayın.'},
+    {title:'21 · Eğitmenin notu, doğrudan kartın içinde',body:'Ayrı bir "eğitmen" sekmesi yoktur — aynı kaydırılabilir karttır. Bu kesikli, turuncu çerçeveli blok bir <b>Eğitmen Notu</b>\'dur: özet, hikaye görevi, hedef, rolünüz, öğretim odağı, önemli noktalar. Bu bloğu yalnızca eğitmenler görür.'},
+    {title:'22 · Aşağı kaydırın: öğrenci ne görüyor',body:'Hemen altında, aynı kart içinde, öğrencinin gerçekte gördüğü şey vardır: ekipman kontrol listesi ve ders yapısı ipucu. Eğitmen Notu yok, geçiş düğmesi yok — platform bu bloğu bir öğrenci hesabında asla göstermez.'}
+  ],
+  inClass:['İlk yaratıcı görevine hazırlan 🚀','Creativia Studio\'ya hoş geldin! ✨','Birbirimizi tanıyalım! 🤝','Ders nasıl işleyecek? 🧭','İsmin insanlara senin hakkında ne anlatabilir? ✨','Animasyon atölyesini açmak 🎬','İlk harf — projenin ilk versiyonu ✏️','Çizim araçlarını keşfet 🎨','Taşı, döndür ve yeniden boyutlandır 🖼️','İkinci harfin daha sonra belirmesini nasıl sağlarsın? 🤔','İsmine daha fazla harf ekle 🔤','Harflerini canlandır ✨','Şimdiye kadarki ilerlemeni kontrol et 👀','Animasyonunu kontrol et ✅','Animasyonunu kaydet ve gönder 💾','Animasyonun nasıl çalışıyor? 🔍','Mini Animasyon Galası! 🎬','Bugün ne keşfettin? ✨','Canva kullanmaya hazırlan 📷'],
+  homework:['Canva için bir e-posta hesabı hazırla 📧','Sonraki derse hazır olduğundan emin ol ✅']
+},
+it:{
+  simBadge:'🧪 SIMULAZIONE — Formazione Kodland (dati fittizi)',
+  tourBtn:'🚀 Avvia il percorso guidato',
+  tourMinimize:'Riduci a icona ▾', tourResume:'📍 Riprendi il percorso guidato',
+  stepOf:'Passo {n} di {total}', nextArrow:'Avanti →', finish:'Fine ✓',
+  groupsTitle:'Gruppi', tabExtra:'Lezioni Extra', tabParallel:'Parallel Groups', tabRegular:'Gruppi Regolari',
+  emptyRegular:'Nessun gruppo regolare da mostrare. L\'unico incarico di questo tutor è un Parallel Group — clicca <b>Parallel Groups</b> qui sopra.',
+  colID:'ID', colTitle:'Titolo', colTutor:'Tutor', colType:'Tipo', colCurrentCourse:'Corso attuale', colStart:'Inizio',
+  colStudentsPaid:'Studenti/Pagati', colPreviousLesson:'Lezione precedente', colNextLesson:'Prossima lezione', colPremium:'Premium',
+  containerType:'Parallel group', no:'No', yes:'Sì',
+  itemsPage100_1:'Elementi per pagina: 100 &nbsp;|&nbsp; 1-1 di 1', itemsPage10_4:'Elementi per pagina: 10 &nbsp;|&nbsp; 1-4 di 4',
+  itemsPage100_19:'Elementi per pagina: 100 &nbsp;|&nbsp; 1-19 di 19',
+  backToGroups:'Torna a Gruppi', backToCourses:'Torna a Corsi', backToAssignments:'Torna alle Assegnazioni',
+  tutorLabel:'Tutor:', openConsoleTip:'Apri console', colLessonTime:'Orario lezione', colCourse:'Corso', colNextTopic:'Argomento prossima lezione',
+  simOpenCourseFromDetail:'Apri la scheda del corso anche da qui',
+  teacherName:'Tutor Demo Italia', teacherCountry:'🇮🇹 Italia',
+  profileTitle:'Profilo', teacherCoursesH:'Corsi del tutor', availabilityH:'Orari di disponibilità', notAssigned:'Non assegnato',
+  groupsTabLbl:'Gruppi', scheduleTabLbl:'Schedule', regularGroupsNote:'La tua lista di gruppi regolari — per i Parallel Groups vedi la pagina Gruppi nella barra laterale.',
+  currentWeek:'Settimana Corrente', available:'Disponibile',
+  days:['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato','Domenica'],
+  coursesTitle:'Corsi', colBusinessBranch:'Ramo aziendale', colActive:'Attivo', colNumberOfLessons:'Numero di lezioni',
+  badgeActive:'Attivo', fieldBranch:'Ramo aziendale: ENG', fieldLanguage:'Lingua: Inglese 🇬🇧', fieldCourseType:'Tipo di corso: Corsi a pagamento',
+  fieldCourseGroup:'Gruppo corso: Digital Creativity lvl 2', fieldLessons:'Numero di lezioni: 40', fieldModules:'Numero di moduli: 10',
+  fieldExcluded:'Escluso dall\'overbooking: No', fieldCertificate:'Certificato: —',
+  lessonsTab:'Lezioni', assignmentsTab:'Assegnazioni', moduleFirstSteps:'M1. Primi passi', viewAssignments:'Vedi assegnazioni →',
+  colNo:'N°', colActions:'Azioni',
+  lessonSelectLbl:'Lezione', lessonOption:'L1. Introduzione. Animazione del tuo nome in FlipAnim',
+  inClassH:'Assegnazioni in classe', homeworkH:'Compiti a casa', studyGuidesH:'Guide di studio',
+  colNumber:'Numero', colAssignmentTitle:'Titolo assegnazione', colTheory:'Teoria', colProject:'Progetto', colMaxScore:'Punteggio max',
+  interactive:'INTERATTIVO', noData:'Nessun dato disponibile',
+  noWikiNote:'Qui non ci sono link alla wiki — è intenzionale. Nei corsi in formato Parallel Lessons, la guida per il tutor si trova dentro le attività stesse, come Note per il Tutor, non come documento wiki separato.',
+  lessonCrumb:'I miei corsi &gt; Preparati per la tua prima mi...', teacherNoteBadge:'👁 Nota per il tutor — visibile solo ai tutor',
+  modalGroups:'GRUPPI', modalExit:'Esci', modalOpenConsole:'Apri Console',
+  toastConsoleDetail:'🔗 Questo apre il link della Classroom per DEMO_PARALLEL_POLAND. Diventa attivo 60 minuti prima dell\'inizio della lezione.',
+  toastConsoleModal:'🔗 Questo è lo stesso link della Classroom, raggiunto dal tuo Schedule. Diventa attivo 30 minuti prima dell\'inizio della lezione.',
+  toastSimClick:'🧪 Questa è una simulazione — nel vero BO, questo farebbe: "{label}".',
+  toastBlocked:'👉 Segui il passo evidenziato per continuare — il percorso guidato è obbligatorio la prima volta.',
+  reflect:'🎉 <strong>Percorso guidato completato!</strong> Ora sai dove si trovano i tuoi Parallel Groups, entrambi i modi per aprire il link della Classroom (60 min dal gruppo, 30 min dal tuo Schedule), come appare un corso in formato PL nella sezione Corsi, e dove trovare le tue Note per il Tutor dentro ogni attività. Sentiti libero/a di continuare a esplorare questa replica da solo/a.',
+  lessonTitle:'Preparazione alla lezione: Animare un nome in FlipAnim',
+  hOverview:'Panoramica della lezione',
+  pOverview:'Questa è la prima lezione del programma Digital Creativity livello 2, erogata in formato parallelo. Lo studente lavora uno a uno con il tutor all\'inizio e alla fine della lezione, poi completa i compiti pratici principali in autonomia usando le card. Il progetto della lezione è un\'animazione GIF con il nome dello studente.',
+  hMission:'Missione narrativa della lezione',
+  pMission:'Lo studente inizia a lavorare a Creativia Studio come animatore digitale. La sua prima missione è dare vita al proprio nome facendo apparire le lettere una per una.',
+  hGoal:'Obiettivo principale della lezione',
+  pGoal:'Aiuta lo studente a capire il principio dell\'animazione fotogramma per fotogramma e a usarlo per creare la propria GIF.',
+  hResult:'Risultato chiave',
+  resultItems:['Ha creato un\'animazione GIF con il proprio nome.','Ha fatto apparire le lettere in sequenza su fotogrammi diversi.','Ha salvato e scaricato la propria GIF completata.'],
+  calloutLbl:'Attenzione!', callout:'I riferimenti alle attività di gruppo non sono rilevanti per questo formato di lezione.',
+  videoTag:'LEZIONE 1', videoTitle:'Digital Creativity: un\'introduzione delicata al mondo dell\'animazione',
+  videoDesc:'La prima lezione come un laboratorio: un ciclo completo di creazione di un\'animazione in un\'ora — senza teoria eccessiva o interfacce complesse. ▶ 10:38',
+  hRole:'Il ruolo del tutor',
+  pRole1:'Nelle parti sincrone, il tutor dà il tono, spiega l\'obiettivo e verifica che la configurazione tecnica sia pronta. Durante l\'autostudio, il tutor non conduce la lezione al posto dello studente, ma fornisce un aiuto mirato solo quando lo studente lo chiede. Le card ricordano allo studente di chiamare il tutor prima di salvare e nei punti chiave.',
+  pRole2:'Algoritmo di supporto chiave: <b>una nuova lettera — un nuovo fotogramma.</b> Inizia con un risultato minimo funzionante, poi aggiungi le decorazioni.',
+  hFocus:'Approccio didattico',
+  pFocus1:'La lezione segue un approccio deduttivo: lo studente vede prima un\'animazione finita, poi scopre come è stata realizzata e applica lo stesso principio al proprio progetto.',
+  pFocus2:'Feedback: <b>Tutor + Auto-valutazione.</b> Non c\'è feedback tra pari. L\'IA non è usata in questa lezione (N/D); nelle lezioni successive del modulo, l\'IA viene aggiunta come terzo canale di feedback, dove opportuno.',
+  pFocus3:'L\'obiettivo principale è la sensazione: "Riesco a creare da solo/a un progetto digitale funzionante." Gli errori sono una parte normale del processo creativo.',
+  hImportant:'Punti importanti',
+  importantItems:['Lo studente potrebbe disegnare l\'intero nome su un solo fotogramma — ricordagli di duplicare il fotogramma prima di aggiungere ogni nuova lettera.','Lascia tempo per salvare, e controlla che la GIF si sia scaricata correttamente e si apra senza problemi.','Sostieni gli studenti insoddisfatti del proprio disegno: l\'idea, l\'autonomia e un\'animazione funzionante contano più delle linee perfette.'],
+  hEnding:'Chiusura della lezione',
+  pEnding:'Lo studente mostra la propria animazione al tutor condividendo lo schermo. Il tutor evidenzia un punto di forza specifico e aiuta lo studente a individuare il prossimo passo di miglioramento.',
+  hNext:'Prossima lezione',
+  pNext:'Nella prossima lezione, lo studente esplorerà Canva e inizierà a creare un\'introduzione video, in cui potrà usare la GIF del proprio nome. Per la registrazione a Canva, prepara in anticipo un indirizzo email: quello dello studente o di un genitore.',
+  studentTitle:'Preparati per la tua prima missione creativa 🚀',
+  studentLead:'Tra pochi minuti entrerai a Creativia Studio e creerai la tua prima animazione — dando vita al tuo nome! Controlla che tutto sia pronto per iniziare comodamente.',
+  hEquip:'⚙️ Controlla la tua attrezzatura', equipItems:['L\'audio è attivo e senti bene la lezione;','Il microfono funziona;','La videocamera si accende e mostra la tua immagine.'],
+  hSpace:'✨ Prepara il tuo spazio', spaceItems:['Trova un posto tranquillo dove non sarai distratto/a;','Metti un bicchiere d\'acqua vicino;','Siediti comodamente e preparati a creare!'],
+  tipLbl:'💡 La struttura della lezione', tipBody:'Prima lavorerai un po\' con il tuo tutor. Poi andrai avanti da solo/a con le card. Puoi chiedere aiuto al tutor se qualcosa non è chiaro o non funziona.',
+  steps:[
+    {title:'1 · Trovare i tuoi Parallel Groups',body:'I Parallel Groups non appaiono di default. Accanto a <b>Lezioni Extra</b> c\'è un altro pulsante — ora dice <b>Parallel Groups</b>.'},
+    {title:'2 · Clicca su Parallel Groups',body:'Clicca quel pulsante. Rivelerà il tuo parallel group e cambierà etichetta in <b>Gruppi Regolari</b>, così puoi cliccarlo di nuovo per tornare indietro.'},
+    {title:'3 · Il gruppo genitore, non ogni studente',body:'Questo mostra solo <b>l\'unico grande gruppo</b> che unisce tutti — <b>DEMO_PARALLEL_POLAND</b>. A questo livello non vedrai ancora il gruppo individuale di ogni studente.'},
+    {title:'4 · Aprilo',body:'Clicca su <b>DEMO_PARALLEL_POLAND</b> per aprirlo.'},
+    {title:'5 · Dentro un Parallel Group',body:'Qui vedi finalmente ogni studente: un Parallel Group unisce diversi gruppi individuali, uno per studente, ciascuno con il proprio orario di lezione.'},
+    {title:'6 · Primo modo per entrare in classe',body:'Questa icona è <b>Apri console</b> — passaci sopra o cliccala per andare direttamente al link della Classroom per questo parallel group.'},
+    {title:'7 · 60 minuti prima della lezione',body:'Questo link diventa <b>attivo 60 minuti prima</b> dell\'inizio della lezione. Questo è uno dei due modi per entrare in classe.'},
+    {title:'8 · Il secondo modo: dal tuo profilo',body:'C\'è un secondo modo per raggiungere la stessa classe. Clicca su <b>Profilo</b> nella barra laterale.'},
+    {title:'9 · Il tuo profilo',body:'La stessa pagina profilo che già conosci: le tue informazioni, i tuoi corsi, la tua disponibilità.'},
+    {title:'10 · Apri il tuo Schedule',body:'Clicca sulla scheda <b>Schedule</b>.'},
+    {title:'11 · Il tuo schedule settimanale',body:'I blocchi verdi sono le tue ore disponibili. I blocchi azzurri sono i tuoi slot di Parallel Lesson — cliccane uno.'},
+    {title:'12 · Stesso gruppo, stessa console',body:'Qui sono elencati gli stessi gruppi che hai visto prima. Clicca su <b>Apri Console</b>.'},
+    {title:'13 · 30 minuti prima della lezione',body:'Da qui, il link diventa <b>attivo 30 minuti prima</b> della lezione — un po\' prima rispetto alla pagina Gruppi.'},
+    {title:'14 · Il nuovo corso in formato PL',body:'Ora vediamo come appare un corso adattato alle Parallel Lessons. Per vedere il contenuto di un corso, passi da <b>Corsi</b>, non da Gruppi. Cliccaci sopra.'},
+    {title:'15 · Apri il corso',body:'Clicca su <b>[2079] Digital Creativity. Level 2</b>.'},
+    {title:'16 · La scheda del corso',body:'Ramo aziendale, lingua, numero di lezioni e moduli — gli stessi campi di qualsiasi corso.'},
+    {title:'17 · Apri Assegnazioni',body:'Clicca sulla scheda <b>Assegnazioni</b>.'},
+    {title:'18 · Le attività della lezione',body:'Queste 19 card interattive SONO il contenuto della lezione — istruzioni, suggerimenti, immagini e video, tutto dentro ogni card. Non serve un manuale separato.'},
+    {title:'19 · Nessun link wiki — di proposito',body:'La tabella <b>Guide di studio</b> è vuota. Non è un bug: nei corsi in formato PL, la guida per il tutor si trova dentro le attività stesse come Note per il Tutor — non come documento wiki separato.'},
+    {title:'20 · Apri la prima attività',body:'Clicca su <b>Preparati per la tua prima missione creativa</b> per vedere come appare una Nota per il Tutor dall\'interno.'},
+    {title:'21 · La nota del tutor, proprio dentro la card',body:'Non c\'è una scheda "tutor" separata — è la stessa card scorrevole. Questo blocco tratteggiato con bordo arancione è una <b>Nota per il Tutor</b>: panoramica, missione narrativa, obiettivo, il tuo ruolo, approccio didattico, punti importanti. Questo blocco lo vedono solo i tutor.'},
+    {title:'22 · Scorri più giù: cosa vede lo studente',body:'Subito sotto, nella stessa card, c\'è ciò che lo studente vede davvero: la checklist dell\'attrezzatura e il suggerimento sulla struttura della lezione. Nessuna Nota per il Tutor, nessun interruttore — la piattaforma semplicemente non mostra mai quel blocco a un account studente.'}
+  ],
+  inClass:['Preparati per la tua prima missione creativa 🚀','Benvenuto/a a Creativia Studio! ✨','Conosciamoci! 🤝','Come funzionerà la lezione? 🧭','Cosa può dire il tuo nome di te alle persone? ✨','Aprire il laboratorio di animazione 🎬','Prima lettera — prima versione del tuo progetto ✏️','Esplora gli strumenti di disegno 🎨','Sposta, ruota e ridimensiona 🖼️','Come far apparire la seconda lettera più tardi? 🤔','Aggiungi altre lettere al tuo nome 🔤','Dai vita alle tue lettere ✨','Controlla i tuoi progressi finora 👀','Controlla la tua animazione ✅','Salva e invia la tua animazione 💾','Come funziona la tua animazione? 🔍','Mini Anteprima dell\'Animazione! 🎬','Cosa hai scoperto oggi? ✨','Preparati a usare Canva 📷'],
+  homework:['Prepara un account email per Canva 📧','Controlla di essere pronto/a per la prossima lezione ✅']
+}
+};
+let LANG = 'en';
+function T(key){ return STR[LANG][key]; }
+function Tf(key,vars){ let s=STR[LANG][key]; if(vars) Object.keys(vars).forEach(k=>{ s=s.split('{'+k+'}').join(vars[k]); }); return s; }
+
+/* ---------- FICTIONAL DEMO DATA (language-independent identifiers) ---------- */
+const SUBGROUPS = [
+ {title:'DEMO_PARALLEL_POL_G1',time:'13.08, 17:00–18:00'},
+ {title:'DEMO_PARALLEL_POL_G3',time:'13.08, 17:00–18:00'},
+ {title:'DEMO_PARALLEL_POL_G4',time:'13.08, 17:00–18:00'},
+ {title:'DEMO_PARALLEL_POL_G2',time:'13.08, 17:10–18:10'},
+];
+const COURSE_NAME = '[2079] Digital Creativity. Level 2[2026][10-12][60 min][40 L][ENG][in progress]';
+
+/* ---------- STATE ---------- */
+let state = {page:'groups', groupsView:'initial', ptab:'groups', ctab:'lessons'};
+
+function goPage(p){ state.page=p; render(); fire('go-'+p); }
+function toggleGroupsView(){
+  state.groupsView = (state.groupsView==='initial') ? 'parallel' : 'initial';
+  render();
+  fire(state.groupsView==='parallel' ? 'click-parallel-tab' : 'click-regular-tab');
+}
+function openGroupDetail(){ state.page='groupDetail'; render(); fire('open-group-detail'); }
+function goPTab(t){ state.ptab=t; render(); fire(t==='schedule'?'open-schedule-tab':'open-groups-tab'); }
+function goCTab(t){ state.ctab=t; render(); fire(t==='assignments'?'open-assignments-tab':'open-lessons-tab'); }
+function openCourseDetail(){ state.page='courseDetail'; state.ctab='lessons'; render(); fire('open-course-detail'); }
+function openLessonViewer(){ state.page='lesson'; render(); fire('open-lesson-viewer'); }
+
+function openConsoleFromDetail(){
+  toast(T('toastConsoleDetail'));
+  fire('open-console-detail');
+}
+function openConsoleModalFromSchedule(){
+  document.getElementById('consoleModal').style.display='flex';
+  fire('open-console-modal');
+}
+function closeConsoleModal(){ document.getElementById('consoleModal').style.display='none'; }
+function openConsoleFromModal(){
+  toast(T('toastConsoleModal'));
+  closeConsoleModal();
+  fire('open-console-modal-btn');
+}
+function simClick(label){ toast(Tf('toastSimClick',{label:label})); }
+function toast(msg){
+  const t=document.createElement('div'); t.className='toast'; t.textContent=msg;
+  document.body.appendChild(t); setTimeout(()=>t.remove(),3800);
+}
+
+/* ---------- LANGUAGE ---------- */
+function toggleLangMenu(){ document.getElementById('langMenu').classList.toggle('open'); }
+function setLang(lang){
+  LANG = lang;
+  document.getElementById('langMenu').classList.remove('open');
+  applyChrome();
+  render();
+  if(tourActive()) showStepCard();
+}
+document.addEventListener('click', function(e){
+  if(!e.target.closest('.langwrap')) document.getElementById('langMenu').classList.remove('open');
+});
+function applyChrome(){
+  document.getElementById('simBadge').textContent = T('simBadge');
+  document.getElementById('tourBtnTop').textContent = T('tourBtn');
+  document.getElementById('tourMinBtn').textContent = T('tourMinimize');
+  document.getElementById('tourReopenBtn').textContent = T('tourResume');
+  document.getElementById('modalGroupsLbl').textContent = T('modalGroups');
+  document.getElementById('modalExit').textContent = T('modalExit');
+  document.getElementById('consoleModalOpenBtn').textContent = T('modalOpenConsole');
+  document.querySelectorAll('.langmenu button').forEach(b=>b.classList.toggle('active', b.dataset.lang===LANG));
+}
+
+/* ---------- RENDER ---------- */
+function render(){
+  const c = document.getElementById('content');
+  document.querySelectorAll('.side-icon[data-page]').forEach(b=>b.classList.toggle('active',
+    b.dataset.page===state.page ||
+    (state.page==='groupDetail' && b.dataset.page==='groups') ||
+    (state.page==='courseDetail' && b.dataset.page==='courses') ||
+    (state.page==='lesson' && b.dataset.page==='courses')
+  ));
+  if(state.page==='groups') c.innerHTML = renderGroups();
+  else if(state.page==='groupDetail') c.innerHTML = renderGroupDetail();
+  else if(state.page==='profile') c.innerHTML = renderProfile();
+  else if(state.page==='courses') c.innerHTML = renderCourses();
+  else if(state.page==='courseDetail') c.innerHTML = renderCourseDetail();
+  else if(state.page==='lesson') c.innerHTML = renderLesson();
+  applyTourHighlights();
+}
+
+function renderGroups(){
+  const label = state.groupsView==='initial' ? T('tabParallel') : T('tabRegular');
+  const body = state.groupsView==='initial'
+    ? `<table><thead><tr><th>${T('colID')}</th><th>${T('colTitle')}</th><th>${T('colTutor')}</th><th>${T('colType')}</th></tr></thead>
+       <tbody><tr class="empty-row"><td colspan="4">${T('emptyRegular')}</td></tr></tbody></table>`
+    : `<table><thead><tr><th>${T('colID')}</th><th>${T('colTitle')}</th><th>${T('colTutor')}</th><th>${T('colCurrentCourse')}</th><th>${T('colStart')}</th><th>${T('colStudentsPaid')}</th><th>${T('colPreviousLesson')}</th><th>${T('colNextLesson')}</th><th>${T('colType')}</th><th>${T('colPremium')}</th></tr></thead>
+       <tbody><tr>
+         <td>11</td>
+         <td><a class="tour-container-row" onclick="openGroupDetail()">DEMO_PARALLEL_POLAND</a></td>
+         <td>${T('teacherName')}</td>
+         <td>—</td><td>—</td><td>—</td><td>-</td><td>—</td>
+         <td>${T('containerType')}</td><td>${T('no')}</td>
+       </tr></tbody></table>
+       <div class="tbl-foot">${T('itemsPage100_1')}</div>`;
+  return `
+  <h1 class="pagetitle">${T('groupsTitle')}</h1>
+  <div class="tabrow">
+    <button class="tab ghost">${T('tabExtra')}</button>
+    <button class="tab ${state.groupsView==='parallel'?'active':''}" id="groupsToggleBtn" onclick="toggleGroupsView()">${label}</button>
+  </div>
+  <div class="tablewrap" id="groupsTable">${body}</div>`;
+}
+
+function renderGroupDetail(){
+  return `
+  <a class="backlink" onclick="goPage('groups')">${ICONS.back} ${T('backToGroups')}</a>
+  <div class="detailhead">
+    <div>
+      <h2>DEMO_PARALLEL_POLAND</h2>
+      <div class="field" style="border:none;padding-top:8px">${ICONS.person}${T('tutorLabel')} <a>${T('teacherName')}</a></div>
+    </div>
+    <div class="detailhead-actions">
+      <span class="icontip tour-console-btn" id="openConsoleBtn">
+        <button class="iconbtn" onclick="openConsoleFromDetail()">${ICONS.monitor}</button>
+        <span class="bubble">${T('openConsoleTip')}</span>
+      </span>
+    </div>
+  </div>
+  <div class="tablewrap" id="groupDetailTable">
+    <table><thead><tr><th>${T('colTitle')}</th><th>${T('colLessonTime')}</th><th>${T('colCourse')}</th><th>${T('colNextTopic')}</th></tr></thead>
+    <tbody>${SUBGROUPS.map(g=>`<tr>
+      <td><a>${g.title}</a></td><td>${g.time}</td>
+      <td><a onclick="simClick('${T('simOpenCourseFromDetail')}')">${COURSE_NAME}</a></td>
+      <td>—</td>
+    </tr>`).join('')}</tbody></table>
+    <div class="tbl-foot">${T('itemsPage10_4')}</div>
+  </div>`;
+}
+
+function renderProfile(){
+  const AVAILABILITY = [
+   [T('days')[0],'14:00-16:00'],[T('days')[1],'16:00-18:00'],[T('days')[2],'13:00-15:00'],
+   [T('days')[3],null],[T('days')[4],null],[T('days')[5],null],[T('days')[6],null]
+  ];
+  return `
+  <h1 class="pagetitle">${T('profileTitle')}</h1>
+  <div class="row3">
+    <div class="card">
+      <div class="profile-name">${T('teacherName')} <span class="pill pill-green">${T('badgeActive')}</span></div>
+      <div class="field">${ICONS.mail}—</div>
+      <div class="field">${ICONS.phone}—</div>
+      <div class="field">${ICONS.flag}${T('teacherCountry')}</div>
+      <div class="field">${ICONS.clock}UTC (UTC+00:00)</div>
+    </div>
+    <div class="card">
+      <h3>${T('teacherCoursesH')}</h3>
+      <div class="course-item">${COURSE_NAME}</div>
+    </div>
+    <div class="card">
+      <h3>${T('availabilityH')} ${ICONS.pencil}</h3>
+      ${AVAILABILITY.map(([d,v])=>`<div class="availrow"><span class="day">${d}:</span><span class="val ${v?'set':''}">${v||T('notAssigned')}</span></div>`).join('')}
+    </div>
+  </div>
+  <div class="tabrow">
+    <button class="tab ${state.ptab==='groups'?'active':''}" data-ptab="groups" onclick="goPTab('groups')">${ICONS.users} ${T('groupsTabLbl')}</button>
+    <button class="tab ${state.ptab==='schedule'?'active':''}" data-ptab="schedule" onclick="goPTab('schedule')">${ICONS.clock} ${T('scheduleTabLbl')}</button>
+  </div>
+  ${state.ptab==='schedule' ? renderSchedule() : `<div class="tablewrap"><div class="empty-row" style="padding:26px;text-align:center;color:var(--muted);font-style:italic">${T('regularGroupsNote')}</div></div>`}
+  `;
+}
+
+function renderSchedule(){
+  const days = T('days');
+  const hours=['01:00 PM','02:00 PM','03:00 PM','04:00 PM','05:00 PM','06:00 PM','07:00 PM','08:00 PM'];
+  return `
+  <div class="sched-nav"><button class="arrowbtn">${ICONS.back}</button><button class="btn btn-ghost">${T('currentWeek')}</button><button class="arrowbtn">${ICONS.arrow}</button></div>
+  <div class="sched-range">10.08 - 16.08.2026 📅</div>
+  <div class="tablewrap" style="padding-bottom:6px" id="scheduleGrid">
+    <div class="gridcal">
+      <div class="hd"></div>${days.map(d=>`<div class="hd">${d}</div>`).join('')}
+      ${hours.map((h,i)=>`<div class="hourlbl">${h}</div>${days.map((d,di)=>{
+        let content='';
+        if(di===0&&i===0) content=`<div class="evt avail">14:00-16:00<br>${T('available')}</div>`;
+        if(di===1&&i===2) content=`<div class="evt avail">16:00-18:00<br>${T('available')}</div>`;
+        if(di===2&&i===0) content=`<div class="evt avail">13:00-15:00<br>${T('available')}</div>`;
+        if(di===3&&i===4) content=`<div class="evt pl" onclick="openConsoleModalFromSchedule()">17:00-18:00<br>DEMO_PARALLEL_POLAND</div><div class="evt pl2" onclick="openConsoleModalFromSchedule()">17:10-18:10</div>`;
+        return `<div class="cell">${content}</div>`;
+      }).join('')}`).join('')}
+    </div>
+  </div>`;
+}
+
+function renderCourses(){
+  return `
+  <h1 class="pagetitle">${T('coursesTitle')}</h1>
+  <div class="tablewrap">
+    <table><thead><tr><th>${T('colID')}</th><th>${T('colTitle')}</th><th>${T('colBusinessBranch')}</th><th>${T('colActive')}</th><th>${T('colNumberOfLessons')}</th></tr></thead>
+    <tbody><tr>
+      <td>2079</td>
+      <td><a class="tour-course-link" onclick="openCourseDetail()">${COURSE_NAME}</a></td>
+      <td>ENG</td><td>${T('yes')}</td><td>40</td>
+    </tr></tbody></table>
+    <div class="tbl-foot">${T('itemsPage100_1')}</div>
+  </div>`;
+}
+
+function renderCourseDetail(){
+  return `
+  <a class="backlink" onclick="goPage('courses')">${ICONS.back} ${T('backToCourses')}</a>
+  <div class="course-head-card card" style="margin-bottom:18px">
+    <h1 class="pagetitle" style="margin-bottom:10px">${COURSE_NAME}</h1>
+    <div style="display:flex;gap:10px;margin-bottom:14px"><span class="pill pill-green">${T('badgeActive')}</span><span class="pill" style="background:#4a3420;color:#e0a860">fwd</span></div>
+    <div class="row3" style="grid-template-columns:1fr 1fr">
+      <div>
+        <div class="field">${ICONS.users}${T('fieldBranch')}</div>
+        <div class="field">文A ${T('fieldLanguage')}</div>
+        <div class="field">${ICONS.clock}${T('fieldCourseType')}</div>
+        <div class="field">${ICONS.users}${T('fieldCourseGroup')}</div>
+      </div>
+      <div>
+        <div class="field">${T('fieldLessons')}</div>
+        <div class="field">${T('fieldModules')}</div>
+        <div class="field">${T('fieldExcluded')}</div>
+        <div class="field">${T('fieldCertificate')}</div>
+      </div>
+    </div>
+  </div>
+  <div class="tabrow">
+    <button class="tab ${state.ctab==='lessons'?'active':''}" data-ctab="lessons" onclick="goCTab('lessons')">${T('lessonsTab')}</button>
+    <button class="tab ${state.ctab==='assignments'?'active':''}" data-ctab="assignments" onclick="goCTab('assignments')">${T('assignmentsTab')}</button>
+  </div>
+  ${state.ctab==='assignments' ? renderAssignments() : renderLessonsTab()}
+  `;
+}
+
+function renderLessonsTab(){
+  return `
+  <div class="tablewrap">
+    <table><thead><tr><th>${T('colID')}</th><th>${T('colTitle')}</th><th>${T('colNo')}</th><th>${T('colActions')}</th></tr></thead>
+    <tbody><tr><td>9001</td><td>${T('moduleFirstSteps')}</td><td>1</td><td><a onclick="goCTab('assignments')">${T('viewAssignments')}</a></td></tr></tbody></table>
+  </div>`;
+}
+
+function assignRows(titles, meta){
+  return meta.map((r,i)=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[0]===1?`<a class="tour-lesson-link" onclick="openLessonViewer()">${titles[i]}</a>`:`<a onclick="openLessonViewer()">${titles[i]}</a>`}</td><td>${T('interactive')}</td>
+    <td>${r[2]?'✅':'❌'}</td><td>${r[3]?'✅':'❌'}</td><td>${r[4]}</td></tr>`).join('');
+}
+const IN_CLASS_META = [
+ [1,196527,true,false,5],[2,196528,true,false,5],[3,196529,true,false,5],[4,196530,true,false,5],
+ [5,196531,false,false,10],[6,196532,true,false,5],[7,196533,true,false,5],[8,196534,true,false,5],
+ [9,196535,true,false,5],[10,196536,false,false,10],[11,196537,true,false,5],[12,196538,true,false,5],
+ [13,196539,false,false,5],[14,196540,true,false,5],[15,196541,false,true,30],[16,196542,false,false,10],
+ [17,196543,false,false,10],[18,196544,true,false,5],[19,196545,true,false,5]
+];
+const HOMEWORK_META = [[1,196546,true,false,25],[2,196547,false,true,75]];
+
+function renderAssignments(){
+  return `
+  <div style="margin-bottom:14px">
+    <label style="font-size:12px;color:var(--muted);font-weight:700;display:block;margin-bottom:6px">${T('lessonSelectLbl')}</label>
+    <select class="tab" style="width:100%;max-width:360px;text-align:left"><option>${T('lessonOption')}</option></select>
+  </div>
+  <div class="tablewrap" id="inClassTable" style="margin-bottom:18px">
+    <h3 style="padding:16px 18px 0">${T('inClassH')}</h3>
+    <table><thead><tr><th>${T('colNumber')}</th><th>${T('colID')}</th><th>${T('colAssignmentTitle')}</th><th>${T('colType')}</th><th>${T('colTheory')}</th><th>${T('colProject')}</th><th>${T('colMaxScore')}</th></tr></thead>
+    <tbody>${assignRows(T('inClass'),IN_CLASS_META)}</tbody></table>
+    <div class="tbl-foot">${T('itemsPage100_19')}</div>
+  </div>
+  <div class="tablewrap" style="margin-bottom:18px">
+    <h3 style="padding:16px 18px 0">${T('homeworkH')}</h3>
+    <table><thead><tr><th>${T('colNumber')}</th><th>${T('colID')}</th><th>${T('colAssignmentTitle')}</th><th>${T('colType')}</th><th>${T('colTheory')}</th><th>${T('colProject')}</th><th>${T('colMaxScore')}</th></tr></thead>
+    <tbody>${assignRows(T('homework'),HOMEWORK_META)}</tbody></table>
+  </div>
+  <div class="tablewrap" id="studyGuidesTable">
+    <h3 style="padding:16px 18px 0">${T('studyGuidesH')}</h3>
+    <table><thead><tr><th>${T('colID')}</th><th>${T('colTitle')}</th></tr></thead>
+    <tbody><tr class="empty-row"><td colspan="2">${T('noData')}</td></tr></tbody></table>
+    <div class="tbl-foot">${T('noWikiNote')}</div>
+  </div>`;
+}
+
+function renderLesson(){
+  const ri = T('resultItems'), ii = T('importantItems'), ei = T('equipItems'), si = T('spaceItems');
+  return `
+  <a class="backlink" onclick="goCTab('assignments')">${ICONS.back} ${T('backToAssignments')}</a>
+  <div class="lesson-shell">
+    <div class="lesson-top">
+      <div class="lesson-brand">kodland <span class="lesson-crumb">${T('lessonCrumb')}</span></div>
+      <div class="lesson-top-right">
+        <div class="lesson-lang">${LANG.toUpperCase()} ▾</div>
+        <div class="lesson-avatar">${ICONS.person}</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <div class="lesson-rail"><div class="dot">${ICONS.gear}</div></div>
+      <div class="lesson-content">
+        <div class="notecard" id="lessonNotes">
+          <div class="notelbl">${T('teacherNoteBadge')}</div>
+          <h2>${T('lessonTitle')}</h2>
+          <h3>${T('hOverview')}</h3>
+          <p>${T('pOverview')}</p>
+          <h3>${T('hMission')}</h3>
+          <p>${T('pMission')}</p>
+          <h3>${T('hGoal')}</h3>
+          <p>${T('pGoal')}</p>
+          <h3>${T('hResult')}</h3>
+          <ul>${ri.map(x=>`<li>${x}</li>`).join('')}</ul>
+          <div class="note-callout"><div class="lbl">${T('calloutLbl')}</div>${T('callout')}</div>
+          <div class="videobox"><div class="tag">${T('videoTag')}</div><h4>${T('videoTitle')}</h4><p>${T('videoDesc')}</p></div>
+          <h3>${T('hRole')}</h3>
+          <p>${T('pRole1')}</p>
+          <p>${T('pRole2')}</p>
+          <h3>${T('hFocus')}</h3>
+          <p>${T('pFocus1')}</p>
+          <p>${T('pFocus2')}</p>
+          <p>${T('pFocus3')}</p>
+          <h3>${T('hImportant')}</h3>
+          <ul>${ii.map(x=>`<li>${x}</li>`).join('')}</ul>
+          <h3>${T('hEnding')}</h3>
+          <p>${T('pEnding')}</p>
+          <h3>${T('hNext')}</h3>
+          <p>${T('pNext')}</p>
+        </div>
+        <div class="studentblock" id="lessonStudent">
+          <h2>${T('studentTitle')}</h2>
+          <p class="lead">${T('studentLead')}</p>
+          <h4>${T('hEquip')}</h4>
+          <ul>${ei.map(x=>`<li>${x}</li>`).join('')}</ul>
+          <h4>${T('hSpace')}</h4>
+          <ul>${si.map(x=>`<li>${x}</li>`).join('')}</ul>
+          <div class="tipbox"><div class="lbl">${T('tipLbl')}</div><p>${T('tipBody')}</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-foot">◀ &nbsp; 1 / 21 &nbsp; ▶</div>
+  </div>`;
+}
+
+/* ---------- GUIDED TOUR (structure is language-independent; text comes from T('steps')) ---------- */
+const STEPS = [
+ {page:'groups',groupsView:'initial',sel:'#groupsTable',advance:'next'},
+ {page:'groups',groupsView:'initial',sel:'#groupsToggleBtn',hl:['#groupsToggleBtn'],advance:'parallel',waitFor:'click-parallel-tab'},
+ {page:'groups',groupsView:'parallel',sel:'#groupsTable',advance:'next'},
+ {page:'groups',groupsView:'parallel',sel:'.tour-container-row',hl:['.tour-container-row'],advance:'detail',waitFor:'open-group-detail'},
+ {page:'groupDetail',sel:'#groupDetailTable',advance:'next'},
+ {page:'groupDetail',sel:'#openConsoleBtn',hl:['#openConsoleBtn'],advance:'console1',waitFor:'open-console-detail'},
+ {page:'groupDetail',sel:'#openConsoleBtn',advance:'next'},
+ {page:'groupDetail',sel:'[data-page="profile"]',hl:['[data-page="profile"]'],advance:'profile',waitFor:'go-profile'},
+ {page:'profile',ptab:'groups',sel:'.row3',advance:'next'},
+ {page:'profile',ptab:'groups',sel:'[data-ptab="schedule"]',hl:['[data-ptab="schedule"]'],advance:'schedule',waitFor:'open-schedule-tab'},
+ {page:'profile',ptab:'schedule',sel:'#scheduleGrid',advance:'modal',waitFor:'open-console-modal',hl:['.evt.pl']},
+ {page:'profile',ptab:'schedule',sel:'#consoleModal .modal-box',advance:'console2',waitFor:'open-console-modal-btn',hl:['#consoleModalOpenBtn']},
+ {page:'profile',ptab:'schedule',sel:'#scheduleGrid',advance:'next'},
+ {page:'profile',ptab:'schedule',sel:'[data-page="courses"]',hl:['[data-page="courses"]'],advance:'courses',waitFor:'go-courses'},
+ {page:'courses',sel:'.tour-course-link',hl:['.tour-course-link'],advance:'coursedetail',waitFor:'open-course-detail'},
+ {page:'courseDetail',ctab:'lessons',sel:'.course-head-card',advance:'next'},
+ {page:'courseDetail',ctab:'lessons',sel:'[data-ctab="assignments"]',hl:['[data-ctab="assignments"]'],advance:'assignments',waitFor:'open-assignments-tab'},
+ {page:'courseDetail',ctab:'assignments',sel:'#inClassTable',advance:'next'},
+ {page:'courseDetail',ctab:'assignments',sel:'#studyGuidesTable',advance:'next'},
+ {page:'courseDetail',ctab:'assignments',sel:'.tour-lesson-link',hl:['.tour-lesson-link'],advance:'lesson',waitFor:'open-lesson-viewer'},
+ {page:'lesson',sel:'#lessonNotes',advance:'next'},
+ {page:'lesson',sel:'#lessonStudent',advance:'next'},
+];
+let stepIdx = -1;
+
+function startTour(){
+  stepIdx = 0;
+  goToStepPage();
+  showStepCard();
+}
+function goToStepPage(){
+  const st = STEPS[stepIdx];
+  const needsModalOpen = st.sel && st.sel.indexOf('consoleModal')!==-1;
+  if(!needsModalOpen) closeConsoleModal();
+  state.page = st.page;
+  if(st.groupsView) state.groupsView = st.groupsView;
+  if(st.ptab) state.ptab = st.ptab;
+  if(st.ctab) state.ctab = st.ctab;
+  render();
+  if(needsModalOpen) document.getElementById('consoleModal').style.display='flex';
+}
+function showStepCard(){
+  const st = STEPS[stepIdx];
+  const txt = T('steps')[stepIdx];
+  document.getElementById('tourCard').style.display='flex';
+  document.getElementById('tourReopenBtn').style.display='none';
+  document.getElementById('tourStepLbl').textContent = Tf('stepOf',{n:stepIdx+1,total:STEPS.length});
+  document.getElementById('tourBar').style.width = Math.round(((stepIdx+1)/STEPS.length)*100)+'%';
+  document.getElementById('tourTitle').innerHTML = txt.title;
+  document.getElementById('tourBody').innerHTML = txt.body;
+  const nb = document.getElementById('tourNextBtn');
+  if(st.advance==='next'){ nb.style.display='inline-block'; nb.textContent = (stepIdx===STEPS.length-1) ? T('finish') : T('nextArrow'); }
+  else { nb.style.display='none'; }
+}
+function nextStep(){
+  stepIdx++;
+  if(stepIdx>=STEPS.length){ endTour(); return; }
+  goToStepPage();
+  showStepCard();
+}
+function minimizeTour(){
+  document.getElementById('tourCard').style.display='none';
+  document.getElementById('tourReopenBtn').style.display='block';
+}
+function reopenTour(){
+  document.getElementById('tourReopenBtn').style.display='none';
+  document.getElementById('tourCard').style.display='flex';
+}
+function endTour(){
+  document.getElementById('tourCard').style.display='none';
+  document.getElementById('tourReopenBtn').style.display='none';
+  document.querySelectorAll('.tour-hl').forEach(e=>e.classList.remove('tour-hl'));
+  const c = document.getElementById('content');
+  c.insertAdjacentHTML('afterbegin', `<div class="reflect" style="margin-bottom:18px">${T('reflect')}</div>`);
+  showSimDone();
+}
+// Clear end of the simulation: tells the tutor it's finished and to go back to the training
+function showSimDone(){
+  if (document.getElementById('simDone')) return;
+  const o = document.createElement('div');
+  o.id = 'simDone';
+  o.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(10,12,22,.72);display:flex;align-items:center;justify-content:center;padding:16px;font-family:Inter,system-ui,sans-serif';
+  o.innerHTML = '<div style="background:#fff;color:#1f2433;max-width:520px;width:100%;border-radius:22px;padding:30px 30px 24px;text-align:center;border-top:8px solid #2fbf68;box-shadow:0 30px 80px rgba(0,0,0,.45)">'
+    + '<div style="font-size:54px;line-height:1">🎉</div>'
+    + '<h2 style="margin:12px 0 8px;font-size:24px">Simulation complete!</h2>'
+    + '<p style="color:#454b5e;font-size:15px;line-height:1.6;margin:6px 0">You’ve finished the BO walkthrough: Parallel Groups, the two ways to open the Classroom link, PL courses and the Teacher Notes.</p>'
+    + '<p style="color:#1f2433;font-size:15px;line-height:1.6;margin:14px 0 0;background:#fff4c7;border-radius:12px;padding:12px 14px"><b>Next step:</b> close this tab and go back to the training to finish the module.</p>'
+    + '<div style="display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap">'
+    + '<button id="simDoneStay" style="border:1px solid #c9cdd8;background:#fff;border-radius:10px;padding:11px 18px;font-weight:600;font-size:14px;cursor:pointer">Keep exploring</button>'
+    + '<button id="simDoneClose" style="border:0;background:#1f2433;color:#fff;border-radius:10px;padding:11px 18px;font-weight:700;font-size:14px;cursor:pointer">Close and return to the training</button>'
+    + '</div></div>';
+  document.body.appendChild(o);
+  document.getElementById('simDoneStay').onclick = () => o.remove();
+  // window.close() only works for tabs opened by the training; otherwise explain what to do
+  document.getElementById('simDoneClose').onclick = () => {
+    window.close();
+    setTimeout(() => { o.querySelector('p:last-of-type').innerHTML = '<b>You can close this tab now</b> and continue in the training tab.'; }, 300);
+  };
+}
+function tourActive(){ return stepIdx>=0 && stepIdx<STEPS.length; }
+document.addEventListener('click', function(e){
+  if(!tourActive()) return;
+  if(e.target.closest('.tour-card, #tourReopenBtn, .tour-hl, .langwrap')) return;
+  e.preventDefault();
+  e.stopPropagation();
+  toast(T('toastBlocked'));
+}, true);
+function fire(action){
+  if(stepIdx<0 || stepIdx>=STEPS.length) return;
+  if(STEPS[stepIdx].waitFor===action){
+    setTimeout(()=>{
+      stepIdx++;
+      if(stepIdx>=STEPS.length){ endTour(); } else { goToStepPage(); showStepCard(); }
+    }, 300);
+  }
+}
+function applyTourHighlights(){
+  document.querySelectorAll('.tour-hl').forEach(e=>e.classList.remove('tour-hl'));
+  if(stepIdx<0 || stepIdx>=STEPS.length) return;
+  const st = STEPS[stepIdx];
+  const targets = st.hl || [st.sel];
+  targets.forEach(sel=>{
+    if(!sel) return;
+    document.querySelectorAll(sel).forEach(el=>el.classList.add('tour-hl'));
+  });
+  if(st.sel){ const el=document.querySelector(st.sel); if(el) el.scrollIntoView({behavior:'smooth',block:'center'}); }
+}
+
+applyChrome();
+render();
+startTour();
+</script>
+</body>
+</html>
