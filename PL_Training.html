@@ -430,6 +430,113 @@ input[type=range]{width:100%;accent-color:var(--lime)}
 .mbox p{color:var(--pmuted);line-height:1.6}
 .lb img{max-width:94vw;max-height:88vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:300}
+/* ---------- v2 components ---------- */
+.defn,.example,.bridge{display:flex;gap:16px;align-items:flex-start;border-radius:20px;padding:18px 20px;margin:4px 0 18px;line-height:1.65;font-size:16px}
+.defn{background:linear-gradient(135deg,rgba(205,242,74,.14),rgba(255,211,77,.08));border:1px solid rgba(205,242,74,.45)}
+.example{background:rgba(91,140,255,.12);border:1px solid rgba(91,140,255,.45)}
+.bridge{background:var(--panel);border:1px dashed var(--line2);margin:16px 0}
+.defn p,.example p,.bridge p{margin:0}
+.defn .de,.example .de,.bridge .de{font-size:34px;line-height:1}
+.fig img{max-height:520px;object-fit:contain;background:#262c40}
+.formula{border-radius:20px;padding:18px 20px;background:var(--panel);border:1px solid var(--line)}
+.fx{font-family:Unbounded,sans-serif;font-size:17px;line-height:1.5}
+.fx b{color:var(--yellow)}
+.fchips{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.fchips button{border-radius:14px;padding:12px;background:var(--bg2);border:2px solid var(--line);text-align:center;transition:all .2s}
+.fchips button b{display:block;font-size:13.5px}
+.fchips button span{display:block;font-family:Unbounded,sans-serif;font-size:20px;color:var(--yellow);margin-top:4px}
+.fchips button.on,.fchips button:hover{border-color:var(--lime);background:rgba(205,242,74,.08)}
+.card.cute{background:rgba(255,211,77,.10);border-color:rgba(255,211,77,.45)}
+.sec2{margin-top:22px}
+.vsoon{aspect-ratio:16/9;max-height:420px;width:100%;border-radius:20px;border:2px dashed var(--line2);background:repeating-linear-gradient(135deg,var(--panel) 0 22px,#2b3149 22px 44px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center}
+.vsoon span{font-size:58px}.vsoon b{font-size:18px}.vsoon small{color:var(--muted)}
+.chapters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;font-size:13px;color:var(--muted)}
+.chapters b{background:var(--panel2);border:1px solid var(--line2);border-radius:999px;padding:5px 12px;color:var(--txt);font-size:12.5px}
+.q3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.q3 div{border-radius:18px;padding:18px;background:var(--panel);border:1px solid var(--line);text-align:center}
+.q3 span{font-size:40px;display:block}
+.q3 b{display:block;font-family:Unbounded,sans-serif;font-size:15px;margin:8px 0 4px}
+.q3 small{color:var(--muted);font-size:13.5px}
+.fbx{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.fbi{border-radius:14px;padding:12px 14px;font-size:15px;line-height:1.55;animation:fadeUp .35s both}
+.fbi.v{background:var(--bg2);color:var(--muted)}
+.fbi.s{background:rgba(205,242,74,.10);border:1px solid rgba(205,242,74,.4)}
+.fbn{margin:4px 0 0;font-size:14px;color:var(--muted)}
+.scrub-grid{display:grid;grid-template-columns:1fr 290px;gap:16px;margin-top:14px}
+.scrub-grid .lanes{margin-top:0}
+.notebook{border-radius:14px;background:#cfb08c;color:#2b1d0e;padding:12px 14px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.08);font-family:'Segoe Print','Comic Sans MS',cursive;min-height:220px}
+.nb-title{font-weight:800;font-size:15px;margin-bottom:6px}
+.nb-lines{max-height:230px;overflow-y:auto;font-size:13.5px}
+.nbl{padding:7px 0;border-bottom:1px solid rgba(110,70,30,.35);line-height:1.4;opacity:0;max-height:0;overflow:hidden;transition:opacity .6s ease,max-height .6s ease}
+.nbl.show{opacity:1;max-height:60px}
+.nbl.dim.show{opacity:.6}
+.subh{font-family:Unbounded,sans-serif;font-size:18px;margin:26px 0 8px}
+.qa.my .qa-q{color:#ffd2d7}
+.hl2{background:#ffe680;border-radius:4px;padding:1px 4px;font-weight:700}
+.cklist{display:flex;flex-direction:column;gap:8px}
+.ck{display:flex;gap:12px;align-items:flex-start;text-align:left;border-radius:12px;padding:11px 14px;background:var(--bg2);border:1px solid var(--line);font-size:15px;line-height:1.5}
+.ckb{flex:0 0 22px;height:22px;border-radius:7px;border:2px solid var(--line2);display:grid;place-items:center;font-weight:900;color:var(--ink);margin-top:1px}
+.ck.on{border-color:var(--lime);background:rgba(205,242,74,.07)}
+.ck.on .ckb{background:var(--lime);border-color:var(--lime)}
+.ck.on .ckb::after{content:"✓"}
+.oq{display:flex;flex-direction:column;gap:6px;text-align:left;border-radius:14px;padding:14px 16px;background:var(--bg2);border:1px solid var(--line);font-size:15px;line-height:1.5}
+.oq span{display:none;color:#d5d9e6;font-size:14px}
+.oq::after{content:"Tap to see the answer you want to hear →";font-size:12px;color:var(--dim);font-weight:700}
+.oq.on{border-color:var(--lime)}
+.oq.on span{display:block;animation:fadeUp .3s}
+.oq.on::after{content:none}
+.codebox{margin-top:16px;border-radius:18px;padding:16px 18px;background:var(--bg2);border:2px dashed var(--yellow)}
+.codebox label{display:block;font-size:14.5px;margin-bottom:10px}
+.cb-row{display:flex;gap:10px;flex-wrap:wrap}
+.cb-row input{flex:1;min-width:200px;border-radius:12px;border:2px solid var(--line2);background:#1d2231;color:var(--txt);font-size:17px;padding:11px 14px;font-family:Unbounded,sans-serif;letter-spacing:.05em;text-transform:uppercase}
+.cb-row input:focus{outline:none;border-color:var(--lime)}
+.cb-err{display:block;color:#ff9aa5;font-weight:600;font-size:13.5px;margin-top:8px;min-height:18px}
+.codebox.ok{border-style:solid;border-color:var(--lime);background:rgba(205,242,74,.08)}
+.cb-ok{font-size:15px}
+.lockmsg{margin-top:10px;display:inline-block;background:rgba(255,211,77,.16);border:1px solid rgba(255,211,77,.6);color:var(--yellow);border-radius:10px;padding:8px 12px;font-weight:700;font-size:14px}
+.lockmsg.shake{animation:shakeX .45s}
+@keyframes shakeX{25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
+.qaprog{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--muted);margin-bottom:14px}
+.qaprog .ptrack{max-width:300px}
+.qalist{display:flex;flex-direction:column;gap:10px}
+.qa{border-radius:16px;background:var(--panel);border:1px solid var(--line);overflow:hidden}
+.qa.read{border-color:rgba(205,242,74,.4)}
+.qa-q{width:100%;display:flex;gap:14px;align-items:center;text-align:left;padding:15px 18px;font-size:15.5px;font-weight:700;line-height:1.45}
+.qa-q .qi{font-size:24px}
+.qa-q .qx{margin-left:auto;font-size:22px;color:var(--lime);transition:transform .2s}
+.qa.open .qx{transform:rotate(45deg)}
+.qa.read .qa-q .qi::after{content:"✓";font-size:11px;color:var(--lime);vertical-align:top;margin-left:2px}
+.qa-a{display:none;padding:0 20px 16px 56px;color:#d5d9e6;line-height:1.65;font-size:15px}
+.qa.open .qa-a{display:block;animation:fadeUp .3s}
+.qa-a p{margin:8px 0}.qa-a h4{margin:14px 0 6px;color:var(--lime)}.qa-a ul{margin:6px 0;padding-left:20px}
+.ladder{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.lrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.lr{width:26px;height:26px;border-radius:50%;background:var(--yellow);color:var(--ink);display:grid;place-items:center;font-weight:800;font-size:13px}
+.lw{background:rgba(205,242,74,.18);color:var(--lime);border-radius:999px;padding:4px 12px;font-weight:700;font-size:13.5px}
+.ll{background:var(--panel2);color:var(--muted);border-radius:999px;padding:4px 12px;font-weight:700;font-size:13.5px}
+.lv{font-size:12.5px;color:var(--dim)}
+.anna{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.anna div{display:flex;gap:12px;background:var(--bg2);border-radius:10px;padding:8px 12px}
+.anna b{font-family:Unbounded,sans-serif;color:var(--yellow);font-size:13px;min-width:48px}
+.drivewrap{position:relative;padding-bottom:56.25%;border-radius:14px;overflow:hidden;background:#000;margin-top:8px}
+.drivewrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+main:has(.simpage){max-width:1400px}
+.simhead{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.simintro{margin-bottom:16px}
+.simintro[hidden]{display:none}
+.simframe-wrap{border-radius:18px;overflow:hidden;border:2px solid var(--line2);background:#000;box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.simframe{display:block;width:100%;height:calc(100vh - 90px);min-height:640px;border:0}
+.nexts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0;text-align:left}
+.nexts div{display:flex;gap:12px;align-items:flex-start;border-radius:14px;padding:12px 14px;background:var(--bg2)}
+.nexts span{font-size:24px}.nexts p{margin:0;font-size:14.5px}
+.carN{align-self:center;font-size:13px;font-weight:800;background:rgba(0,0,0,.35);border-radius:999px;padding:8px 14px;min-width:70px;text-align:center}
+.car .arrows .nxt{background:var(--lime);color:var(--ink);font-weight:900}
+.car .arrows button:disabled{opacity:.3;cursor:default}
+.car .dots button.seen{background:rgba(205,242,74,.55)}
+.tfopts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tfopts .qopt{justify-content:center;font-size:18px;font-weight:800;padding:20px}
+.simcard{background:linear-gradient(160deg,#3a4370,var(--panel))}
+@media (max-width:900px){.fchips,.q3,.nexts,.tfopts{grid-template-columns:1fr 1fr}.scrub-grid{grid-template-columns:1fr}}
 .devbadge{position:fixed;bottom:12px;left:12px;z-index:250;background:var(--pink);color:#fff;font-weight:800;font-size:12px;border-radius:999px;padding:6px 12px}
 .foot{max-width:1080px;margin:0 auto;padding:0 22px 26px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--dim)}
 .foot button{font-size:12.5px;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
@@ -466,13 +573,18 @@ const CONFIG = {
   PASS: 0.7,   // 70% to pass each module check
   CLASSROOM_SIM: 'https://agathiceras.github.io/PL_simulation_test/Classroom_Simulator.html',
   BO_SIM: 'BO_simulator/Simulacion_BO_PL.html',
-  VIDEO_ID: 'DDkHpfBujl0',
-  DEV_CODE: 'PLDEV'   // code for the Developer options (not case-sensitive)
+  SIM_CODE: 'PL-SIM-4827',      // shown at the end of the Classroom simulator
+  BO_CODE: 'PL-BO-3815',        // shown at the end of the BO simulator
+  OPENING_VIDEO_ID: '',         // YouTube id of the "PL opening" video (with chapters) — empty = "coming soon"
+  CLOSING_VIDEO_ID: '',         // YouTube id of the "PL closing" video (with chapters)
+  CONTENT_VIDEO: 'https://drive.google.com/file/d/1gizpY-aR2ND0Olj52FWJIGx0D2YYDPKg/preview',
+  DEV_CODE: 'PLDEV'             // code for the Developer options (not case-sensitive)
 };
-const PKEY = 'kl-newpl-progress-v1';
+const PKEY = 'kl-newpl-progress-v2';
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const norm = s => String(s || '').trim().toUpperCase().replace(/\s+/g, '');
 
 /* ---------- Progress (localStorage) ---------- */
 let P = {};
@@ -484,22 +596,35 @@ const flag = k => !!(P.flags && P.flags[k]);
 function setFlag(k, v){ P.flags = P.flags || {}; P.flags[k] = v; saveP(); }
 
 /* =========================================================
-   MODULES (Core 1 — The PL format)
+   MODULES (Part 1 — The PL format)
+   check: quiz | tf | chat | qa | sim      needs: a flag that must be set before the check opens
    ========================================================= */
 const MODULES = [
-  { id:'m1', n:1, e:'🌟', color:'#cdf24a', title:'Welcome to Parallel Lessons',
-    desc:'What the format is, why it exists, who the students are, and the mindset you bring to it.',
-    obj:'By the end of this module you’ll know what a Parallel Lesson is, why Kodland created it, which students it’s designed for, and how it expands your role as a tutor.',
-    sections:[ ['what','🧩','What is a Parallel Lesson?'], ['why','🚀','Why the format exists'], ['students','🧒','Meet the students'], ['role','🧭','Your role as a tutor'], ['mindset','🌱','A new mindset'] ] },
-  { id:'m2', n:2, e:'🎬', color:'#ffd34d', title:'How a Parallel Lesson Works',
-    desc:'The lesson structure, what changes for you, a full simulation and the moments that matter most.',
-    obj:'See the structure of a Kodland lesson, compare a parallel tutor with a regular tutor, live a parallel lesson in the simulator and learn what happens in each stage you still lead.',
-    sections:[ ['structure','🗺️','The lesson structure'], ['compare','⚖️','What a PL tutor does'], ['sim','🎮','Live a parallel lesson'], ['stages','🪜','The moments you lead'], ['video','🎥','A real example'] ] },
-  { id:'m3', n:3, e:'🖥️', color:'#5b8cff', title:'Technical Aspects of Parallel Lessons',
-    desc:'Parallel Groups in BO, communication and tracking rules, and how the timing works.',
-    obj:'Find your Parallel Groups in the Back Office, know the communication and tracking rules, and understand how one tutor session fits several 60-minute lessons.',
-    sections:[ ['bo','🗂️','Parallel Groups in BO'], ['rules','📏','Communication & tracking rules'], ['timing','⏱️','How the timing works'] ] }
+  { id:'m1', n:1, e:'🌟', color:'#cdf24a', title:'Welcome to Parallel Lessons', check:'quiz', needs:['metAll', 'Meet all 4 students in the carousel above to unlock the check.'],
+    desc:'What a Parallel Lesson is, how it works, how the time works, and who the students are.',
+    obj:'By the end of this module you’ll know what a Parallel Lesson is, how one lesson runs, how your time works with several students, and which students this format is made for.',
+    sections:[ ['what','🧩','What is a Parallel Lesson?'], ['runs','📋','How a lesson actually runs'], ['time','⏱️','How the time works'], ['why','🚀','Why the format exists'], ['students','🧒','Meet the students'] ] },
+  { id:'m2', n:2, e:'🗺️', color:'#ffd34d', title:'The Lesson Structure', check:'tf',
+    desc:'The structure of a regular lesson and of a parallel lesson, and why the opening and the closing matter so much.',
+    obj:'Compare the structure you already know with the structure of a parallel lesson, and see what happens in the opening and in the closing — the two moments you lead.',
+    sections:[ ['structure','🗺️','Two lesson structures'], ['matter','⭐','The opening and the closing still matter'], ['opening','🎬','The opening'], ['closing','🏁','The closing'] ] },
+  { id:'m3', n:3, e:'🧭', color:'#ec5fa6', title:'Your Role as a PL Tutor', check:'chat',
+    desc:'Your role and mindset, what you do (and don’t do), feedback, taking notes, and your first PL lesson.',
+    obj:'Understand your role in a parallel lesson, how to give feedback, how to keep track of your students with notes, and how to run your very first PL lesson.',
+    sections:[ ['role','🧭','So… what’s my role?'], ['mindset','🌱','Skills and mindset for every lesson'], ['feedback','💬','Feedback that helps'], ['notes','📝','How students join — and your notes'], ['first','🚀','Your first PL lesson'] ] },
+  { id:'m4', n:4, e:'🖥️', color:'#5b8cff', title:'Technical Aspects', check:'quiz', needs:['boCode', 'Enter the code from the end of the BO simulator to unlock the check.'],
+    desc:'Parallel Groups and Teacher Notes in BO, and the communication and tracking rules.',
+    obj:'Find your Parallel Groups and Teacher Notes in the Back Office, open the console, and know the communication and tracking rules.',
+    sections:[ ['bo','🗂️','Parallel Groups in BO'], ['tnotes','📒','Teacher Notes, not the wiki'], ['rules','📏','Communication & tracking rules'] ] },
+  { id:'m5', n:5, e:'❓', color:'#3fd16b', title:'Q&A: Your Questions', check:'qa',
+    desc:'Straight answers to the questions tutors ask most — no test, just read through them.',
+    obj:'Real questions from tutors about Parallel Lessons, with straight answers. There’s no test: open every question to complete the module.',
+    sections:[ ['qa','❓','Questions & answers'] ] },
+  { id:'m6', n:6, e:'🎮', color:'#f5a623', title:'Classroom Simulation', check:'sim',
+    desc:'To complete the training, practice a real lesson: enter the simulation.',
+    obj:'' }
 ];
+const TOTAL = MODULES.length;
 const unlocked = m => { const i = MODULES.indexOf(m); return i <= 0 || passed(MODULES[i - 1].id); };
 const coreDone = () => MODULES.every(m => passed(m.id));
 
@@ -513,18 +638,31 @@ const QUIZ = {
          'One tutor supports 2–5 students in the same time slot, each on their own path and each with a full 60-minute lesson.',
          'A recorded course that students follow on their own, with no tutor at any point.'],
       a:1, e:'Each student has their own individual 60-minute lesson. What stretches to fit everyone is the tutor’s session.' },
+    { q:'How does Classroom make Parallel Lessons possible?',
+      o:['All students share one room and take turns to talk to the tutor.',
+         'Each student has their own room, created by default — like breakout rooms that are already set up.',
+         'The tutor creates a new video call for every student.'],
+      a:1, e:'In the console, each student has their own room. You move from room to room; students never see each other.' },
+    { q:'You have 4 students in your parallel group. How long is your session?',
+      o:['60 minutes', '90 minutes', '240 minutes'],
+      a:1, e:'Your session = 60 min + 10 min for each additional student. With 4 students: 60 + 30 = 90 minutes. Each student still gets 60.' },
     { q:'Which student is this format designed for?',
       o:['Students aged 10+ who can work independently, enjoy autonomy and like knowing an expert is there when they need help.',
          'Young children who still need an adult beside them during the whole lesson.',
          'Students who learn best by working in teams with their classmates.'],
-      a:0, e:'From around age 10, students can manage their own focus for stretches of time. Many already enjoy learning on their own, and some have used fully asynchronous formats before.' },
-    { q:'What does learning the PL format mean for you as a tutor?',
-      o:['From now on, all your courses will become parallel lessons.',
-         'You’ll have to teach in the parallel way in every group you have.',
-         'You expand your experience with a new educational format, which can also open the door to more groups.'],
-      a:2, e:'Learning the format doesn’t turn all your courses into parallel lessons, and your role only changes in your parallel groups. It adds a new format to your experience.' }
+      a:0, e:'From around age 10, students can manage their own focus for stretches of time. Many already enjoy learning on their own.' }
   ],
-  m3:[
+  m2:[
+    { tf:true, q:'In a parallel lesson, the tutor explains the theory and models the practice for each student.', a:1,
+      e:'False. In a parallel lesson the student does the theory and practice on their own with the cards. The content is designed for it.' },
+    { tf:true, q:'Feedback on the student’s project is given in Wrapping up, at the end of the lesson.', a:0,
+      e:'True. There’s no separate feedback stage in the middle: the student shows their project and you give feedback when you close the lesson.' },
+    { tf:true, q:'Because the middle of the lesson is independent, the opening and the closing matter less than in other formats.', a:1,
+      e:'False. They matter even more: they’re the only moments each student has your full, undivided attention.' },
+    { tf:true, q:'Lesson goal is the last stage before the student starts working on their own.', a:0,
+      e:'True. After the lesson goal, the student starts their independent work with the cards.' }
+  ],
+  m4:[
     { q:'What is a “Parallel Group” in the Back Office?',
       o:['A container that groups several individual student groups under one tutor.',
          'A new course type with a different curriculum.',
@@ -538,8 +676,8 @@ const QUIZ = {
     { q:'How should you communicate with the students of a parallel group?',
       o:['Create one WhatsApp group with all the students of the slot.',
          'Only inside Classroom, never by message.',
-         'Individually, with direct messages to each student, the same as a 1:1 lesson.'],
-      a:2, e:'Parallel lessons are individualized learning: never create WhatsApp groups for the slot. Every student is contacted individually.' },
+         'Individually, with direct messages to each student.'],
+      a:2, e:'Parallel Lessons are individualized learning: never create WhatsApp groups for the slot. Every student is contacted individually.' },
     { q:'How early can you open the Classroom console?',
       o:['From your Groups list, 60 minutes before the lesson. From your Schedule, 30 minutes before.',
          'Only at the exact start time, from any page.',
@@ -548,8 +686,7 @@ const QUIZ = {
   ]
 };
 
-// Module 2 check: a conversation with a tutor who doesn't know the format yet.
-// The correct answer is placed in a different position on purpose (C, A, B, C).
+// Module 3 check: a conversation with a tutor who doesn't know the format yet. Correct answers sit in different positions (C, A, B, C).
 const CHAT = [
   { them:'This new format sounds interesting, but I’m confused. Wouldn’t it be a lot more work to teach the same thing to 5 kids separately?',
     o:['Yes, it’s more work: you repeat the whole lesson, theory included, five times in a row.',
@@ -570,21 +707,61 @@ const CHAT = [
     a:1, ok:'Exactly. You help raised hands in the gaps, and the cards already include help and what to do with technical issues — that’s why a clear explanation of the format at the start is so important.',
     ko:'Not quite. You can help raised hands in the short gaps, and the lesson on the platform already includes help options and guidance for technical problems.' },
   { them:'Sounds interesting, that makes me feel calmer. So the content changed for this format?',
-    o:['No, it’s exactly the same content as the regular courses — you just teach it faster.',
-       'Only the order of the lessons changed; the activities are the same.',
-       'Yes, actually it’s very different: it’s designed precisely so the lessons can work “without a tutor” for most of the time.'],
-    a:2, ok:'Yes! The content was redesigned for this format, so the student can move forward on their own with the cards.',
-    ko:'Not quite. The content is very different: it was designed precisely so students can work through it on their own.' }
+    o:['No, they’re exactly the same lessons as the regular course — you just teach them faster.',
+       'Yes, everything changed: new tools, new skills and new goals.',
+       'The tools, skills and goals students learn are the same, but the lessons are different: they’re designed so students can move forward on their own with the cards.'],
+    a:2, ok:'Yes! The learning goals stay the same, but the lessons were redesigned for this format. Good news: you don’t have to teach the same lessons in a new format.',
+    ko:'Not quite. Students learn the same tools, skills and goals, but the lessons themselves are different: they’re designed for independent work.' }
 ];
 
 /* =========================================================
-   CONTENT — section bodies (HTML builders)
+   Q&A (Module 5)
+   ========================================================= */
+const LADDER = `<div class="ladder">${[['Onboarding','Raised hand'],['Closing (offboarding)','Raised hand'],['Onboarding','Closing'],['Raised hand','A quick check-in']]
+  .map((r, i) => `<div class="lrow"><span class="lr">${i + 1}</span><span class="lw">${r[0]}</span><span class="lv">beats</span><span class="ll">${r[1]}</span></div>`).join('')}</div>`;
+const QA = [
+  { ic:'⏱️', q:'With 5 students, how can I welcome a new one every 10 minutes and also help everyone else?',
+    a:`<p>You don’t visit every student every few minutes — you only go to whoever <b>raises their hand</b>. When several things happen at once, follow this order:</p>${LADDER}<p>Quick check-ins only happen when there’s no one to welcome, no one to close and no hand raised.</p>` },
+  { ic:'🚦', q:'If a technical problem uses up the 10-minute onboarding and the next student arrives at that moment, who comes first?',
+    a:`<p>The student who arrived on time is the priority. The student with the technical problem is helped <b>after</b> you finish with the one who arrived punctually, following the same priority order:</p>${LADDER}` },
+  { ic:'🌍', q:'What’s the scope of PL — is this a test?',
+    a:'<p>PL fully replaces the <b>Premium format</b> in selected courses. That’s why the tutors of those courses are being trained on it. The format has already been tested in other large regions, including Brazil and LatAm, with very positive results.</p>' },
+  { ic:'🎬', q:'Is the content the same as in the regular course?',
+    a:`<p>The <b>tools, skills and goals</b> students learn are the same. The <b>lessons are different</b>: they’re written for a more mature, more independent student, and designed so the student doesn’t depend 100% on you to complete the lesson. Good news: you won’t teach the same lessons as before in a new format.</p>
+      <h4>What this format is built on</h4><p>The lesson follows a <b>deductive approach</b>: the student first sees a finished project, then explores how it was made, and applies the principle to their own project.</p>
+      <p><b>Feedback: Tutor + Self.</b> There’s no peer feedback. AI isn’t used in the first lessons; in later lessons in the module, AI is added as a third feedback channel where appropriate.</p>
+      <p>The main focus is the feeling: <i>“I can create a working digital project on my own.”</i> Mistakes are a normal part of the creative process.</p>
+      <p>Watch this video to understand how the content changes, for you and for the student:</p>
+      <div class="drivewrap"><iframe src="${CONFIG.CONTENT_VIDEO}" allow="autoplay" loading="lazy" title="How the content changes"></iframe></div>` },
+  { ic:'👥', q:'What’s the maximum number of students in a Parallel Lesson group?', a:'<p>Maximum <b>5 students / 100 minutes</b>.</p>' },
+  { ic:'💙', q:'How do I manage a PL lesson with students who have disabilities or need more attention and support?',
+    a:'<p>CS will leave a note whenever a student has a known disability, as usual. If you realize the PL format isn’t suitable for a particular student, <b>discuss the case with your TL</b> and we’ll find the best solution together.</p><p>In many cases the format can work <i>better</i> than a traditional group lesson, because the student still receives individual attention. Questions about independence, individual work and past experience with self-paced courses are already asked during the trial class — if a student wouldn’t be comfortable in PL, they simply aren’t offered this format.</p>' },
+  { ic:'⏰', q:'What’s the protocol for students who arrive late?',
+    a:`<p>Each student joins 10 minutes apart (e.g. 16:00, 16:10, 16:20…). Onboarding and closing one student takes about 6–7 minutes in practice, so you always have some margin.</p>
+      <h4>If a student doesn’t join within their first 5 minutes</h4>
+      <ul><li>Message them or their guardian directly on WhatsApp.</li><li>If their window ends and they still haven’t joined, welcome the next student — you don’t wait indefinitely.</li><li>If the student joins late, invite them in, but finish with the student already in progress first.</li><li>A late student does <b>not</b> get a full 60-minute lesson — it ends when their originally planned window ends.</li></ul>
+      <h4>Example: Anna</h4>
+      <div class="anna">${[['16:10','Anna is expected (16:10–16:20).'],['16:15','She hasn’t connected: you message her on WhatsApp and welcome the next student, Mario.'],['16:21','Anna appears in the waiting room, but you’re with Mario. You tell her on WhatsApp you’ll be with her in a few minutes.'],['16:25','You finish with Mario and welcome Anna.']].map(r => `<div><b>${r[0]}</b><span>${r[1]}</span></div>`).join('')}</div>
+      <p>Anna’s planned window: <b>16:10–17:10</b> → her actual time after the late arrival: <b>16:25–17:10</b>.</p>` },
+  { ic:'💬', q:'Do I need a WhatsApp group with all the students in the parallel group?',
+    a:'<p>No. PL is individualized learning: tutors must <b>not</b> create WhatsApp groups for the students of a slot. Every student is treated individually, and all communication goes through direct messages.</p>' },
+  { ic:'🔄', q:'Will all courses move to this format? Is this the new default at Kodland?', a:'<p>No — PL only replaces the Premium format, for selected courses.</p>' },
+  { ic:'👪', q:'Are parents aware of this format when enrolling?', a:'<p>Yes. Parents are informed about the PL format when they enroll, as part of the communication process for the selected courses.</p>' },
+  { ic:'💰', q:'How does compensation work in PL?', a:'<p>For PL compensation and specific calculations, <b>contact your TL</b>.</p>' }
+];
+
+/* =========================================================
+   BUILDERS
    ========================================================= */
 const callout = (type, icon, html) => `<div class="callout ${type}"><span class="ci">${icon}</span><div>${html}</div></div>`;
 const fig = (src, alt, cap) => `<figure class="fig"><img src="${src}" alt="${alt}" data-zoom>${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>`;
 const flip = (e, t, back, hint = 'Tap to flip') => `<div class="flip" data-flip><div class="in"><div class="fc front"><span class="fe">${e}</span><b>${t}</b><small>${hint}</small></div><div class="fc back">${back}</div></div></div>`;
-
-// One lesson-structure diagram. Item kinds: open / main / indep / close. Numbering skips the independent-work block.
+const fileNote = () => location.protocol === 'file:' ? callout('warn', '⚠️', '<b>You’re viewing this training as a local file.</b> YouTube videos only play here once the training is published on a website.') : '';
+function videoBlock(id, intro, chapters){
+  const ch = `<div class="chapters"><span>Chapters in the video:</span>${chapters.map(c => `<b>${c}</b>`).join('')}</div>`;
+  if (!id) return `<p class="p">${intro}</p><div class="vsoon"><span>🎬</span><b>Video coming soon</b><small>It will appear here as soon as it’s ready.</small></div>${ch}`;
+  return `<p class="p">${intro}</p>${fileNote()}<div class="video"><iframe src="https://www.youtube.com/embed/${id}?rel=0&cc_load_policy=1&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy" title="Video"></iframe></div>${ch}`;
+}
 function flowHTML(id, title, items, phases){
   let n = 0;
   const cells = items.map((s, i) => s.k === 'indep'
@@ -596,37 +773,62 @@ function flowHTML(id, title, items, phases){
     <div class="phases" style="grid-template-columns:${phases.map(p => p[2] + 'fr').join(' ')}">${phases.map(p => `<span class="${p[0]}">${p[1]}</span>`).join('')}</div>
   </div>`;
 }
+const codeBox = (id, label) => `<div class="codebox ${flag(id) ? 'ok' : ''}" data-codebox="${id}">
+  ${flag(id) ? `<span class="cb-ok">✅ <b>${label} completed.</b> Code accepted.</span>`
+    : `<label for="in-${id}"><b>🔑 Completion code</b> — you’ll find it on the last screen of the simulation.</label>
+       <div class="cb-row"><input id="in-${id}" type="text" autocomplete="off" placeholder="e.g. PL-XX-0000"><button class="btn-y" data-code="${id}">Unlock</button></div>
+       <span class="cb-err" id="err-${id}"></span>`}</div>`;
 
+/* =========================================================
+   CONTENT — section bodies
+   ========================================================= */
 const BODY = {
 /* ---------------- Module 1 ---------------- */
 what:() => `
-  <p class="p">In a <b>Parallel Lesson (PL)</b>, one tutor supports <b>2 to 5 students</b> in the same time slot. Each student follows their own path and gets a full, individual <b>60-minute</b> lesson. Students join one by one, so what stretches is the tutor’s session — not the student’s lesson.</p>
-  <div class="grid2">
-    <div class="card">
-      <div class="wh"><b>👇 Move the slider: how many students?</b><span class="tag">Try it</span></div>
-      <input type="range" min="2" max="5" value="3" id="nStud" aria-label="Number of students">
-      <div style="display:flex;align-items:flex-end;gap:16px;margin-top:10px">
-        <div><div class="bignum" id="tutMin">80</div><div style="font-size:13px;color:var(--muted)">minutes for you</div></div>
-        <div><div class="bignum" style="color:var(--lime)">60</div><div style="font-size:13px;color:var(--muted)">minutes for each student</div></div>
-      </div>
-      <div class="slots" id="slots"></div>
+  <p class="p">Imagine your next lesson: four students, each one arriving at a different time, each one building their own project — and each one getting you all to themselves at the moments that matter most. That’s a Parallel Lesson.</p>
+  <div class="defn"><span class="de">⚡</span><p><b>Parallel Lessons (PL)</b> is a new <b>Premium</b> format for students who enjoy independent, individual work. One tutor supports <b>2–5 students at the same time</b>, each on their own individual path, within the same time slot. Every student still gets a full, uninterrupted <b>60 minutes</b> — it’s the tutor’s total session time that stretches to fit everyone.</p></div>
+  <p class="p">How is that possible? Classroom has a new version of the platform. Instead of one room for all your students, you get <b>one room for each student</b> — like breakout rooms, but already set up for you by default. You move from room to room; students never see or hear each other.</p>
+  ${fig('images/Console_lobby.png', 'The Classroom console with a separate room for each of four students', 'The console lobby: each student has their own panel, even though they share one tutor.')}`,
+
+runs:() => `
+  <p class="p">So what does one student’s lesson look like? Lesson format: <b>parallel</b>. Every student’s lesson is designed for a full 60 minutes — and there are no group activities. You support each student at the beginning and at the end of their lesson; during self-study, you help whenever the student raises their hand.</p>
+  <div class="trio">
+    <div class="ti"><span class="tie">🎙️</span><h3>The tutor’s role</h3><p>In the live parts, you set the tone, explain the goal and check that the technical setup is ready. During self-study, you don’t lead the lesson — you give targeted help when the student asks. The cards remind students to call you before saving and at key steps.</p></div>
+    <div class="ti"><span class="tie">🔁</span><h3>A deductive approach</h3><p>The student first sees a finished project, then explores how it was made, and applies the same idea to their own project: result first, how it works second, their own version third.</p></div>
+    <div class="ti"><span class="tie">💬</span><h3>Feedback: Tutor + Self</h3><p>There’s no peer feedback in this format. AI isn’t used in the first lessons; in later lessons of the module, AI is added as a third feedback channel where it makes sense.</p></div>
+  </div>`,
+
+time:() => `
+  <p class="p">Here’s the key to the timing. Students don’t all start together: <b>a new student joins every 10 minutes</b>. Each one gets their full 60 minutes, so your session grows by 10 minutes for each extra student.</p>
+  <div class="example"><span class="de">💡</span><p><b>Example:</b> if you have 3 students, your session lasts 80 minutes, but each student still gets 60 minutes, because a new student joins every 10 minutes.</p></div>
+  <div class="formula">
+    <div class="fx">Your session = <b>60 min</b> + <b>10 min</b> for each additional student</div>
+    <div class="fchips">${[2,3,4,5].map(n => `<button data-fn="${n}"><b>${n} students</b><span>${60 + (n - 1) * 10} min</span></button>`).join('')}</div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <div class="wh"><b>👇 Now try it: move the slider (or tap a box above)</b><span class="tag">Try it</span></div>
+    <input type="range" min="2" max="5" value="3" id="nStud" aria-label="Number of students">
+    <div style="display:flex;align-items:flex-end;gap:22px;margin-top:10px;flex-wrap:wrap">
+      <div><div class="bignum" id="nNum">3</div><div style="font-size:13px;color:var(--muted)">students</div></div>
+      <div><div class="bignum" id="tutMin">80</div><div style="font-size:13px;color:var(--muted)">minutes for you</div></div>
+      <div><div class="bignum" style="color:var(--lime)">60</div><div style="font-size:13px;color:var(--muted)">minutes for each student</div></div>
     </div>
-    ${fig('images/Image1.png', 'Classroom console with a separate room for each student', 'The Classroom console: every student has their own room.')}
+    <div class="slots" id="slots"></div>
   </div>`,
 
 why:() => `
-  <p class="p">Premium one-to-one courses often take a long time to start, because the student’s availability and the tutor’s schedule rarely match. Parallel Lessons solve that. Flip the cards:</p>
+  <p class="p">Premium courses often take a long time to start, because the student’s availability and the tutor’s schedule rarely match. Parallel Lessons solve that. Flip the cards:</p>
   <div class="grid3">
-    ${flip('⚡', 'For students', '<b>They start much faster.</b><br>No waiting weeks for a one-to-one slot that fits: they can begin their course and learn at their own pace.')}
+    ${flip('⚡', 'For students', '<b>They start much faster.</b><br>No waiting weeks for a Premium slot that fits: they can begin their course and learn at their own pace.')}
     ${flip('🗓️', 'For tutors', '<b>More flexibility.</b><br>Several individual lessons fit in one slot of your schedule, and you discover a new way of teaching.')}
     ${flip('🎯', 'For learning', '<b>Real autonomy.</b><br>Students build the feeling: <i>“I can create a working digital project on my own.”</i> Mistakes are part of the process.')}
   </div>
-  ${callout('warn', '📌', '<b>Important scope:</b> Parallel Lessons don’t replace how Kodland teaches. They only replace the <b>premium format</b>, for selected courses.')}`,
+  ${callout('warn', '📌', '<b>Important scope:</b> Parallel Lessons don’t replace how Kodland teaches. They replace the <b>Premium format</b>, for selected courses.')}`,
 
 students:() => `
   <p class="p">You might wonder: <i>“Will students like working on their own?”</i> The short answer: <b>these students chose it.</b> Meet them:</p>
-  <div class="car" id="car">
-    <div class="timer" id="carTimer"></div>
+  ${callout('tip', '👉', '<b>How to go through it:</b> use the <b>›</b> arrow to meet each student, one by one. There are <b>4 slides</b> — the module check unlocks once you’ve seen them all.')}
+  <div class="car" id="car" style="margin-top:14px">
     <div class="track" id="carTrack">
       <div class="slide">
         <div class="scene" style="background:radial-gradient(circle at 50% 60%,#4a5aa0,#2d3450)">
@@ -640,8 +842,7 @@ students:() => `
       <div class="slide">
         <div class="scene" style="background:radial-gradient(circle at 50% 60%,#5a4a8f,#2d3450)">
           <span class="fl" style="animation:orbit 7s linear infinite">📚</span><span class="fl" style="animation:orbit 7s linear infinite;animation-delay:-2.3s">💡</span><span class="fl" style="animation:orbit 7s linear infinite;animation-delay:-4.6s">🔍</span>
-          <span class="av">🧒</span>
-          <span class="bubble" style="right:12%;top:16%">Need help? ✋ Ask the expert</span>
+          <span class="av">🧒</span><span class="bubble" style="right:12%;top:16%">Need help? ✋ Ask the expert</span>
         </div>
         <div class="stext"><span class="who">Student 2 · The self-taught one</span><h3>Learns on their own</h3>
           <p>Already loves exploring and figuring things out alone. For them, this format is a bonus: the freedom to learn by themselves <b>and</b> an expert to ask whenever they need one.</p>
@@ -666,95 +867,136 @@ students:() => `
           <p class="quote">“I can create a working digital project on my own.”</p></div>
       </div>
     </div>
-    <div class="arrows"><button data-car="-1" aria-label="Previous">‹</button><button class="cp" id="carPause" aria-label="Pause">⏸ Pause</button><button data-car="1" aria-label="Next">›</button></div>
+    <div class="arrows"><button data-car="-1" aria-label="Previous">‹</button><span class="carN" id="carN">1 of 4</span><button data-car="1" aria-label="Next" class="nxt">›</button></div>
     <div class="dots" id="carDots"></div>
   </div>
+  <div id="carDone"></div>
   ${callout('good', '💚', '<b>Don’t be afraid they won’t like it.</b> These students know the format before they join, and many prefer it. Your job is to make their start and their finish great.')}`,
-
-role:() => `
-  <p class="p">In a Parallel Lesson you are not the one who explains everything. You’re the person who <b>opens the door to learning</b> and makes sure each student walks through it.</p>
-  <div class="trio">
-    <div class="ti"><span class="tie">🧭</span><h3>Platform guide</h3><p>You show each student around the Kodland platform, so they know where everything is and how to move on their own.</p></div>
-    <div class="ti"><span class="tie">🚀</span><h3>Learning starter</h3><p>With your opening, you set the tone, explain the goal and launch each student into their lesson.</p></div>
-    <div class="ti"><span class="tie">💬</span><h3>Feedback coach</h3><p>With constructive feedback, you guide every student — in parallel — through their own learning process.</p></div>
-  </div>`,
-
-mindset:() => `
-  <p class="p">Parallel Lessons are a new type of group at Kodland. Knowing the format <b>adds</b> to what you can do — it doesn’t take anything away. Tap each belief to see the reality:</p>
-  <div class="myths">
-    <button class="myth" data-myth><span class="mtag">Myth</span><span class="mq">“All my courses will become parallel from now on.”</span><span class="ma"><b>Not at all.</b> Learning the format doesn’t mean your groups change. Parallel Lessons are only for selected courses.</span><span class="mh">Tap to see the reality →</span></button>
-    <button class="myth" data-myth><span class="mtag">Myth</span><span class="mq">“My role as a tutor will change in every group.”</span><span class="ma"><b>No.</b> You teach the parallel way only in your parallel groups. Everywhere else, you keep doing what you already do well.</span><span class="mh">Tap to see the reality →</span></button>
-    <button class="myth" data-myth><span class="mtag">Myth</span><span class="mq">“It’s just one more thing to learn.”</span><span class="ma"><b>It’s an opportunity.</b> You broaden your experience with educational formats, and knowing more formats can open the door to more groups.</span><span class="mh">Tap to see the reality →</span></button>
-  </div>`,
 
 /* ---------------- Module 2 ---------------- */
 structure:() => {
   const OPEN = [['🔌','Connection check'],['😊','Mood check'],['📓','Homework check'],['🎯','Lesson goal']];
   return `
-  <p class="p">First, the structure of a <b>regular Kodland lesson</b>. Then the structure of a <b>parallel lesson</b>. Compare them:</p>
+  <p class="p">Let’s start with something you already know. This is the structure of a <b>regular Kodland lesson</b> — the one you follow in your other formats, <b>Premium included</b>. You lead every part of it, from the opening to the closing, including the theory and the practice:</p>
   ${flowHTML('rg', '👩‍🏫 Regular Kodland lesson', [
       ...OPEN.map(s => ({ e:s[0], t:s[1], k:'open' })),
       { e:'🧑‍🏫', t:'Theory & practice', k:'main' },
       { e:'🎬', t:'Wrapping up', k:'close' }, { e:'🪞', t:'Reflection', k:'close' }, { e:'📌', t:'Homework announced', k:'close' }
     ], [['ph1','Opening',4], ['ph4','Main part',1], ['ph3','Closing',3]])}
+  <div class="bridge"><span class="de">⬇️</span><p>A parallel lesson is <b>more independent</b>. You don’t do the theory and the practice — <b>the student does it on their own</b>, with the cards. This works because the content is <b>designed for students to work independently</b>: the cards explain, show examples and include help when something doesn’t work.</p></div>
   ${flowHTML('pl', '⚡ Parallel lesson', [
       ...OPEN.map(s => ({ e:s[0], t:s[1], k:'open' })),
       { e:'🧑‍💻', t:'Independent work', k:'indep', tag:'Replaces theory & practice' },
       { e:'🎬', t:'Wrapping up', k:'close', tag:'Feedback is here' }, { e:'🪞', t:'Reflection', k:'close' }, { e:'📌', t:'Homework announced', k:'close' }
     ], [['ph1','Opening',4], ['ph2','Self-study',1.3], ['ph3','Closing',3]])}
   <div class="diffs">
-    <div><span class="de">🔁</span><span><b>Theory & practice → independent work.</b> In a parallel lesson there’s no theory or modeling by the tutor: the student works with the cards.</span></div>
-    <div><span class="de">💬</span><span><b>Feedback moves to the closing.</b> There’s no separate demo & feedback stage: you give feedback on the project when you close the lesson.</span></div>
+    <div><span class="de">🔁</span><span><b>Theory & practice → independent work.</b> No theory or modeling by the tutor: the student works with the cards.</span></div>
+    <div><span class="de">💬</span><span><b>Feedback moves to the closing.</b> During the lesson you’re busy welcoming, closing and helping raised hands — so feedback on the project happens in Wrapping up.</span></div>
   </div>
   <div class="btn-row" style="margin-top:12px"><button class="btn-g" id="flowReplay">↻ Replay</button></div>`; },
 
-compare:() => `
-  <p class="p">Now compare the two roles. Switch between them and watch what changes:</p>
-  <div class="cmp">
-    <div class="cmp-top"><div class="seg" id="cmpSeg"><button data-k="rg" aria-pressed="true">👩‍🏫 Regular Kodland tutor</button><button data-k="pl" aria-pressed="false">⚡ Parallel Lessons tutor</button></div>
-      <button class="btn-g" id="cmpDiff" style="padding:8px 14px">✨ Highlight the differences</button></div>
-    <div class="cmp-grid" id="cmpGrid"></div>
-    <div class="cmp-out" id="cmpOut"></div>
+matter:() => `
+  <p class="p">An independent format doesn’t mean the opening and the closing deserve less attention than in other formats. Just like in any lesson, they’re key for students to <b>understand and enjoy the course</b> — and to build a <b>relationship</b> with you.</p>
+  <div class="grid2">
+    <div class="card"><div class="wh"><b>🎬 Why beginnings and endings still matter</b></div><p class="p" style="margin:0">It’s tempting to think that once a student is working independently, the “real” teaching has paused — that the opening and closing are just formalities around the actual work. <b>The opposite is true.</b></p></div>
+    <div class="card cute"><div class="wh"><b>⭐ Why this still matters</b></div><p class="p" style="margin:0">None of this changes just because the middle of the lesson is now independent. If anything, a strong opening and closing matter <b>more</b> in PL, because they’re the only two moments every student experiences with your full, undivided attention.</p></div>
   </div>
-  <div class="vs">
-    <div class="vsc pl"><h3>⚡ In a parallel lesson</h3><p>Each student is in a <b>separate room</b>. Students don’t see each other, so there’s no need to promote participation or teamwork between them.</p>
-      <div class="rooms"><div class="room solo">🧑‍💻<small>Room 1</small></div><div class="room solo">👧<small>Room 2</small></div><div class="room solo">🧒<small>Room 3</small></div><div class="room solo">🧑‍🎨<small>Room 4</small></div></div></div>
-    <div class="vsc rg"><h3>👩‍🏫 In a regular lesson</h3><p>All students share <b>one room</b>. The tutor explains, models and encourages everyone to take part and work together.</p>
-      <div class="rooms"><div class="room" style="font-size:22px">🧑‍💻👧🧒🧑‍🎨<small>One shared room</small></div></div></div>
-  </div>`,
+  <p class="p" style="margin-top:16px">Let’s remember what each part of the opening and the closing is for.</p>`,
 
-sim:() => `
-  <p class="p">We’ve talked about the format, the mindset and your role. The best way to put it all together is to <b>be in a parallel lesson</b>. Use this simulator to live a lesson with 4 students, then come back here to continue.</p>
-  <div class="launch">
-    <span class="le">🎮</span>
-    <div>
-      <h3>Classroom Simulator</h3>
-      <p>A real parallel lesson in Classroom: a guided tour first, then 10 decisions with 3 lives.</p>
-      <div class="steps3"><div><b>1</b>Open the simulator in a new tab.</div><div><b>2</b>Complete the guided tour and the decision game.</div><div><b>3</b>Come back to this tab and confirm below.</div></div>
-      <div class="btn-row" style="margin-top:12px"><a class="btn-y" href="${CONFIG.CLASSROOM_SIM}" target="_blank" rel="noopener" style="text-decoration:none">🚀 Open the simulator</a></div>
-    </div>
-  </div>
-  ${callout('warn', '⚠️', '<b>This is only an example.</b> The simulation uses a <b>media course</b> adapted to the PL format. It isn’t necessarily the final course, or the one you’ll teach — especially if you’re a coding tutor or teach other media courses. You don’t need to study that lesson’s content to complete the simulation. The new course content will be covered in <b>Part 2</b> of this training.')}
-  <div class="confirm ${flag('simClassroom') ? 'on' : ''}" data-confirm="simClassroom"><span class="box">${flag('simClassroom') ? '✓' : ''}</span><span><b>I’ve completed the whole Classroom simulation</b> (guided tour + decision game).</span></div>`,
+opening:() => `
+  <p class="p">The opening has <b>4 stages</b>. Go through each one with the arrows:</p>
+  <div class="stc" data-range="0,4"><div class="stc-l"></div><div class="stc-r"></div></div>
+  <div class="sec2">${videoBlock(CONFIG.OPENING_VIDEO_ID, 'Now let’s see it in action: how a PL tutor runs the opening with one of their students. The video has chapter markers, so you can jump to each stage.', ['Connection check','Mood check','Homework check','Lesson goal'])}</div>`,
 
-stages:() => `
-  <p class="p">The middle of the lesson runs on its own, which makes the opening and the closing <b>more</b> important, not less: they’re the only moments each student has your full attention. Click through every stage:</p>
-  <div class="stc" id="stc">
-    <div class="stc-l" id="stcL"></div>
-    <div class="stc-r" id="stcR"></div>
-  </div>
-  ${callout('tip', '💡', 'Only stage 4 hands the student over to independent work. Everything before it, and stages 5 to 7 after it, is where your full attention belongs.')}`,
-
-video:() => `
-  <p class="p">Before the final check, watch a parallel lesson in real life. <b>Turn on the subtitles</b> (the <b>CC</b> button in the player).</p>
-  ${location.protocol === 'file:' ? callout('warn', '⚠️', '<b>You’re viewing this training as a local file.</b> YouTube doesn’t allow its player inside local files, so the video only plays here once the training is published on a website (like the Classroom simulator). Until then, use the link below the video.') : ''}
-  <div class="video"><iframe src="https://www.youtube.com/embed/${CONFIG.VIDEO_ID}?rel=0&cc_load_policy=1&cc_lang_pref=en&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy" title="Parallel lesson example"></iframe></div>
-  ${callout('tip', '💬', 'Subtitles: click <b>CC</b> in the video player, then ⚙️ to choose your language.')}
-  <p style="font-size:13px;color:var(--dim);margin-top:10px">Video not loading? <a href="https://www.youtube.com/watch?v=${CONFIG.VIDEO_ID}" target="_blank" rel="noopener">Watch it on YouTube</a>.</p>`,
+closing:() => `
+  <p class="p">The closing is where everything comes together. The student shows their final project, hears specific feedback from you, thinks about what they learned and leaves knowing what comes next. In a PL, it’s also <b>the moment you give feedback</b> — there’s no separate feedback stage in the middle. The closing has <b>3 stages</b>:</p>
+  <div class="stc" data-range="4,7"><div class="stc-l"></div><div class="stc-r"></div></div>
+  <div class="sec2">${videoBlock(CONFIG.CLOSING_VIDEO_ID, 'Now let’s see how a PL tutor closes the lesson with a student. Use the chapter markers to jump to each stage.', ['Wrapping up','Reflection','Homework announced'])}</div>`,
 
 /* ---------------- Module 3 ---------------- */
+role:() => `
+  <p class="p">If the work is independent… <b>what’s my role in the lesson?</b> A big one — just a different one. In a parallel lesson you’re not the person who explains everything. You’re the person who <b>opens the door to learning</b> and makes sure each student walks through it.</p>
+  <div class="trio">
+    <div class="ti"><span class="tie">🧭</span><h3>Platform guide</h3><p>You show each student around the Kodland platform, so they know where everything is and how to move on their own.</p></div>
+    <div class="ti"><span class="tie">🚀</span><h3>Learning starter</h3><p>With your opening, you set the tone, explain the goal and launch each student into their lesson.</p></div>
+    <div class="ti"><span class="tie">💬</span><h3>Feedback coach</h3><p>With constructive feedback, you guide every student — in parallel — through their own learning process.</p></div>
+  </div>
+  </div>`,
+
+mindset:() => {
+  const SK = [
+    ['🎭','Understanding your role','Your job stops being “deliver the content” and becomes “guide several learning processes at the same time”. The content is still there — in the cards — but it’s no longer the main event. Your attention goes to what each student needs to keep moving: a good start, help when they call you, and a real ending.'],
+    ['🤲','Accepting that students work independently','Independent work isn’t a gap in your teaching — it’s planned time. A student working alone while you’re in another room is doing exactly what the format asks of them. Treat it as progress, not as a problem waiting for you to come back.'],
+    ['🧭','From “teacher” to “learning facilitator”','A facilitator asks a question before giving an answer, and trusts the student to close part of the gap on their own. Your support is temporary and adjustable: just enough to get them unstuck, so that little by little they need you less.'],
+    ['💡','Hints, not solutions','When a student raises their hand, start with “What have you tried so far?”. A hint keeps them thinking; a solution ends the thinking. Give a hint as big as they need — not as big as the time you’d like to save.'],
+    ['⚖️','Balancing guidance with autonomy','Giving students real choices and explaining the reason behind what you ask motivates them more than tightly controlling every step. The PL format gives you many natural chances to do this — use them.'],
+    ['🌱','Patience with different learning speeds','Your students will never move at the same pace, and treating that as a problem creates exactly the pressure that gets in the way of learning. Patience isn’t passive: it’s deciding to let the pace vary without making anyone feel rushed.'],
+    ['👀','Making every student feel seen','A specific, personal detail — something from last time, a detail of their project — does more than a long, generic chat. If your opening and closing are reliable every time, the relationship grows even in short moments.'],
+    ['🛡️','Creating a safe space to ask','Students need to feel it’s safe to ask a question, admit they’re confused or try something and fail. In a rotating format that safety has to be built quickly — say it in the opening, and show it every time they call you.']
+  ];
+  const MY = [
+    ['🔄','“All my courses will become parallel from now on.”','<b>Not at all.</b> Learning the format doesn’t mean your groups change. Parallel Lessons are only for selected courses.'],
+    ['🎓','“My role as a tutor will change in every group.”','<b>No.</b> You teach the parallel way only in your parallel groups. Everywhere else, you keep doing what you already do well.'],
+    ['🚀','“It’s just one more thing to learn.”','<b>It’s an opportunity.</b> You broaden your experience with educational formats, and knowing more formats can open the door to more groups.']
+  ];
+  const acc = (list, cls) => `<div class="qalist" data-acc>${list.map(x => `<div class="qa ${cls}"><button class="qa-q"><span class="qi">${x[0]}</span><span>${x[1]}</span><span class="qx">+</span></button><div class="qa-a"><p>${x[2]}</p></div></div>`).join('')}</div>`;
+  return `
+  <p class="p">These aren’t random tips: they’re the <b>skills a PL tutor brings to every lesson</b>. Keep them in mind — and remind yourself of them before each class — because they’re what makes several lessons at once feel like good lessons for every student. Open each one:</p>
+  ${acc(SK, 'sk')}
+  <h3 class="subh">🌱 A new mindset about the format</h3>
+  <p class="p">Parallel Lessons are a new type of group at Kodland. Knowing the format <b>adds</b> to what you can do — it doesn’t take anything away. Open each belief to see the reality:</p>
+  ${acc(MY, 'my')}`; },
+feedback:() => `
+  <p class="p">Feedback is where you make the biggest difference in a parallel lesson — and it happens in the closing, when the student shows their project. Good feedback answers three questions for the student:</p>
+  <div class="q3">${[['🎯','Where am I going?','What was the goal of today’s project?'],['📍','How am I doing?','What exactly did they do well?'],['➡️','Where to next?','One clear next step to improve.']].map(q => `<div><span>${q[0]}</span><b>${q[1]}</b><small>${q[2]}</small></div>`).join('')}</div>
+  <div class="card" style="margin-top:14px">
+    <div class="wh"><b>Vague or specific? Switch and compare</b><span class="tag">Try it</span></div>
+    <div class="seg" id="fbSeg"><button data-k="v" aria-pressed="true">😐 Vague</button><button data-k="s" aria-pressed="false">🌟 Specific</button></div>
+    <div class="fbx" id="fbOut"></div>
+  </div>
+  ${callout('tip', '🩹', '<b>Mistakes are information, not a verdict.</b> “This didn’t work because the letter isn’t closed — let’s check the outline” helps far more than “this is wrong”.')}`,
+
+notes:() => `
+  <p class="p">Remember how students join: <b>one every 10 minutes</b>, and each one leaves 60 minutes after joining. That means you also say goodbye in the same order they arrived. With several students, the easiest way not to get lost is to <b>take short notes</b> as they join.</p>
+  ${callout('good', '✋', '<b>You don’t have to visit every student every few minutes.</b> Students call you by raising their hand. When several things happen at once: onboarding beats a raised hand, closing beats a raised hand, and onboarding beats closing.')}
+  <p class="p" style="margin-top:16px">Here’s an example with <b>3 students</b> (Ana, Leo and Mia), from 16:00. Press play or drag the time, and watch the tutor’s notes fill in:</p>
+  <div class="scrub" data-n="3" data-names="Ana,Leo,Mia" data-start="16:00" data-notes="1">
+    <div class="scrub-top"><button class="btn-y tplay" style="padding:10px 18px">▶ Play</button><span class="clock">16:00</span><input type="range" min="0" max="80" value="0" class="trange" style="flex:1;min-width:200px" aria-label="Time"></div>
+    <div class="scrub-grid"><div class="lanes"></div><div class="notebook"><div class="nb-title">📝 My notes</div><div class="nb-lines"></div></div></div>
+    <div class="legend"><span><i class="s-on"></i>Opening (with you)</span><span><i class="s-ind"></i>Independent work</span><span><i class="s-off"></i>Closing (with you)</span><span><i class="s-tut"></i>Your session</span></div>
+  </div>
+  ${callout('tip', '🗒️', '<b>Write down when each student started.</b> That’s how you know, at any moment, who says goodbye first and at what time.')}`,
+
+first:() => `
+  <p class="p">Your students already know they’ve chosen a parallel format — but the first lesson is their <b>first real experience</b> of it. That’s why, in lesson 1, you explain <b>in detail</b> how the lesson works and make sure they can move around on their own. Here’s what to keep in mind.</p>
+  <div class="grid2">
+    <div class="card"><div class="wh"><b>📚 Before the lesson</b></div>
+      <div class="dolist"><div><span>Study the lesson in advance.</span></div><div><span>All the “manual” materials are now in <b>BO, inside each activity</b>: the <b>Teacher Notes</b>. There are no manuals in the wiki anymore.</span></div><div>Read the notes of every card you’ll lead — especially the opening and the last synchronous card.</div></div></div>
+    <div class="card"><div class="wh"><b>🔄 Adapt the opening for lesson 1</b></div>
+      <div class="dolist"><div><span><b>Mood check →</b> get to know them: interests, and whether they’ve learned online or on their own before.</span></div><div><span><b>Homework check →</b> there’s no homework yet. Use this time to <b>explain the format</b>.</span></div></div></div>
+  </div>
+  <div class="card" style="margin-top:14px"><div class="wh"><b>✅ During the lesson: your first-lesson checklist</b><span class="tag">Tick them off</span></div>
+    <div class="cklist">${[
+      'Explain the PL format: what a parallel lesson is and how it works.',
+      'Tell them <b>how long</b> they’ll work on their own.',
+      'Show them — and point to it if needed — where to find <b>help in the cards</b> (solutions and alternatives for technical problems).',
+      'Check that everything works on the platform: sound, camera, the lesson.',
+      'Check that they can move <b>from one activity to the next</b> on their own.',
+      'Make clear <b>where to raise their hand</b> ✋ and <b>where to send messages</b>.'
+    ].map((t, i) => `<button class="ck" data-ck="${i}"><span class="ckb"></span><span>${t}</span></button>`).join('')}</div></div>
+  <div class="card" style="margin-top:14px"><div class="wh"><b>🗣️ Check with open questions, not “Is it clear?”</b></div>
+    <p class="p" style="font-size:15px">A “yes” doesn’t tell you much. Ask questions where the student shows you they know how the lesson works. Tap each one to see what you want to hear:</p>
+    <div class="grid2">${[
+      ['“How will you let me know if you need me?”','They raise their hand ✋ (and know where the button is) or send a message.'],
+      ['“If the website doesn’t open, what can you do?”','Look at the help in the card: it has solutions and alternatives.'],
+      ['“Show me how you go to the next activity.”','They move to the next card by themselves.'],
+      ['“How long will you work on your own today?”','They know roughly when you’ll be back for the closing.']
+    ].map(q => `<button class="oq" data-oq><b>${q[0]}</b><span>${q[1]}</span></button>`).join('')}</div></div>
+  ${callout('warn', '💛', 'Some students can feel left alone in this format even after the explanation. Asking them to <b>repeat, in their own words</b>, how the lesson will work is how you make sure they really got it.')}`,
+
+/* ---------------- Module 4 ---------------- */
 bo:() => `
-  <p class="p">A <b>Parallel Group</b> is a container that groups several individual student groups under one tutor. Each student still has their own individual group, just like in the premium format — the link to join as teacher is simply the same for all of them.</p>
+  <p class="p">A <b>Parallel Group</b> is a container that groups several individual student groups under one tutor. Each student still has their own individual group, just like in the Premium format — the link to join as teacher is simply the same for all of them.</p>
   <div class="grid2">
     ${fig('images/Image2.png', 'A Parallel Group card in BO with the individual groups inside', 'The Parallel Group in BO: the groups inside it, and the console that launches the Classroom session.')}
     <div class="card">
@@ -769,45 +1011,42 @@ bo:() => `
     <span class="le">🖥️</span>
     <div>
       <h3>Parallel Lessons BO Simulator</h3>
-      <p>A click-through replica of BO: find the Parallel Group, open the console in both ways, and see a PL course and its Teacher Notes.</p>
-      <div class="steps3"><div><b>1</b>Open the BO simulator in a new tab.</div><div><b>2</b>Follow every step until you see “Simulation complete”.</div><div><b>3</b>Close that tab, come back here and confirm below.</div></div>
+      <p>A click-through replica of BO: find the Parallel Group, open the console in both ways, see a PL course and find its Teacher Notes.</p>
+      <div class="steps3"><div><b>1</b>Open the BO simulator in a new tab.</div><div><b>2</b>Follow every step until you see “Simulation complete” and your code.</div><div><b>3</b>Come back here and enter the code below.</div></div>
       <div class="btn-row" style="margin-top:12px"><a class="btn-y" href="${CONFIG.BO_SIM}" target="_blank" rel="noopener" style="text-decoration:none">🖥️ Open the BO simulator</a></div>
     </div>
   </div>
-  <div class="confirm ${flag('simBO') ? 'on' : ''}" data-confirm="simBO"><span class="box">${flag('simBO') ? '✓' : ''}</span><span><b>I’ve completed the BO simulation</b> and I’m back in the training.</span></div>`,
+  ${codeBox('boCode', 'BO simulation')}`,
+
+tnotes:() => `
+  <div class="defn"><span class="de">📒</span><p><b>We don’t use the wiki for these courses.</b> Everything you need to prepare a lesson is in the <b>Teacher Notes</b>, inside each activity in BO. You’re expected to <b>read the notes before every lesson</b>.</p></div>
+  <div class="grid3" style="margin-top:14px">
+    <div class="ti"><span class="tie">🔍</span><h3>Where</h3><p>BO → Courses → your course → Assignments → each activity. The notes are at the top of the card — only you see them.</p></div>
+    <div class="ti"><span class="tie">⏰</span><h3>When</h3><p>Before every lesson. Not during it: with several students, there’s no time to read while you teach.</p></div>
+    <div class="ti"><span class="tie">🎯</span><h3>What to look for</h3><p>The format of each card (live or self-study), how long it takes, what you should do and what to watch out for.</p></div>
+  </div>
+  ${callout('tip', '🖥️', 'The BO simulator above walks you to the Teacher Notes of a real PL lesson. If you skipped that step, open it again.')}`,
 
 rules:() => `
   <p class="p">Parallel Lessons have their own communication rules, but tracking works exactly as before. Do or don’t? Decide for each one:</p>
   <div class="sorter" id="sorter">
     ${[
       ['💬','Create a WhatsApp group with all the students of the parallel slot.','no','<b>Don’t.</b> Never create WhatsApp groups for a parallel slot: Parallel Lessons are individualized learning.'],
-      ['📱','Message each student (or their parent) individually, the same as a 1:1 lesson.','yes','<b>Do.</b> All communication is individual, through direct messages.'],
+      ['📱','Message each student (or their parent) individually.','yes','<b>Do.</b> All communication is individual, through direct messages.'],
       ['📊','Mark attendance and check projects in each student’s individual group.','yes','<b>Do.</b> Attendance, submitted projects and other metrics are tracked per individual group — nothing changes there.'],
       ['🗂️','Track the whole slot as one shared record in the Parallel Group.','no','<b>Don’t.</b> The Parallel Group is only a container. Each student’s data stays in their own group.']
-    ].map((r, i) => `<div class="srow" data-ans="${r[2]}"><span class="sei">${r[0]}</span><span class="stx">${r[1]}</span><span class="sbtns"><button data-pick="yes">✅ Do</button><button data-pick="no">🚫 Don’t</button></span><span class="sfb">${r[3]}</span></div>`).join('')}
+    ].map(r => `<div class="srow" data-ans="${r[2]}"><span class="sei">${r[0]}</span><span class="stx">${r[1]}</span><span class="sbtns"><button data-pick="yes">✅ Do</button><button data-pick="no">🚫 Don’t</button></span><span class="sfb">${r[3]}</span></div>`).join('')}
   </div>`,
 
-timing:() => `
-  <p class="p">Students join one every 10 minutes, and each one gets 60 minutes. With 5 students, your session lasts <b>100 minutes</b>. Press play or drag the time to see what’s happening at each moment:</p>
-  <div class="scrub">
-    <div class="scrub-top"><button class="btn-y" id="tPlay" style="padding:10px 18px">▶ Play</button><span class="clock" id="tClock">min 0</span><input type="range" min="0" max="100" value="0" id="tRange" style="flex:1;min-width:200px" aria-label="Minute"></div>
-    <div class="lanes" id="lanes"></div>
-    <div class="legend"><span><i class="s-on"></i>Opening (with you)</span><span><i class="s-ind"></i>Independent work</span><span><i class="s-off"></i>Closing (with you)</span><span><i class="s-tut"></i>Your session</span></div>
-  </div>
-  <div class="card" style="margin-top:14px">
-    <table class="ttable">
-      <tr><th></th><th>🧒 Student</th><th>🧑‍🏫 Tutor</th></tr>
-      <tr><td>Duration</td><td>Always 60 minutes</td><td>100 minutes in total (5 students)</td></tr>
-      <tr><td>First 50 min</td><td>Gets a personal welcome, then works mostly on their own</td><td>Welcomes one new student every 10 minutes</td></tr>
-      <tr><td>Last 50 min</td><td>Keeps working until their own hour is up</td><td>Helps raised hands and closes lessons — no new students join</td></tr>
-      <tr><td>End</td><td>Leaves 60 minutes after joining</td><td>Says goodbye to one student every 10 minutes, in the order they joined</td></tr>
-    </table>
-  </div>
-  ${callout('tip', '🧭', '<b>When things happen at once:</b> onboarding beats a raised hand, closing beats a raised hand, and onboarding beats closing.')}`
+/* ---------------- Module 5 ---------------- */
+qa:() => `
+  <p class="p">These are real questions tutors asked during the Parallel Lessons rollout. Click each question to see the answer.</p>
+  <div class="qaprog" id="qaProg"></div>
+  <div class="qalist">${QA.map((x, i) => `<div class="qa" data-qa="${i}"><button class="qa-q"><span class="qi">${x.ic}</span><span>${x.q}</span><span class="qx">+</span></button><div class="qa-a">${x.a}</div></div>`).join('')}</div>`
 };
 
 /* =========================================================
-   STAGES (Module 2 carousel)
+   STAGES (Module 2 carousels: opening = 0–3, closing = 4–6)
    ========================================================= */
 const STAGES = [
   { e:'🔌', t:'Connection check', ph:'Opening', c:'#3e5bb5', goal:'Make sure you can both see and hear each other before anything else.',
@@ -815,7 +1054,7 @@ const STAGES = [
   { e:'😊', t:'Mood check', ph:'Opening', c:'#3e5bb5', goal:'A quick read on how the student is doing today.',
     d:['Greet them by name and ask how their day is going.','Notice their energy: a student who feels seen works better on their own.','Keep it short and warm.'] },
   { e:'📓', t:'Homework check', ph:'Opening', c:'#3e5bb5', goal:'Review what they worked on since last time.',
-    d:['Ask them to show what they did.','Name one specific thing that went well.','Connect it with today’s lesson.'] },
+    d:['Ask them to show what they did.','Name one specific thing that went well.','In the first lesson there’s no homework yet — use this time to explain the format (see Module 3).'] },
   { e:'🎯', t:'Lesson goal', ph:'Opening → self-study', c:'#2f8a4f', goal:'Set what today’s lesson is aiming for. This is the last stage before independent work begins.',
     d:['Explain the goal of today’s project in one or two sentences.','Ask the student to repeat the plan in their own words.','Remind them how to raise their hand ✋ if they need you.'] },
   { e:'🎬', t:'Wrapping up', ph:'Closing', c:'#b36b12', goal:'The student shows their final project, you give feedback on it and close the loop on today’s work.',
@@ -826,6 +1065,13 @@ const STAGES = [
     d:['Explain the homework or the next step clearly.','Preview the next lesson so they arrive curious.','Say goodbye on a positive note.'] }
 ];
 
+// Tutor's notes for the 3-student example: when each student joined, and when their goodbye is due (minute from 16:00 → line)
+const NOTES = [
+  [0,  '<b>Ana</b> joined at 16:00 → goodbye at <span class="hl2">16:50</span>'],
+  [10, '<b>Leo</b> joined at 16:10 → goodbye at <span class="hl2">17:00</span>'],
+  [20, '<b>Mia</b> joined at 16:20 → goodbye at <span class="hl2">17:10</span>']
+];
+
 /* =========================================================
    RENDERING
    ========================================================= */
@@ -833,7 +1079,7 @@ const view = $('#view');
 function renderNav(kind){
   const done = MODULES.filter(m => passed(m.id)).length;
   $('#nav').innerHTML = `<span class="logo">kodland<small>Parallel Lessons Training</small></span><span class="sp"></span>
-    ${kind === 'home' ? `<span class="npill">${done}/${MODULES.length} modules</span>` : ''}
+    ${kind === 'home' ? `<span class="npill">${done}/${TOTAL} modules</span>` : ''}
     ${kind === 'core' ? '<button class="nbtn" data-go="">← Home</button>' : ''}
     ${kind === 'module' ? '<button class="nbtn" data-go="core1">← Modules</button>' : ''}
     ${kind === 'quiz' ? '<button class="nbtn" data-exit>← Back to the module</button>' : ''}`;
@@ -846,16 +1092,20 @@ function renderHome(){
   <div class="hero">
     <span class="kicker">Tutor training · New version</span>
     <h1>Parallel <span class="hl">Lessons</span></h1>
-    <p class="lead">A new way of running individual courses: one tutor, several students, each on their own path in the same time slot. This training has two parts. Start with the format, then the content.</p>
+    <p class="lead">A new Premium format: one tutor, several students, each on their own path in the same time slot. This training gets you ready to teach your first parallel lessons — step by step.</p>
+  </div>
+  <div class="facts" style="margin-top:22px">
+    <div class="fact"><span class="fn">🧑‍💻</span><span><b>100% self-study.</b> Go at your own pace — your progress is saved in this browser.</span></div>
+    <div class="fact"><span class="fn">🔁</span><span><b>Practice as much as you need.</b> The simulations can be repeated as many times as you like, until you feel confident.</span></div>
   </div>
   <div class="cores">
     <div class="core open" data-go="core1" role="button" tabindex="0">
       <span class="big">⚡</span>
       <span class="cn">Part 1 · Core module</span>
       <h2>The PL format</h2>
-      <p>What Parallel Lessons are, how a lesson works, and the technical side. 3 modules, each with a short check.</p>
-      <div class="prog" style="margin:0 0 16px;background:var(--bg2)"><b>${done}/3</b><div class="ptrack"><div class="pfill" style="width:${done / 3 * 100}%"></div></div></div>
-      <button class="btn-y">${done === 0 ? 'Start →' : done === 3 ? 'Review →' : 'Continue →'}</button>
+      <p>What Parallel Lessons are, the lesson structure, your role, the technical side, your questions and a full practice simulation. ${TOTAL} short modules.</p>
+      <div class="prog" style="margin:0 0 16px;background:var(--bg2)"><b>${done}/${TOTAL}</b><div class="ptrack"><div class="pfill" style="width:${done / TOTAL * 100}%"></div></div></div>
+      <button class="btn-y">${done === 0 ? 'Start →' : done === TOTAL ? 'Review →' : 'Continue →'}</button>
     </div>
     <div class="core soon">
       <span class="big">🧱</span>
@@ -872,37 +1122,77 @@ function renderCore1(){
   const done = MODULES.filter(m => passed(m.id)).length;
   view.innerHTML = `
   <div class="hero"><span class="kicker">Part 1 · Core module</span><h1>The PL <span class="hl">format</span></h1>
-    <p class="lead">Three modules, in order. Each one ends with a short check: score 70% or more to unlock the next one.</p></div>
-  <div class="prog"><b>${done}/3</b><div class="ptrack"><div class="pfill" style="width:${done / 3 * 100}%"></div></div><span style="color:var(--muted);font-size:14px">${done === 3 ? 'Part 1 complete 🎉' : 'modules complete'}</span></div>
+    <p class="lead">${TOTAL} short modules, in order. Each one ends with a short check or activity that unlocks the next one.</p></div>
+  <div class="prog"><b>${done}/${TOTAL}</b><div class="ptrack"><div class="pfill" style="width:${done / TOTAL * 100}%"></div></div><span style="color:var(--muted);font-size:14px">${done === TOTAL ? 'Part 1 complete 🎉' : 'modules complete'}</span></div>
   <div class="mods">
     ${MODULES.map(m => {
       const lock = !unlocked(m), ok = passed(m.id);
-      return `<button class="mcard ${lock ? 'locked' : ''} ${ok ? 'done' : ''}" ${lock ? 'data-locked' : `data-go="${m.id}"`} style="border-top:6px solid ${m.color}">
-        <span class="mn">Module ${m.n}</span><span class="me">${m.e}</span><h3>${m.title}</h3><p>${m.desc}</p>
-        <span class="badge">${ok ? `✓ Completed · ${P[m.id].score}%` : lock ? `🔒 Complete Module ${m.n - 1}` : 'Start →'}</span></button>`;
+      const badge = ok ? (m.check === 'sim' ? '✓ Completed' : `✓ Completed · ${P[m.id].score}%`) : lock ? `🔒 Complete Module ${m.n - 1}` : m.check === 'sim' ? '▶ Enter the simulation' : 'Start →';
+      return `<button class="mcard ${lock ? 'locked' : ''} ${ok ? 'done' : ''} ${m.check === 'sim' ? 'simcard' : ''}" ${lock ? 'data-locked' : `data-go="${m.id}"`} style="border-top:6px solid ${m.color}">
+        <span class="mn">Module ${m.n}</span><span class="me">${m.e}</span><h3>${m.title}</h3><p>${m.desc}</p><span class="badge">${badge}</span></button>`;
     }).join('')}
   </div>
-  ${done === 3 ? `<div class="mcta"><span class="e">🏆</span><div class="grow"><h3>Part 1 complete!</h3><p>You know the PL format. Part 2, the content, is under construction.</p></div><button class="btn-g" data-go="core2">See Part 2</button></div>` : ''}`;
+  ${done === TOTAL ? `<div class="mcta"><span class="e">🏆</span><div class="grow"><h3>Part 1 complete!</h3><p>You’re ready for your first parallel lessons.</p></div><button class="btn-y" data-go="done">See your next steps</button></div>` : ''}`;
 }
 
+const ctaInfo = m => ({
+  quiz:  ['Module check', `${(QUIZ[m.id] || []).length} short questions. Score 70% or more to pass.`],
+  tf:    ['Module check: true or false?', `${(QUIZ[m.id] || []).length} statements. Score 70% or more to pass.`],
+  chat:  ['Module check: a conversation with a colleague', 'A tutor who doesn’t know the format is curious about it. Help them with 4 answers. Score 70% or more to pass.'],
+  qa:    ['Done reading?', 'Open every question to complete this module.']
+}[m.check]);
+function ctaHTML(m){
+  const ready = !m.needs || flag(m.needs[0]);
+  const [h, p] = ctaInfo(m);
+  if (m.check === 'qa'){
+    const all = qaAllOpen();
+    return `<span class="e">${passed(m.id) ? '🏅' : '📖'}</span><div class="grow"><h3>${h}</h3><p>${p}</p></div>
+      <button class="btn-y" id="qaDone" ${all || passed(m.id) ? '' : 'disabled'}>${passed(m.id) ? '✓ Completed — next module →' : '✅ Got my answers — continue'}</button>`;
+  }
+  return `<span class="e">${passed(m.id) ? '🏅' : '📝'}</span>
+    <div class="grow"><h3>${h}</h3><p>${p}</p>${ready ? '' : `<div class="lockmsg">🔒 ${m.needs[1]}</div>`}</div>
+    <button class="btn-y" id="startCheck" ${ready ? '' : 'disabled'}>${passed(m.id) ? '🔁 Retake the check' : 'Start the check →'}</button>`;
+}
+const refreshCTA = m => { const c = $('#mcta'); if (c) c.innerHTML = ctaHTML(m); };
+
 function renderModule(m){
-  clearTimers();   // stops the carousel / animations of a previous render
+  clearTimers();
+  if (m.check === 'sim'){ renderSim(m); return; }
   renderNav('module');
-  const needs = { m2:'simClassroom', m3:'simBO' }[m.id];
-  const ready = !needs || flag(needs);
   view.innerHTML = `
-  <div class="mhead"><span class="eyebrow">Part 1 · Module ${m.n} of 3</span><h1>${m.e} ${m.title}</h1><div class="mobj">${m.obj}</div></div>
+  <div class="mhead"><span class="eyebrow">Part 1 · Module ${m.n} of ${TOTAL}</span><h1>${m.e} ${m.title}</h1><div class="mobj">${m.obj}</div></div>
   <div class="chips">${m.sections.map(s => `<button class="chip" data-jump="${s[0]}">${s[1]} ${s[2]}</button>`).join('')}</div>
   ${m.sections.map(s => `<section class="sec" id="sec-${s[0]}"><div class="sh"><span class="se">${s[1]}</span><h2>${s[2]}</h2></div>${BODY[s[0]]()}</section>`).join('')}
-  <div class="mcta" id="mcta">
-    <span class="e">${passed(m.id) ? '🏅' : '📝'}</span>
-    <div class="grow"><h3>${m.id === 'm2' ? 'Final check: a conversation with a colleague' : 'Module check'}</h3>
-      <p>${m.id === 'm2' ? 'A tutor who doesn’t know the format is curious about it. Help them with 4 answers.' : `${QUIZ[m.id].length} short questions.`} Score 70% or more to pass.</p>
-      ${ready ? '' : `<p style="margin-top:8px;color:var(--yellow)"><b>🔒 First, complete the ${m.id === 'm2' ? 'Classroom' : 'BO'} simulation and confirm it above.</b></p>`}</div>
-    <button class="btn-y" id="startCheck" ${ready ? '' : 'disabled'}>${passed(m.id) ? '🔁 Retake the check' : 'Start the check →'}</button>
-  </div>`;
+  <div class="mcta" id="mcta">${ctaHTML(m)}</div>`;
   initWidgets(m);
 }
+
+/* ---------- Module 6: the simulation, embedded ---------- */
+function renderSim(m){
+  renderNav('module');
+  view.innerHTML = `
+  <div class="mhead"><span class="eyebrow">Part 1 · Module ${m.n} of ${TOTAL} · The practical part</span><h1>🎮 Classroom Simulation</h1>
+    <div class="mobj">Practice a real parallel lesson before your first one. This is the last step of Part 1.</div></div>
+  <section class="sec" style="margin-top:28px">
+    <div class="grid3">
+      <div class="ti"><span class="tie">🎮</span><h3>What it is</h3><p>A real parallel lesson in Classroom, with 4 students who join every 10 minutes. You’re the tutor: same screens, same lesson materials, same situations you’ll find in your own lessons.</p></div>
+      <div class="ti"><span class="tie">💡</span><h3>Why you need it</h3><p>It’s the <b>only practical part</b> of this training — and the one that will really help you understand how a PL works. Everything from Modules 1–5 comes together here.</p></div>
+      <div class="ti"><span class="tie">🧭</span><h3>How it works</h3><p>First a <b>guided tour</b> with your first student, then a <b>decision game</b> with 10 situations and 3 lives. Repeat it as many times as you need. At the end you’ll get a <b>completion code</b>.</p></div>
+    </div>
+    ${callout('warn', '⚠️', '<b>This is an example.</b> The simulation uses a media course adapted to the PL format — it isn’t necessarily the course you’ll teach. You don’t need to study that lesson’s content: focus on <b>how</b> the lesson runs. Turn your <b>sound on</b>: students and the tutor speak.')}
+    <div class="launch" style="margin-top:16px">
+      <span class="le">🎮</span>
+      <div>
+        <h3>Classroom Simulator</h3>
+        <p>It opens in a new tab, full screen, so you can see Classroom exactly as you will in your lessons.</p>
+        <div class="steps3"><div><b>1</b>Open the simulator in a new tab.</div><div><b>2</b>Complete the guided tour and the decision game until you see “Simulation complete” and your code.</div><div><b>3</b>Come back to this tab and enter the code below.</div></div>
+        <div class="btn-row" style="margin-top:12px"><a class="btn-y" href="${CONFIG.CLASSROOM_SIM}" target="_blank" rel="noopener" style="text-decoration:none">🚀 Open the simulator</a></div>
+      </div>
+    </div>
+    ${codeBox('simCode', 'Classroom simulation')}
+  </section>`;
+}
+
 
 /* =========================================================
    WIDGETS
@@ -910,62 +1200,51 @@ function renderModule(m){
 let timers = [];
 const later = (fn, ms) => { const t = setTimeout(fn, ms); timers.push(t); return t; };
 function clearTimers(){ timers.forEach(clearTimeout); timers.forEach(clearInterval); timers = []; }
+const qaAllOpen = () => QA.every((_, i) => flag('qa' + i));
 
-function initWidgets(){
-  // Students slider (M1)
+function initWidgets(m){
+  // Students slider + formula chips (M1)
   const ns = $('#nStud');
   if (ns){
     const draw = () => {
       const n = +ns.value, total = 60 + (n - 1) * 10;
-      $('#tutMin').textContent = total;
+      $('#tutMin').textContent = total; $('#nNum').textContent = n;
+      $$('[data-fn]').forEach(b => b.classList.toggle('on', +b.dataset.fn === n));
       $('#slots').innerHTML = `<div class="slot tutor"><span>You</span><div class="bar"><div class="fillb" style="left:0;width:${total}%">${total} min</div></div></div>` +
-        Array.from({ length:n }, (_, i) => `<div class="slot"><span>Student ${i + 1}</span><div class="bar"><div class="fillb" style="left:${i * 10}%;width:60%">60 min</div></div></div>`).join('');
+        Array.from({ length:n }, (_, i) => `<div class="slot"><span>Student ${i + 1}</span><div class="bar"><div class="fillb" style="left:${i * 10}%;width:60%">joins at min ${i * 10} · 60 min</div></div></div>`).join('');
     };
     ns.oninput = draw; draw();
+    $$('[data-fn]').forEach(b => b.onclick = () => { ns.value = b.dataset.fn; draw(); });
   }
-  // Flip cards
   $$('[data-flip]').forEach(f => f.onclick = () => f.classList.toggle('on'));
-  // Myths
   $$('[data-myth]').forEach(b => b.onclick = () => { b.classList.add('on'); b.querySelector('.mtag').textContent = 'Reality ✓'; });
-  // Persona carousel: auto-advances every SLIDE_MS; Pause freezes it (and the progress bar) where it is
+
+  // Persona carousel (manual): "1 of 4", the check unlocks once every slide has been seen
   const car = $('#car');
   if (car){
-    const SLIDE_MS = 14000;
-    const n = $$('.slide', car).length; let i = 0, paused = false, t = null, start = 0, left = SLIDE_MS;
+    const n = $$('.slide', car).length, seen = new Set(); let i = 0;
     $('#carDots').innerHTML = Array.from({ length:n }, (_, k) => `<button data-dot="${k}" aria-label="Slide ${k + 1}"></button>`).join('');
-    const tm = $('#carTimer'), pb = $('#carPause');
-    const run = ms => {   // runs the timer bar from where it is to the end, then moves on
-      clearTimeout(t); start = Date.now(); left = ms;
-      tm.style.transition = 'none'; tm.style.width = ((SLIDE_MS - ms) / SLIDE_MS * 100) + '%';
-      requestAnimationFrame(() => requestAnimationFrame(() => { tm.style.transition = `width ${ms}ms linear`; tm.style.width = '100%'; }));
-      t = setTimeout(() => go(i + 1), ms); timers.push(t);
-    };
-    const freeze = () => {
-      clearTimeout(t); left = Math.max(0, left - (Date.now() - start));
-      tm.style.transition = 'none'; tm.style.width = ((SLIDE_MS - left) / SLIDE_MS * 100) + '%';
-    };
     const go = k => {
-      i = (k + n) % n;
+      i = Math.max(0, Math.min(n - 1, k)); seen.add(i);
       $('#carTrack').style.transform = `translateX(-${i * 100}%)`;
-      $$('#carDots button').forEach((d, j) => d.classList.toggle('on', j === i));
-      if (paused){ clearTimeout(t); left = SLIDE_MS; tm.style.transition = 'none'; tm.style.width = '0'; }
-      else run(SLIDE_MS);
-    };
-    pb.onclick = () => {
-      paused = !paused;
-      pb.textContent = paused ? '▶ Play' : '⏸ Pause';
-      pb.setAttribute('aria-label', paused ? 'Play' : 'Pause');
-      pb.classList.toggle('paused', paused);
-      paused ? freeze() : run(left || SLIDE_MS);
+      $('#carN').textContent = `${i + 1} of ${n}`;
+      $$('#carDots button').forEach((d, j) => { d.classList.toggle('on', j === i); d.classList.toggle('seen', seen.has(j)); });
+      $('[data-car="-1"]', car).disabled = i === 0;
+      $('[data-car="1"]', car).disabled = i === n - 1;
+      if (seen.size === n || flag('metAll')){
+        if (!flag('metAll')){ setFlag('metAll', true); refreshCTA(m); confetti(60); }
+        $('#carDone').innerHTML = callout('good', '✅', '<b>You’ve met all 4 students!</b> The module check is now unlocked at the bottom of the page.');
+      }
     };
     $$('[data-car]', car).forEach(b => b.onclick = () => go(i + +b.dataset.car));
     $$('[data-dot]', car).forEach(b => b.onclick = () => go(+b.dataset.dot));
     go(0);
   }
-  // Lesson structure diagrams (M2): the regular one builds first, then the parallel one below it
+
+  // Lesson structure diagrams (M2): the regular one builds first, then the parallel one
   const flows = $$('[data-flow]');
   if (flows.length){
-    const STEP = 380, SPAN = 8 * STEP + 400;   // time per stage, and per diagram
+    const STEP = 380, SPAN = 8 * STEP + 400;
     const playOne = (f, delay) => {
       $$('[data-st]', f).forEach(s => s.classList.remove('in')); $('.phases', f).classList.remove('in'); f.classList.remove('shown');
       const ln = $('.line i', f); ln.style.transition = 'none'; ln.style.width = '0';
@@ -974,7 +1253,6 @@ function initWidgets(){
       later(() => $('.phases', f).classList.add('in'), delay + 8 * STEP + 200);
     };
     const play = () => flows.forEach((f, k) => playOne(f, k * SPAN));
-    // Plays the first time the diagrams scroll into view
     let played = false;
     const check = () => { if (played || !document.body.contains(flows[0])) return; const r = flows[0].getBoundingClientRect();
       if (r.top < innerHeight * .8 && r.bottom > 0){ played = true; play(); window.removeEventListener('scroll', check); } };
@@ -982,104 +1260,140 @@ function initWidgets(){
     later(check, 300);
     $('#flowReplay').onclick = play;
   }
-  // Role comparison (M2)
+
+  // Stage carousels (M2): each one shows a range of STAGES
+  $$('.stc').forEach(stc => {
+    const [a, b] = stc.dataset.range.split(',').map(Number), list = STAGES.slice(a, b);
+    let i = 0; const seen = new Set();
+    const draw = () => {
+      const s = list[i]; seen.add(i);
+      const L = $('.stc-l', stc), R = $('.stc-r', stc);
+      L.style.background = `radial-gradient(circle at 50% 40%,${s.c},#262c40)`;
+      L.innerHTML = `<span class="phase">${s.ph}</span><span class="bi">${s.e}</span><span class="bn">Stage ${a + i + 1} · ${i + 1} of ${list.length}</span>`;
+      R.innerHTML = `<h3>${s.t}</h3><p class="goal">${s.goal}</p>
+        <div class="dolist">${s.d.map((x, k) => `<div style="animation-delay:${k * .12}s">${x}</div>`).join('')}</div>
+        <div class="stc-nav"><div class="stc-dots">${list.map((x, k) => `<button class="${k === i ? 'on' : ''} ${seen.has(k) ? 'seen' : ''}" data-s="${k}" title="${x.t}">${x.e}</button>`).join('')}</div><span class="sp"></span>
+        <button class="btn-g" data-sd="-1" ${i === 0 ? 'disabled style="opacity:.4"' : ''}>←</button><button class="btn-y" data-sd="1" style="padding:11px 18px">${i === list.length - 1 ? 'Back to the first' : 'Next stage →'}</button></div>`;
+      $$('[data-s]', stc).forEach(x => x.onclick = () => { i = +x.dataset.s; draw(); });
+      $$('[data-sd]', stc).forEach(x => x.onclick = () => { i = (i + +x.dataset.sd + list.length) % list.length; draw(); });
+    };
+    draw();
+  });
+
+  // What a PL tutor does (M3) — PL view only
   const cg = $('#cmpGrid');
   if (cg){
     const T = [
-      ['🎬','Opening of the lesson',1,1,'Both tutors lead the opening: connection, mood, homework and the lesson goal.'],
-      ['📖','Explaining theory',1,0,'In a PL, the theory is in the cards. You don’t present it.'],
-      ['🖥️','Explaining how to use the software',1,0,'The cards explain the software step by step. You only help if a student asks.'],
-      ['🧑‍🏫','Modeling step by step',1,0,'You don’t model the task. Students see a finished example in the cards and build their own.'],
-      ['💬','Feedback on the final work',1,1,'Both tutors give feedback on the student’s work — in a PL, during the closing.'],
-      ['🤝','Promoting participation & teamwork',1,0,'Each PL student is in a separate room: there are no classmates to work with.'],
-      ['🏁','Closing of the lesson',1,1,'Both tutors close the lesson: wrap-up, reflection and homework.'],
-      ['✋','Help when a student raises their hand',1,1,'Both tutors help students who need them — in a PL, in the gaps between openings and closings.']
+      ['🎬','Opening of the lesson',1,'You lead the opening: connection, mood, homework and the lesson goal.'],
+      ['📖','Explaining theory',0,'The theory is in the cards. You don’t present it.'],
+      ['🖥️','Explaining how to use the software',0,'The cards explain the software step by step. You only help if a student asks.'],
+      ['🧑‍🏫','Modeling step by step',0,'You don’t model the task. Students see a finished example in the cards and build their own.'],
+      ['💬','Feedback on the final work',1,'You give feedback on the student’s project during the closing (Wrapping up).'],
+      ['🤝','Promoting participation & teamwork',0,'Each student is in a separate room: there are no classmates to work with.'],
+      ['🏁','Closing of the lesson',1,'You close the lesson: wrap-up with feedback, reflection and homework.'],
+      ['✋','Help when a student raises their hand',1,'You help students who call you, in the gaps between openings and closings.']
     ];
-    let mode = 'rg', diff = false;
-    const draw = () => {
-      cg.innerHTML = T.map((t, i) => { const on = mode === 'rg' ? t[2] : t[3];
-        return `<button class="task ${on ? 'yes' : 'no'} ${diff && t[2] !== t[3] ? 'diff' : ''}" data-t="${i}"><span class="st">${on ? '✓' : '–'}</span><span class="te">${t[0]}</span><b>${t[1]}</b></button>`; }).join('');
-      $('#cmpOut').innerHTML = mode === 'rg'
-        ? '👩‍🏫 <b>A regular Kodland tutor</b> follows the whole lesson structure: explains, models, gives feedback, leads the opening and closing, and promotes participation between students.'
-        : '⚡ <b>A Parallel Lessons tutor</b> leads the opening and the closing and gives feedback on the final work. They don’t explain theory, explain the software or model. Click any task to see why.';
-      $$('.task', cg).forEach(b => b.onclick = () => { $('#cmpOut').innerHTML = `${T[+b.dataset.t][0]} <b>${T[+b.dataset.t][1]}:</b> ${T[+b.dataset.t][4]}`; });
-    };
-    $$('#cmpSeg button').forEach(b => b.onclick = () => { mode = b.dataset.k; $$('#cmpSeg button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); draw(); });
-    $('#cmpDiff').onclick = () => { diff = !diff; $('#cmpDiff').textContent = diff ? '✨ Hide the differences' : '✨ Highlight the differences'; draw(); };
-    draw();
+    cg.innerHTML = T.map((t, i) => `<button class="task ${t[2] ? 'yes' : 'no'}" data-t="${i}"><span class="st">${t[2] ? '✓' : '–'}</span><span class="te">${t[0]}</span><b>${t[1]}</b></button>`).join('');
+    $$('.task', cg).forEach(b => b.onclick = () => { const t = T[+b.dataset.t]; $('#cmpOut').innerHTML = `${t[0]} <b>${t[1]}: ${t[2] ? 'yes ✓' : 'no ✗'}.</b> ${t[3]}`; });
   }
-  // Stage carousel (M2)
-  const stc = $('#stc');
-  if (stc){
-    let i = 0; const seen = new Set();
-    const draw = () => {
-      const s = STAGES[i]; seen.add(i);
-      $('#stcL').style.background = `radial-gradient(circle at 50% 40%,${s.c},#262c40)`;
-      $('#stcL').innerHTML = `<span class="phase">${s.ph}</span><span class="bi">${s.e}</span><span class="bn">Stage ${i + 1} of ${STAGES.length}</span>`;
-      $('#stcR').innerHTML = `<h3>${s.t}</h3><p class="goal">${s.goal}</p>
-        <div class="dolist">${s.d.map((x, k) => `<div style="animation-delay:${k * .12}s">${x}</div>`).join('')}</div>
-        <div class="stc-nav"><div class="stc-dots">${STAGES.map((x, k) => `<button class="${k === i ? 'on' : ''} ${seen.has(k) ? 'seen' : ''}" data-s="${k}" title="${x.t}">${x.e}</button>`).join('')}</div><span class="sp"></span>
-        <button class="btn-g" data-sd="-1" ${i === 0 ? 'disabled style="opacity:.4"' : ''}>←</button><button class="btn-y" data-sd="1" style="padding:11px 18px">${i === STAGES.length - 1 ? 'Back to stage 1' : 'Next stage →'}</button></div>`;
-      $$('[data-s]', stc).forEach(b => b.onclick = () => { i = +b.dataset.s; draw(); });
-      $$('[data-sd]', stc).forEach(b => b.onclick = () => { i = (i + +b.dataset.sd + STAGES.length) % STAGES.length; draw(); });
+
+  // Vague vs specific feedback (M3)
+  const fbSeg = $('#fbSeg');
+  if (fbSeg){
+    const EX = {
+      v:['“Good job!”','“Nice drawing.”','“That’s wrong, try again.”'],
+      s:['“You made each letter appear in its own frame — that’s exactly how the animation works. Next, try adding one more frame between letters to make it smoother.”','“The colours of your name really match your theme. What could you add so the last letter stands out?”','“The V fills everything because there’s a small gap in its outline. Close it and fill it again.”']
     };
-    draw();
+    const draw = k => { $('#fbOut').innerHTML = EX[k].map(x => `<div class="fbi ${k}">${k === 'v' ? '😐' : '🌟'} ${x}</div>`).join('') +
+      `<p class="fbn">${k === 'v' ? 'Kind, but the student doesn’t learn what worked or what to do next.' : 'Each one names what worked (or what went wrong) and points to a next step.'}</p>`; };
+    $$('button', fbSeg).forEach(b => b.onclick = () => { $$('button', fbSeg).forEach(x => x.setAttribute('aria-pressed', String(x === b))); draw(b.dataset.k); });
+    draw('v');
   }
-  // Rules sorter (M3)
+
+  // Timing scrubber with live notes (M3)
+  $$('.scrub').forEach(sc => {
+    const N = +sc.dataset.n, names = (sc.dataset.names || '').split(','), total = 60 + (N - 1) * 10;
+    const [h0, m0] = (sc.dataset.start || '16:00').split(':').map(Number);
+    const clk = t => { const x = h0 * 60 + m0 + t; return `${Math.floor(x / 60)}:${String(x % 60).padStart(2, '0')}`; };
+    const pct = x => x / total * 100;
+    const lanes = $('.lanes', sc), range = $('.trange', sc), nb = $('.nb-lines', sc);
+    lanes.innerHTML = `<div class="lane"><span class="ln">🧑‍🏫 You</span><div class="track"><div class="seg2 s-tut" style="left:0;width:100%"></div></div><span class="state stT"></span></div>` +
+      Array.from({ length:N }, (_, k) => `<div class="lane"><span class="ln">${names[k] || 'Student ' + (k + 1)}</span><div class="track">
+        <div class="seg2 s-on" style="left:${pct(k * 10)}%;width:${pct(8)}%"></div><div class="seg2 s-ind" style="left:${pct(k * 10 + 8)}%;width:${pct(42)}%"></div><div class="seg2 s-off" style="left:${pct(k * 10 + 50)}%;width:${pct(10)}%"></div></div><span class="state st${k}"></span></div>`).join('') +
+      '<div class="playhead"></div>';
+    const draw = () => {
+      const t = +range.value;
+      $('.clock', sc).textContent = clk(t);
+      const tr = $('.track', lanes), lr = lanes.getBoundingClientRect(), r = tr.getBoundingClientRect();
+      $('.playhead', lanes).style.left = (r.left - lr.left + r.width * t / total) + 'px';
+      let tutor = 'Free — hands raised?';
+      for (let k = 0; k < N; k++){
+        const s = k * 10, el = $('.st' + k, lanes); let c = '', txt = '';
+        if (t < s){ txt = 'Not joined yet'; }
+        else if (t < s + 8){ c = 'on'; txt = 'Opening'; tutor = `Opening ${names[k]}`; }
+        else if (t < s + 50){ c = 'ind'; txt = 'Working alone'; }
+        else if (t < s + 60){ c = 'off'; txt = 'Closing'; if (!tutor.startsWith('Opening')) tutor = `Closing ${names[k]}`; }
+        else { c = 'done'; txt = 'Finished'; }
+        el.className = 'state st' + k + ' ' + c; el.textContent = txt;
+      }
+      if (t >= 35 && t < 38 && !tutor.startsWith('Opening') && !tutor.startsWith('Closing')) tutor = '✋ Helping Leo';
+      const stT = $('.stT', lanes); stT.className = 'state stT ' + (tutor.startsWith('Opening') ? 'on' : tutor.startsWith('Closing') ? 'off' : 'ind');
+      stT.textContent = t >= total ? 'Session over' : tutor;
+      // Notes: all lines are always in the page; each one simply fades in once its time has come
+      if (nb){
+        if (!nb.children.length) nb.innerHTML = '<div class="nbl dim nb-empty">Your notes will appear here as students join…</div>' + NOTES.map(n => `<div class="nbl" data-t="${n[0]}">${n[1]}</div>`).join('');
+        let any = false;
+        $$('.nbl[data-t]', nb).forEach(l => { const on = +l.dataset.t <= t; l.classList.toggle('show', on); any = any || on; });
+        $('.nb-empty', nb).classList.toggle('show', !any);
+      }
+    };
+    range.oninput = draw; draw();
+    window.addEventListener('resize', draw);
+    let iv = null; const pb = $('.tplay', sc);
+    pb.onclick = () => {
+      if (iv){ clearInterval(iv); iv = null; pb.textContent = '▶ Play'; return; }
+      if (+range.value >= total) range.value = 0;
+      pb.textContent = '⏸ Pause';
+      iv = setInterval(() => { range.value = +range.value + 1; draw(); if (+range.value >= total){ clearInterval(iv); iv = null; pb.textContent = '▶ Replay'; } }, 160);
+      timers.push(iv);
+    };
+  });
+
+  // Skills & mindset accordions (M3)
+  $$('[data-acc] .qa').forEach(q => $('.qa-q', q).onclick = () => q.classList.toggle('open'));
+
+  // First-lesson checklist + open questions (M3)
+  $$('[data-ck]').forEach(b => b.onclick = () => b.classList.toggle('on'));
+  $$('[data-oq]').forEach(b => b.onclick = () => b.classList.toggle('on'));
+
+  // Rules sorter (M4)
   $$('#sorter .srow').forEach(r => $$('[data-pick]', r).forEach(b => b.onclick = () => {
     const ok = b.dataset.pick === r.dataset.ans;
     r.classList.remove('ok', 'ko'); void r.offsetWidth; r.classList.add(ok ? 'ok' : 'ko');
     r.querySelector('.sfb').innerHTML = (ok ? '✓ ' : '✗ Not quite. ') + r.querySelector('.sfb').innerHTML.replace(/^(✓ |✗ Not quite\. )/, '');
   }));
-  // Timing scrubber (M3)
-  const lanes = $('#lanes');
-  if (lanes){
-    const N = 5;
-    lanes.innerHTML = `<div class="lane"><span class="ln">🧑‍🏫 You</span><div class="track"><div class="seg2 s-tut" style="left:0;width:100%"></div></div><span class="state" id="stT"></span></div>` +
-      Array.from({ length:N }, (_, k) => `<div class="lane"><span class="ln">Student ${k + 1}</span><div class="track">
-        <div class="seg2 s-on" style="left:${k * 10}%;width:10%"></div><div class="seg2 s-ind" style="left:${k * 10 + 10}%;width:40%"></div><div class="seg2 s-off" style="left:${k * 10 + 50}%;width:10%"></div></div><span class="state" id="st${k}"></span></div>`).join('') +
-      '<div class="playhead" id="phd"></div>';
-    const range = $('#tRange');
-    const draw = () => {
-      const t = +range.value;
-      $('#tClock').textContent = `min ${t}`;
-      const tr = lanes.querySelector('.track'), lr = lanes.getBoundingClientRect(), r = tr.getBoundingClientRect();
-      $('#phd').style.left = (r.left - lr.left + r.width * t / 100) + 'px';
-      let tutor = 'Rotating';
-      for (let k = 0; k < N; k++){
-        const s = k * 10, el = $('#st' + k);
-        let c = '', txt = '';
-        if (t < s){ c = ''; txt = 'Not joined yet'; }
-        else if (t < s + 10){ c = 'on'; txt = 'Opening'; tutor = `Opening S${k + 1}`; }
-        else if (t < s + 50){ c = 'ind'; txt = 'Working alone'; }
-        else if (t < s + 60){ c = 'off'; txt = 'Closing'; if (!tutor.startsWith('Opening')) tutor = `Closing S${k + 1}`; }
-        else { c = 'done'; txt = 'Finished'; }
-        el.className = 'state ' + c; el.textContent = txt;
-      }
-      $('#stT').className = 'state ' + (tutor.startsWith('Opening') ? 'on' : tutor.startsWith('Closing') ? 'off' : 'ind');
-      $('#stT').textContent = t >= 100 ? 'Session over' : tutor;
-    };
-    range.oninput = draw; draw();
-    window.addEventListener('resize', draw);
-    let iv = null;
-    $('#tPlay').onclick = () => {
-      if (iv){ clearInterval(iv); iv = null; $('#tPlay').textContent = '▶ Play'; return; }
-      if (+range.value >= 100) range.value = 0;
-      $('#tPlay').textContent = '⏸ Pause';
-      iv = setInterval(() => { range.value = +range.value + 1; draw(); if (+range.value >= 100){ clearInterval(iv); iv = null; $('#tPlay').textContent = '▶ Replay'; } }, 120);
-      timers.push(iv);
-    };
+
+  // Q&A accordions (M5): every question has to be opened once
+  const qaProg = $('#qaProg');
+  if (qaProg){
+    const upd = () => { const n = QA.filter((_, i) => flag('qa' + i)).length;
+      qaProg.innerHTML = `<b>${n} / ${QA.length}</b> questions opened<div class="ptrack"><div class="pfill" style="width:${n / QA.length * 100}%"></div></div>`;
+      $$('.qa').forEach(q => q.classList.toggle('read', flag('qa' + q.dataset.qa))); refreshCTA(m); };
+    $$('.qa').forEach(q => $('.qa-q', q).onclick = () => { q.classList.toggle('open'); if (!flag('qa' + q.dataset.qa)) setFlag('qa' + q.dataset.qa, true); upd(); });
+    upd();
   }
 }
 
 /* =========================================================
-   QUIZ ENGINE (Modules 1 and 3)
+   QUIZ ENGINE (multiple choice and true/false)
    ========================================================= */
 let QZ = null;
 function startQuiz(m){
   clearTimers();
-  // Options are shuffled each run, so the correct answer moves around
-  QZ = { m, i:0, score:0, items:shuffle(QUIZ[m.id]).map(q => { const idx = shuffle(q.o.map((_, k) => k)); return { q:q.q, o:idx.map(k => q.o[k]), a:idx.indexOf(q.a), e:q.e }; }) };
+  // Multiple-choice options are shuffled each run; true/false keeps True first
+  QZ = { m, i:0, score:0, items:shuffle(QUIZ[m.id]).map(q => {
+    if (q.tf) return { q:q.q, o:['✅ True', '❌ False'], a:q.a, e:q.e, tf:true };
+    const idx = shuffle(q.o.map((_, k) => k)); return { q:q.q, o:idx.map(k => q.o[k]), a:idx.indexOf(q.a), e:q.e }; }) };
   renderQ();
 }
 function renderQ(){
@@ -1087,9 +1401,9 @@ function renderQ(){
   const { items, i, m } = QZ, q = items[i];
   view.innerHTML = `<div class="quiz">
     <div class="qbar"><i style="width:${i / items.length * 100}%"></i></div>
-    <span class="qmeta">${m.e} Module ${m.n} check · Question ${i + 1} of ${items.length}</span>
+    <span class="qmeta">${m.e} Module ${m.n} check · ${q.tf ? 'True or false' : 'Question'} ${i + 1} of ${items.length}</span>
     <h2 class="qq">${q.q}</h2>
-    <div id="opts">${q.o.map((o, k) => `<button class="qopt" data-o="${k}"><span class="k">${'ABC'[k]}</span><span>${o}</span></button>`).join('')}</div>
+    <div id="opts" class="${q.tf ? 'tfopts' : ''}">${q.o.map((o, k) => `<button class="qopt" data-o="${k}">${q.tf ? '' : `<span class="k">${'ABC'[k]}</span>`}<span>${o}</span></button>`).join('')}</div>
     <div class="qfb" id="qfb"></div>
     <button class="btn-y qnext" id="qnext">${i === items.length - 1 ? 'See my result →' : 'Next question →'}</button>
   </div>`;
@@ -1100,13 +1414,14 @@ function renderQ(){
     $(`#opts [data-o="${q.a}"]`).classList.add('right');
     if (ok) QZ.score++;
     const fb = $('#qfb'); fb.className = 'qfb show ' + (ok ? 'ok' : 'ko'); fb.innerHTML = (ok ? '✅ <b>Correct!</b> ' : '❌ <b>Not quite.</b> ') + q.e;
-    $('#qnext').classList.add('show'); $('#qnext').focus();
+    // short pause so the feedback gets read before moving on
+    const nx = $('#qnext'); nx.classList.add('show'); nx.disabled = true; later(() => { nx.disabled = false; nx.focus(); }, 900);
   });
   $('#qnext').onclick = () => { QZ.i++; if (QZ.i < QZ.items.length) renderQ(); else finishCheck(QZ.m, QZ.score, QZ.items.length); };
 }
 
 /* =========================================================
-   CHAT CHECK (Module 2)
+   CHAT CHECK (Module 3)
    ========================================================= */
 // The conversation happens on a phone; the side panel holds the instructions, the feedback and the Continue button
 function startChat(m){
@@ -1123,7 +1438,7 @@ function startChat(m){
       <div class="ph-input"><span class="ph-field" id="phField">Waiting for Alex…</span><span class="ph-send">➤</span></div>
     </div>
     <div class="chat-side">
-      <span class="qmeta">${m.e} Module 2 check · A conversation</span>
+      <span class="qmeta">${m.e} Module ${m.n} check · A conversation</span>
       <h2 class="qq" style="font-size:20px;margin-bottom:12px">Help a curious colleague</h2>
       <p class="p" style="font-size:15px">Your colleague <b>Alex</b> teaches regular groups and doesn’t know the PL format yet. You’ve studied it and you’re excited to start your parallel lessons — answer Alex’s questions on the phone.</p>
       <div class="cdots" id="cdots">${CHAT.map(() => '<i></i>').join('')}</div>
@@ -1175,6 +1490,7 @@ function startChat(m){
   }, 1300), 900);
 }
 
+
 /* =========================================================
    RESULT + CELEBRATION
    ========================================================= */
@@ -1182,29 +1498,37 @@ function finishCheck(m, score, n){
   clearTimers();
   const pct = Math.round(score / n * 100), ok = score / n >= CONFIG.PASS;
   setResult(m.id, pct, ok);
+  showResult(m, ok, `<div class="pct ${ok ? 'pass' : 'fail'}">${pct}%</div><p>You answered <b>${score} of ${n}</b> correctly.`);
+}
+function showResult(m, ok, top){
   renderNav('core');
   const next = MODULES[MODULES.indexOf(m) + 1];
   view.innerHTML = `<div class="result">
     <div class="re">${ok ? '🎉' : '😅'}</div>
-    <h1>${ok ? 'You passed!' : 'Almost there'}</h1>
-    <div class="pct ${ok ? 'pass' : 'fail'}">${pct}%</div>
-    <p>You answered <b>${score} of ${n}</b> correctly. ${ok ? (next ? `<b>Module ${next.n}</b> is now unlocked.` : '<b>Part 1 of the training is complete!</b>') : 'You need 70% or more. Review the module and try again — you can retake it as many times as you need.'}</p>
+    <h1>${ok ? (m.check === 'qa' || m.check === 'sim' ? 'Module complete!' : 'You passed!') : 'Almost there'}</h1>
+    ${top} ${ok ? (next ? `<b>Module ${next.n} · ${next.title}</b> is now unlocked.` : '') : 'You need 70% or more. Review the module and try again — you can retake it as many times as you need.'}</p>
     <div class="btn-row">
-      ${ok ? (next ? `<button class="btn-y" data-go="${next.id}">Go to Module ${next.n} →</button>` : '<button class="btn-y" data-go="done">Finish Part 1 →</button>') : `<button class="btn-y" data-retake="${m.id}">🔁 Retake the check</button>`}
+      ${ok ? (next ? `<button class="btn-y" data-go="${next.id}">Go to Module ${next.n} →</button>` : '<button class="btn-y" data-go="done">See your next steps →</button>') : `<button class="btn-y" data-retake="${m.id}">🔁 Retake the check</button>`}
       <button class="btn-g" data-go="${m.id}">📖 Review the module</button>
     </div></div>`;
+  window.scrollTo(0, 0);
   if (ok) confetti();
 }
 
 function renderDone(){
   renderNav('core');
-  view.innerHTML = `<div class="result" style="max-width:720px">
-    <div class="re">🏆</div><h1>Part 1 complete!</h1>
-    <p>You’ve finished the core module on the PL format: what Parallel Lessons are, how a lesson works, and the technical side.</p>
+  view.innerHTML = `<div class="result" style="max-width:780px">
+    <div class="re">🏆</div><h1>You’re ready for your first parallel lessons!</h1>
+    <p>You’ve completed Part 1: the PL format, the lesson structure, your role, the technical side, the most common questions and a full practice lesson.</p>
     <div class="mods" style="grid-template-columns:repeat(3,1fr);text-align:left">
-      ${MODULES.map(m => `<div class="mcard done" style="min-height:0"><span class="me">${m.e}</span><h3>${m.title}</h3><span class="badge">✓ ${P[m.id] ? P[m.id].score : 100}%</span></div>`).join('')}</div>
-    <p style="margin-top:18px"><b>Next:</b> Part 2, the content, is under construction. You’ll find it on the home page as soon as it’s ready.</p>
-    <div class="btn-row"><button class="btn-y" data-go="">Back to home</button><button class="btn-g" data-go="core1">Review the modules</button></div></div>`;
+      ${MODULES.map(m => `<div class="mcard done" style="min-height:0"><span class="me">${m.e}</span><h3>${m.title}</h3><span class="badge">✓ Done</span></div>`).join('')}</div>
+    <div class="nexts">
+      <div><span>📅</span><p><b>What happens now:</b> once you’ve completed the training, Teaching assigns your Parallel Lesson groups.</p></div>
+      <div><span>📒</span><p><b>Before every lesson:</b> read the Teacher Notes in BO — not the wiki.</p></div>
+      <div><span>🙋</span><p><b>Doubts or technical problems?</b> Ask your TL and the support team — you’re not alone.</p></div>
+      <div><span>🔁</span><p><b>Want more practice?</b> Repeat the simulation as many times as you like.</p></div>
+    </div>
+    <div class="btn-row" style="justify-content:center"><button class="btn-y" data-go="">Back to home</button><button class="btn-g" data-go="m6">🎮 Practice again</button><button class="btn-g" data-go="core1">Review the modules</button></div></div>`;
   confetti(240);
 }
 
@@ -1238,54 +1562,76 @@ function confetti(count = 160){
 function modal(html){ const m = $('#modal'); m.innerHTML = `<div class="mbox">${html}</div>`; m.classList.add('show'); }
 function closeModal(){ $('#modal').classList.remove('show'); }
 
+
 /* =========================================================
    ROUTER
    ========================================================= */
 const go = path => { location.hash = '#/' + path; };
 function route(){
   clearTimers(); closeModal(); QZ = null;
-  const parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
-  const id = parts[0];
+  const id = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean)[0];
   const m = MODULES.find(x => x.id === id);
   if (!id) renderHome();
   else if (id === 'core1') renderCore1();
   else if (id === 'core2') renderCore2();
   else if (id === 'done' && coreDone()) renderDone();
   else if (m){
-    if (!unlocked(m)){ go('core1'); setTimeout(() => modal(`<div style="font-size:48px">🔒</div><h2>Still locked</h2><p>Pass the check of Module ${m.n - 1} first.</p><button class="btn-y" onclick="closeModal()">OK</button>`), 50); return; }
+    if (!unlocked(m)){ go('core1'); setTimeout(() => modal(`<div style="font-size:48px">🔒</div><h2>Still locked</h2><p>Complete Module ${m.n - 1} first.</p><button class="btn-y" onclick="closeModal()">OK</button>`), 50); return; }
     renderModule(m);
   } else renderHome();
   window.scrollTo(0, 0);
 }
 window.addEventListener('hashchange', route);
+const curModule = () => MODULES.find(x => location.hash.replace(/^#\/?/, '').split('/')[0] === x.id);
+const startCheck = m => { m.check === 'chat' ? startChat(m) : startQuiz(m); window.scrollTo(0, 0); };
+
+// Completion codes (BO and Classroom simulations)
+function tryCode(id){
+  const inp = $('#in-' + id), want = id === 'simCode' ? CONFIG.SIM_CODE : CONFIG.BO_CODE;
+  if (!inp) return;
+  if (norm(inp.value) !== norm(want)){ $('#err-' + id).textContent = 'That code isn’t right. Check it on the last screen of the simulation.'; inp.focus(); return; }
+  setFlag(id, true);
+  const m = curModule();
+  if (id === 'simCode'){ setResult('m6', 100, true); showResult(MODULES[5], true, '<p>Code accepted: you’ve completed the Classroom simulation.'); return; }
+  $(`[data-codebox="${id}"]`).outerHTML = codeBox(id, 'BO simulation');
+  if (m) refreshCTA(m);
+  confetti(80);
+}
 
 document.addEventListener('click', e => {
   const t = e.target;
-  const g = t.closest('[data-go]'); if (g && !t.closest('a')){ go(g.dataset.go); return; }
-  if (t.closest('[data-locked]')){ modal('<div style="font-size:48px">🔒</div><h2>Still locked</h2><p>Complete the previous module’s check to unlock this one.</p><button class="btn-y" onclick="closeModal()">OK</button>'); return; }
+  const g = t.closest('[data-go]'); if (g && !t.closest('a')){ go(g.dataset.go); if (g.dataset.go === (location.hash.replace(/^#\/?/, '') || '')) route(); return; }
+  if (t.closest('[data-locked]')){ modal('<div style="font-size:48px">🔒</div><h2>Still locked</h2><p>Complete the previous module to unlock this one.</p><button class="btn-y" onclick="closeModal()">OK</button>'); return; }
   const j = t.closest('[data-jump]'); if (j){ $('#sec-' + j.dataset.jump).scrollIntoView({ behavior:'smooth' }); return; }
   const z = t.closest('[data-zoom]'); if (z){ $('#lbImg').src = z.src; $('#lb').classList.add('show'); return; }
   if (t.closest('#lb')){ $('#lb').classList.remove('show'); return; }
   if (t.id === 'modal') closeModal();
-  const c = t.closest('[data-confirm]');
-  if (c){ const k = c.dataset.confirm, on = !flag(k); setFlag(k, on); c.classList.toggle('on', on); c.querySelector('.box').textContent = on ? '✓' : '';
-    const m = MODULES.find(x => location.hash.includes(x.id)); if (m){ const y = scrollY; renderModule(m); scrollTo(0, y); } if (on) confetti(70); return; }
-  if (t.closest('#startCheck') && !t.closest('#startCheck').disabled){ const m = MODULES.find(x => location.hash.includes(x.id)); m.id === 'm2' ? startChat(m) : startQuiz(m); window.scrollTo(0, 0); return; }
-  const r = t.closest('[data-retake]'); if (r){ const m = MODULES.find(x => x.id === r.dataset.retake); m.id === 'm2' ? startChat(m) : startQuiz(m); return; }
-  if (t.closest('[data-exit]')){ const m = MODULES.find(x => location.hash.includes(x.id)) || MODULES[0]; renderModule(m); window.scrollTo(0, 0); }
+  const cd = t.closest('[data-code]'); if (cd){ tryCode(cd.dataset.code); return; }
+  const sc = t.closest('#startCheck');
+  if (sc){ const m = curModule(); if (sc.disabled){ return; } startCheck(m); return; }
+  if (t.closest('#qaDone') && !t.closest('#qaDone').disabled){ const m = MODULES[4]; if (passed(m.id)) go('m6'); else { setResult(m.id, 100, true); showResult(m, true, '<p>You’ve read all the answers.'); } return; }
+  const r = t.closest('[data-retake]'); if (r){ startCheck(MODULES.find(x => x.id === r.dataset.retake)); return; }
+  if (t.closest('[data-exit]')){ const m = curModule() || MODULES[0]; renderModule(m); window.scrollTo(0, 0); }
+});
+// A click on a disabled check button doesn't fire — explain why instead of doing nothing
+document.addEventListener('pointerdown', e => {
+  const sc = e.target.closest('#mcta'); if (!sc) return;
+  const b = $('#startCheck'); if (b && b.disabled){ const l = $('.lockmsg'); if (l){ l.classList.remove('shake'); void l.offsetWidth; l.classList.add('shake'); } }
 });
 document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.matches('.codebox input')){ tryCode(e.target.id.replace('in-', '')); return; }
   if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('[role=button]')){ e.preventDefault(); e.target.click(); }
   if (e.key === 'Escape'){ closeModal(); $('#lb').classList.remove('show'); }
 });
 
 /* =========================================================
-   DEVELOPER OPTIONS — for reviewers: unlock every built module without passing the checks.
+   DEVELOPER OPTIONS — for reviewers: unlock every built module without doing the checks.
    Open with the "🛠 Developer" link at the bottom of the page (code: CONFIG.DEV_CODE),
    or press Shift+D three times quickly.
    ========================================================= */
 function setDev(on){
-  if (on){ MODULES.forEach(m => { if (!passed(m.id)) P[m.id] = { passed:true, score:100 }; }); P.flags = Object.assign({}, P.flags, { simClassroom:true, simBO:true }); P.dev = true; }
+  if (on){ MODULES.forEach(m => { if (!passed(m.id)) P[m.id] = { passed:true, score:100 }; });
+    P.flags = Object.assign({}, P.flags, { metAll:true, boCode:true, simCode:true }); QA.forEach((_, i) => P.flags['qa' + i] = true); P.dev = true; }
   else delete P.dev;
   saveP(); devBadge(); route();
 }
@@ -1300,13 +1646,14 @@ function openDev(unlockedPanel){
       <input id="devCode" type="password" autocomplete="off" style="width:100%;padding:12px 14px;border-radius:12px;border:2px solid #d5d9e5;font-size:16px;margin:4px 0 6px">
       <p id="devErr" style="color:#c0303f;font-weight:600;min-height:20px;margin:4px 0"></p>
       <div class="btn-row" style="justify-content:center"><button class="btn-g" style="color:var(--ink);border-color:#c9cdd8" onclick="closeModal()">Cancel</button><button class="btn-y" id="devGo">Continue</button></div>`);
-    const tryCode = () => { if ($('#devCode').value.trim().toUpperCase() === CONFIG.DEV_CODE) openDev(true); else $('#devErr').textContent = 'Wrong code.'; };
-    $('#devGo').onclick = tryCode; $('#devCode').onkeydown = e => { if (e.key === 'Enter') tryCode(); };
+    const tryDev = () => { if (norm($('#devCode').value) === norm(CONFIG.DEV_CODE)) openDev(true); else $('#devErr').textContent = 'Wrong code.'; };
+    $('#devGo').onclick = tryDev; $('#devCode').onkeydown = e => { if (e.key === 'Enter') tryDev(); };
     setTimeout(() => $('#devCode').focus(), 50);
     return;
   }
   modal(`<div style="font-size:44px">🛠</div><h2>Developer options</h2>
-    <p>Developer mode is <b>${P.dev ? 'ON' : 'OFF'}</b>. ${P.dev ? 'All built modules are unlocked and both simulations are marked as done.' : 'Turn it on to unlock all built modules (Part 2 is still under construction).'}</p>
+    <p>Developer mode is <b>${P.dev ? 'ON' : 'OFF'}</b>. ${P.dev ? 'All built modules are unlocked, including the code-protected steps.' : 'Turn it on to unlock all built modules (Part 2 is still under construction).'}</p>
+    <p style="font-size:13px">Simulation codes — Classroom: <b>${CONFIG.SIM_CODE}</b> · BO: <b>${CONFIG.BO_CODE}</b></p>
     <div class="btn-row" style="justify-content:center;flex-direction:column;align-items:stretch;gap:8px;margin-top:14px">
       <button class="btn-y" id="devToggle">${P.dev ? '🔒 Turn developer mode off' : '🔓 Unlock all built modules'}</button>
       <button class="btn-g" style="color:var(--ink);border-color:#c9cdd8" id="devReset">♻️ Reset all progress</button>
@@ -1316,9 +1663,7 @@ function openDev(unlockedPanel){
   $('#devToggle').onclick = () => { closeModal(); setDev(!P.dev); };
   $('#devReset').onclick = () => { closeModal(); resetProgress(); };
 }
-document.addEventListener('click', e => {
-  if (e.target.closest('#devLink') || e.target.closest('#devBadge')) openDev(false);
-});
+document.addEventListener('click', e => { if (e.target.closest('#devLink') || e.target.closest('#devBadge')) openDev(false); });
 let dk = [];
 document.addEventListener('keydown', e => {
   if (!(e.shiftKey && e.key.toLowerCase() === 'd')) return;
