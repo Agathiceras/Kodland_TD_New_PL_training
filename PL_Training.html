@@ -944,8 +944,8 @@ mindset:() => {
   <p class="p">These aren’t random tips: they’re the <b>skills a PL tutor brings to every lesson</b>. Keep them in mind — and remind yourself of them before each class — because they’re what makes several lessons at once feel like good lessons for every student. Open each one:</p>
   ${acc(SK, 'sk')}
   <h3 class="subh">🌱 A new mindset about the format</h3>
-  <p class="p">Parallel Lessons are a new type of group at Kodland. Knowing the format <b>adds</b> to what you can do — it doesn’t take anything away. Open each belief to see the reality:</p>
-  ${acc(MY, 'my')}`; },
+  <p class="p">Parallel Lessons are a new type of group at Kodland. Knowing the format <b>adds</b> to what you can do — it doesn’t take anything away. Tap each belief to see the reality:</p>
+  <div class="myths">${MY.map(x => `<button class="myth" data-myth><span class="mtag">Myth</span><span class="mq">${x[1]}</span><span class="ma">${x[2]}</span><span class="mh">Tap to see the reality →</span></button>`).join('')}</div>`; },
 feedback:() => `
   <p class="p">Feedback is where you make the biggest difference in a parallel lesson — and it happens in the closing, when the student shows their project. Good feedback answers three questions for the student:</p>
   <div class="q3">${[['🎯','Where am I going?','What was the goal of today’s project?'],['📍','How am I doing?','What exactly did they do well?'],['➡️','Where to next?','One clear next step to improve.']].map(q => `<div><span>${q[0]}</span><b>${q[1]}</b><small>${q[2]}</small></div>`).join('')}</div>
