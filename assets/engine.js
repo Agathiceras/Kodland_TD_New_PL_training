@@ -38,14 +38,16 @@ function setFlag(k, v){ P.flags = P.flags || {}; P.flags[k] = v; saveP(); }
    check: quiz | tf | chat | qa | sim      needs: a flag that must be set before the check opens
    ========================================================= */
 const MODULES = [
+  { id:'m0', e:'💛', color:'#ff7a59', check:'quiz', sections:[['welcome','👋'],['ready','✅'],['never','🤝'],['voices','🗣️'],['closing','🚀']] },
   { id:'m1', e:'🌟', color:'#cdf24a', check:'quiz', needs:'metAll', sections:[['what','🧩'],['runs','📋'],['time','⏱️'],['why','🚀'],['students','🧒']] },
   { id:'m2', e:'🗺️', color:'#ffd34d', check:'tf', sections:[['structure','🗺️'],['matter','⭐'],['opening','🎬'],['closing','🏁']] },
   { id:'m3', e:'🧭', color:'#ec5fa6', check:'chat', sections:[['role','🧭'],['mindset','🌱'],['feedback','💬'],['notes','📝'],['first','🚀']] },
   { id:'m4', e:'🖥️', color:'#5b8cff', check:'quiz', needs:'boCode', sections:[['bo','🗂️'],['tnotes','📒'],['rules','📏']] },
   { id:'m5', e:'❓', color:'#3fd16b', check:'qa', sections:[['qa','❓']] },
   { id:'m6', e:'🎮', color:'#f5a623', check:'sim', sections:[] }
-].map((m, i) => Object.assign({}, C.modules[m.id], m, { n:i + 1 }));   // structure wins over same-named content keys (needs, sections)
+].map((m, i) => Object.assign({}, C.modules[m.id], m, { n:i }));   // Module 0 = "Start here", then 1..6   // structure wins over same-named content keys (needs, sections)
 const TOTAL = MODULES.length;
+const NUMBERED = MODULES.filter(x => x.n > 0).length;   // "Module n of NUMBERED" does not count Module 0
 const QA = C.qa;
 const unlocked = m => { const i = MODULES.indexOf(m); return i <= 0 || passed(MODULES[i - 1].id); };
 const coreDone = () => MODULES.every(m => passed(m.id));
@@ -327,7 +329,7 @@ function renderModule(m){
   if (m.check === 'sim'){ renderSim(m); return; }
   renderNav('module');
   view.innerHTML = `
-  <div class="mhead"><span class="eyebrow">${fmt(U.moduleEyebrow, { n:m.n, total:TOTAL })}</span><h1>${m.e} ${m.title}</h1><div class="mobj">${m.obj}</div></div>
+  <div class="mhead"><span class="eyebrow">${m.eyebrow || fmt(U.moduleEyebrow, { n:m.n, total:NUMBERED })}</span><h1>${m.e} ${m.title}</h1><div class="mobj">${m.obj}</div></div>
   <div class="chips">${m.sections.map(s => `<button class="chip" data-jump="${s[0]}">${s[1]} ${m.sections_t[s[0]]}</button>`).join('')}</div>
   ${m.sections.map(s => `<section class="sec" id="sec-${s[0]}"><div class="sh"><span class="se">${s[1]}</span><h2>${m.sections_t[s[0]]}</h2></div>${BODY[s[0]]()}</section>`).join('')}
   <div class="mcta" id="mcta">${ctaHTML(m)}</div>`;
@@ -341,7 +343,7 @@ function renderSim(m){
   renderNav('module');
   const x = S.sim;
   view.innerHTML = `
-  <div class="mhead"><span class="eyebrow">${fmt(U.simEyebrow, { n:m.n, total:TOTAL })}</span><h1>${x.title}</h1><div class="mobj">${m.obj}</div></div>
+  <div class="mhead"><span class="eyebrow">${fmt(U.simEyebrow, { n:m.n, total:NUMBERED })}</span><h1>${x.title}</h1><div class="mobj">${m.obj}</div></div>
   <section class="sec" style="margin-top:28px">
     ${trio(x.cards)}
     ${callout('warn', '⚠️', x.example)}
@@ -349,6 +351,44 @@ function renderSim(m){
     ${codeBox('simCode')}
   </section>`;
 }
+
+
+/* =========================================================
+   MODULE 0 — "Start here" (mindset). Texts come from content: zero
+   ========================================================= */
+const ZERO = C.zero;
+const zUL = (items, cls) => `<ul class="zl ${cls || ''}">${items.map(i => `<li><span>${i}</span></li>`).join('')}</ul>`;
+const zVoices = (title, list) => list && list.length ? `<h3 class="zh">${title}</h3><div class="voices">${list.map(v => `<figure class="voice">${v.img ? `<img src="${v.img}" alt="">` : ''}<blockquote>${v.text || ''}</blockquote>${v.who ? `<figcaption>${v.who}</figcaption>` : ''}</figure>`).join('')}</div>` : '';
+const ZERO_BODY = {
+welcome:() => { const z = ZERO; return `
+  <div class="defn"><span class="de">👋</span><p>${z.welcome_lead}</p></div>
+  <h3 class="zh">${z.how_h}</h3><p class="p">${z.how_p}</p>
+  <h3 class="zh">${z.prep_h}</h3><p class="p">${z.prep_intro}</p>${zUL(z.prep)}
+  ${callout('tip', '🎮', z.sim)}
+  <h3 class="zh">${z.why_h}</h3><p class="p">${z.why}</p>
+  ${callout('good', '🌟', z.means)}`; },
+ready:() => { const z = ZERO; return `
+  <p class="p">${z.ready_p1}</p>
+  <p class="p">${z.ready_p2}</p>${zUL(z.ready_items, 'num')}
+  ${callout('good', '🌱', z.ready_perm)}
+  ${callout('warn', '📍', z.ready_two)}`; },
+never:() => { const z = ZERO; return `
+  <p class="p">${z.never_p}</p>
+  <div class="mentors" role="table"><div class="mh"><span>${z.mentor_region}</span><span>${z.mentor_h}</span></div>${z.mentors.map(r => `<div class="mr"><span class="mreg">${r[0]}</span><b>${r[1]}</b></div>`).join('')}</div>
+  ${callout('tip', '🗓️', z.coaching)}
+  <h3 class="zh">${z.first_h}</h3>${zUL(z.first_items)}
+  <p class="p">${z.tl}</p>
+  ${callout('good', '💬', z.notconf)}`; },
+voices:() => { const z = ZERO; return `
+  <p class="p">${z.voices_p}</p>
+  <div class="tell"><div class="th"><span>${z.tell_you}</span><span>${z.tell_so}</span></div>${z.rows.map(r => `<div class="tr"><div class="t1"><span class="tq">“</span>${r[0]}</div><div class="t2"><span class="ta">→</span>${r[1]}</div></div>`).join('')}</div>
+  ${callout('warn', '🌟', z.new_courses)}
+  ${zVoices(z.students_h, z.voices)}${zVoices(z.tutors_h, z.tutors)}`; },
+closing:() => { const z = ZERO; return `
+  <div class="defn"><span class="de">🚀</span><p><b>${z.closing_h}</b><br>${z.closing_p}</p></div>
+  ${callout('tip', '💬', z.closing_dm)}`; }
+};
+Object.assign(BODY, ZERO_BODY);
 
 /* =========================================================
    WIDGETS
