@@ -6,8 +6,8 @@
    The index page and the language selector are built from this list.
    ===================================================================== */
 window.PL_LANGUAGES = [
-  { code: "en", name: "English", flag: "🌐" }
-  // { code: "it", name: "Italiano", flag: "🇮🇹" },
+  { code: "en", name: "English", flag: "🌐" },
+  { code: "it", name: "Italiano", flag: "🌐" }
   // { code: "pl", name: "Polski",   flag: "🇵🇱" },
   // { code: "tr", name: "Türkçe",   flag: "🇹🇷" }
 ];

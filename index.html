@@ -20,7 +20,7 @@
   .langs{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
   .lang{display:flex;align-items:center;gap:14px;border-radius:20px;padding:20px;background:var(--panel);border:2px solid var(--line);color:var(--txt);text-decoration:none;transition:transform .2s,border-color .2s}
   .lang:hover{transform:translateY(-4px);border-color:var(--lime)}
-  .lang .f{font-size:38px;line-height:1}
+  .lang .f{flex:0 0 52px;height:52px;border-radius:14px;background:var(--lime);color:var(--ink);display:grid;place-items:center;font-family:Unbounded,sans-serif;font-weight:700;font-size:16px}
   .lang b{display:block;font-size:17px}
   .lang small{color:var(--muted);font-size:13px}
   footer{text-align:center;color:#7f87a8;font-size:12.5px;padding:20px}
@@ -32,7 +32,7 @@
   <span class="logo">kodland</span><br>
   <span class="kicker">Tutor training</span>
   <h1>Parallel <span>Lessons</span></h1>
-  <p class="lead">Choose your language to start the training.</p>
+  <p class="lead">Choose your language · Scegli la lingua · Wybierz język</p>
   <div class="langs" id="langs"></div>
 </main>
 <footer>kodland · Parallel Lessons Training</footer>
@@ -44,7 +44,8 @@
     var a = document.createElement('a');
     a.className = 'lang';
     a.href = 'PL_Training.html?lang=' + encodeURIComponent(l.code);
-    a.innerHTML = '<span class="f">' + l.flag + '</span><span><b>' + l.name + '</b><small>Start →</small></span>';
+    // Language code badge (flag emojis show as plain letters on Windows)
+    a.innerHTML = '<span class="f">' + l.code.toUpperCase() + '</span><span><b>' + l.name + '</b><small>Start →</small></span>';
     document.getElementById('langs').appendChild(a);
   });
 </script>
