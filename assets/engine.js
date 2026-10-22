@@ -357,15 +357,23 @@ function renderSim(m){
    MODULE 0 — "Start here" (mindset). Texts come from content: zero
    ========================================================= */
 const ZERO = C.zero;
+const ZICONS = { rows:['⚡', '🗓️', '🎮', '🧩'] };
+const zSplit = s => { const m = String(s).match(/^<b>([\s\S]*?)<\/b>\s*([\s\S]*)$/); return m ? [m[1].replace(/\s*[:：]\s*$/, ''), m[2]] : ['', s]; };
+const zCards = (items, icons) => `<div class="trio">${items.map((t, i) => { const [h, p] = zSplit(t); return `<div class="ti"><span class="tie">${icons[i] || '✨'}</span><h3>${h}</h3><p>${p}</p></div>`; }).join('')}</div>`;
+const zWhy = z => { const ss = String(z.why).match(/[^.!?]+[.!?]+/g) || [];
+  if (!z.why_cards || ss.length < 4) return `<p class="p">${z.why}</p>`;
+  return `<div class="defn"><span class="de">🧒</span><p>${ss.slice(0, 2).join(' ').trim()}</p></div>
+  <div class="trio">${z.why_cards.map((t, i) => `<div class="ti"><span class="tie">${['🎯', '🌱', '🤖'][i]}</span><h3>${t}</h3></div>`).join('')}</div>
+  ${callout('tip', '🔄', ss.slice(3).join(' ').trim())}`; };
 const zUL = (items, cls) => `<ul class="zl ${cls || ''}">${items.map(i => `<li><span>${i}</span></li>`).join('')}</ul>`;
 const zVoices = (title, list) => list && list.length ? `<h3 class="zh">${title}</h3><div class="voices">${list.map(v => `<figure class="voice">${v.img ? `<img src="${v.img}" alt="">` : ''}<blockquote>${v.text || ''}</blockquote>${v.who ? `<figcaption>${v.who}</figcaption>` : ''}</figure>`).join('')}</div>` : '';
 const ZERO_BODY = {
 welcome:() => { const z = ZERO; return `
   <div class="defn"><span class="de">👋</span><p>${z.welcome_lead}</p></div>
   <h3 class="zh">${z.how_h}</h3><p class="p">${z.how_p}</p>
-  <h3 class="zh">${z.prep_h}</h3><p class="p">${z.prep_intro}</p>${zUL(z.prep)}
+  <h3 class="zh">${z.prep_h}</h3><p class="p">${z.prep_intro}</p>${z.prep.length % 3 === 0 ? zCards(z.prep, ZICONS.prep) : zUL(z.prep)}
   ${callout('tip', '🎮', z.sim)}
-  <h3 class="zh">${z.why_h}</h3><p class="p">${z.why}</p>
+  <h3 class="zh">${z.why_h}</h3>${zWhy(z)}
   ${callout('good', '🌟', z.means)}`; },
 ready:() => { const z = ZERO; return `
   <p class="p">${z.ready_p1}</p>
@@ -381,7 +389,7 @@ never:() => { const z = ZERO; return `
   ${callout('good', '💬', z.notconf)}`; },
 voices:() => { const z = ZERO; return `
   <p class="p">${z.voices_p}</p>
-  <div class="tell"><div class="th"><span>${z.tell_you}</span><span>${z.tell_so}</span></div>${z.rows.map(r => `<div class="tr"><div class="t1"><span class="tq">“</span>${r[0]}</div><div class="t2"><span class="ta">→</span>${r[1]}</div></div>`).join('')}</div>
+  <div class="tell"><div class="th"><span>${z.tell_you}</span><i></i><span>${z.tell_so}</span></div>${z.rows.map((r, i) => `<div class="tr"><div class="t1"><span class="tq">“</span>${r[0]}</div><span class="tarr" aria-hidden="true">→</span><div class="t2"><span class="ticon">${(ZICONS.rows || [])[i] || '✨'}</span><div>${r[1]}</div></div></div>`).join('')}</div>
   ${callout('warn', '🌟', z.new_courses)}
   ${zVoices(z.students_h, z.voices)}${zVoices(z.tutors_h, z.tutors)}`; },
 closing:() => { const z = ZERO; return `

@@ -577,3 +577,15 @@ main:has(.simpage){max-width:1400px}
 .voice blockquote{margin:0;line-height:1.6;font-size:15px}
 .voice figcaption{margin-top:8px;font-size:13px;color:var(--muted)}
 @media (max-width:640px){.tell .th{display:none}.tell .tr,.mentors .mh,.mentors .mr{grid-template-columns:1fr}.mentors .mh{display:none}}
+
+/* ---------- Module 0: arrow badge between the two blocks ---------- */
+.tell .th,.tell .tr{grid-template-columns:1fr 52px 1fr;gap:0;align-items:stretch}
+.tell .tr>div{position:relative}
+.tell .tarr{align-self:center;justify-self:center;width:46px;height:46px;border-radius:50%;background:var(--lime);color:var(--ink);display:grid;place-items:center;font-size:24px;font-weight:800;line-height:1;box-shadow:0 3px 10px rgba(0,0,0,.18);z-index:1}
+[dir="rtl"] .tell .tarr{transform:scaleX(-1)}
+.tell .t2{display:flex;gap:14px;align-items:center}
+.tell .ticon{flex:0 0 50px;height:50px;border-radius:16px;background:var(--lime);color:var(--ink);display:grid;place-items:center;font-size:28px}
+.tell .t1 .tq{font-size:20px;margin-inline-end:4px}
+@media (max-width:640px){.tell .tr{grid-template-columns:1fr;gap:4px}.tell .tarr{transform:rotate(90deg);width:38px;height:38px;font-size:20px}[dir="rtl"] .tell .tarr{transform:rotate(90deg)}}
+.tell{max-width:none}
+.tell .th,.tell .tr{max-width:none}
