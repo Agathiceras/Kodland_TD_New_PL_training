@@ -604,3 +604,147 @@ window.PL_CONTENT = {
       a: "<p>Per il compenso delle PL e i calcoli specifici, <b>contatta il tuo TL</b>.</p>" }
   ]
 };
+
+/* >>> MODULE 0 START (generated block: edit texts here) */
+PL_CONTENT.modules.m0 = {
+  "title": "Inizia da qui: preparati al lancio",
+  "desc": "Perché stiamo cambiando, cosa significa «essere pronti» quando le lezioni non ci sono ancora, chi ti supporta e che cosa ci hanno detto tutor e studenti. Circa 20 minuti.",
+  "obj": "Affronta questo lancio con sicurezza e serenità: saprai perché il formato cambia, che cosa significa davvero essere pronti e a chi rivolgerti ogni volta che ti serve aiuto.",
+  "eyebrow": "Modulo 0 · Inizia da qui · circa 20 minuti",
+  "sections": {
+    "welcome": "Benvenuto/a e perché cambiamo",
+    "ready": "Che cosa significa «essere pronti» adesso",
+    "never": "Non sei mai solo/a",
+    "voices": "Costruito con la tua voce, amato dagli studenti",
+    "closing": "Sei pronto/a per iniziare"
+  }
+};
+PL_CONTENT.quiz.m0 = [
+  {
+    "q": "Stai seguendo la formazione e le lezioni del corso non sono ancora disponibili. Che cosa fai?",
+    "o": [
+      "Aspetto le lezioni prima di iniziare la formazione.",
+      "Completo la formazione su metodo e struttura; le lezioni saranno nel BackOffice prima dell’inizio del corso.",
+      "Cerco materiale simile sulla Wiki."
+    ],
+    "a": 1,
+    "e": "Essere pronti non dipende dall’aver visto ogni lezione. La formazione copre metodo e struttura, e ogni lezione sarà nel BackOffice prima dell’inizio del corso."
+  },
+  {
+    "q": "Pochi giorni prima della tua prima lezione non ti senti sicuro/a. Che cosa fai?",
+    "o": [
+      "Lo tengo per me e spero che vada bene.",
+      "Scrivo un DM al mio mentor.",
+      "Chiedo di essere tolto/a dal corso."
+    ],
+    "a": 1,
+    "e": "Basta un DM al mentor: nessun modulo, nessuna segnalazione, nessuna spiegazione. Chiedere aiuto è ciò che fanno i professionisti."
+  },
+  {
+    "q": "Vorresti aiuto per preparare la tua prima lezione. Qual è il modo più rapido?",
+    "o": [
+      "Scrivo un DM al mio mentor regionale o prenoto una sessione nell’LMS.",
+      "Aspetto di ricevere una segnalazione.",
+      "Chiedo un feedback al genitore di uno studente."
+    ],
+    "a": 0,
+    "e": "Il mentor è sempre il tuo primo contatto. Non serve un problema né una segnalazione: scrivigli un DM o prenota uno slot di Coaching nell’LMS."
+  },
+  {
+    "q": "Un passaggio della formazione non ti è ancora chiaro. Qual è la mossa migliore?",
+    "o": [
+      "Interrompo la formazione finché qualcuno non mi contatta.",
+      "Ripeto il simulatore e, se resta poco chiaro, scrivo al mio mentor.",
+      "Lo salto: lo capirò in classe."
+    ],
+    "a": 1,
+    "e": "I simulatori sono uno spazio sicuro da ripetere quante volte serve. Se dopo non è ancora chiaro, il mentor è lì per aiutarti."
+  },
+  {
+    "q": "La tua prima lezione non è andata come previsto. Quale mentalità è la più adatta?",
+    "o": [
+      "«Questo corso non fa per me.»",
+      "«Non funziona ancora: annoto un miglioramento e ne parlo con il mio mentor.»",
+      "«Aspetto che qualcun altro risolva.»"
+    ],
+    "a": 1,
+    "e": "Le tue prime lezioni sono il tuo prototipo. Fai come chiediamo ai ragazzi: «non funziona ancora», annota un miglioramento e parlane con il mentor."
+  }
+];
+PL_CONTENT.zero = {
+  "welcome_lead": "<b>Benvenuto/a!</b> Fai parte di questo lancio perché sai già insegnare e creare un legame con i ragazzi. Questa formazione parte da ciò che già fai bene. Non parte da zero, e nemmeno tu.",
+  "how_h": "Come seguire questa formazione",
+  "how_p": "Vai al tuo ritmo, con curiosità e non sotto pressione. Non devi memorizzare nulla né essere perfetto/a: l’obiettivo è sentirti a tuo agio con il metodo e sapere dove trovare ciò che ti serve. Un misto di entusiasmo e un pizzico di incertezza è del tutto naturale davanti a qualcosa di nuovo. Significa semplicemente che ci tieni a farlo bene.",
+  "prep_h": "Per che cosa ti prepara questa formazione",
+  "prep_intro": "Dopo questo modulo sulla mentalità, la formazione si concentra sul formato delle lezioni parallele:",
+  "prep": [
+    "<b>Come funzionano le lezioni parallele:</b> più studenti nella stessa fascia oraria, ognuno con il proprio percorso.",
+    "<b>Gestire la fascia oraria:</b> accogliere gli studenti, far avanzare ciascuno e dedicare a tutti momenti individuali.",
+    "<b>Pratica:</b> simulatori di BackOffice e Classroom per provare una vera lezione PL prima della tua prima lezione dal vivo.",
+    "<b>Un test finale</b> che si sblocca quando completi il materiale."
+  ],
+  "sim": "<b>Non saltare i simulatori: è lì che costruisci la tua sicurezza.</b> Leggere di una nuova lezione è utile, ma è farla che te la rende familiare. I simulatori ti permettono di esercitare ogni passaggio reale di una lezione, dall’apertura nel BackOffice allo svolgimento in Classroom, in uno spazio sicuro dove nulla può andare storto. Ripetili quante volte ti serve e torna a rivederli prima della tua prima lezione dal vivo: a quel punto ogni clic ti verrà naturale.",
+  "why_h": "Perché stiamo cambiando",
+  "why": "Spesso le famiglie aspettano a lungo per iniziare un corso 1-to-1 o premium, perché gli orari non coincidono. Le lezioni parallele risolvono il problema: segui da 2 a 5 studenti contemporaneamente, ciascuno con il proprio percorso. Gli studenti iniziano prima e tu hai più flessibilità nel tuo calendario. Sembra una lezione normale, con momenti individuali dedicati a ogni studente.",
+  "means": "<b>Che cosa significa per te.</b> Le competenze che oggi fanno di te un buon tutor (spiegare con chiarezza, tenere i ragazzi coinvolti, accorgerti di chi ha bisogno di aiuto) sono esattamente quelle che servono ai nuovi corsi. Ciò che cambia è il metodo e la struttura, ed è ciò che ti dà questa formazione.",
+  "ready_p1": "Durante la formazione potresti non vedere ancora le lezioni del corso: i contenuti vengono finalizzati a ridosso del lancio. <b>Ogni lezione sarà nel BackOffice prima dell’inizio del tuo corso.</b> La formazione ti prepara a tutto il resto, così sarai pronto/a nel momento in cui le lezioni arrivano.",
+  "ready_p2": "Essere pronti non dipende dall’aver visto ogni lezione durante la formazione. Significa:",
+  "ready_items": [
+    "<b>Capisco il metodo:</b> come scorre una lezione e perché.",
+    "<b>Conosco la struttura:</b> moduli, formato della lezione, dove si trova ogni elemento nel BackOffice.",
+    "<b>Sono sicuro/a sull’aspetto tecnico:</b> BackOffice, Classroom e gli strumenti che uso in aula, esercitati nei simulatori finché risultano naturali.",
+    "<b>Conosco la mia routine:</b> il contenuto della lezione ora si vede direttamente nel BackOffice, tutto in un unico posto, senza bisogno della Wiki. Leggere le note per il tutor prima di ogni lezione è una mia responsabilità.",
+    "<b>So a chi chiedere:</b> prima il mio mentor regionale e il mio TL per gruppi e orari."
+  ],
+  "ready_perm": "<b>Concediti il permesso di essere di nuovo un/una principiante.</b> Anche il tutor più esperto insegna un corso nuovo per la prima volta una sola volta. Ai ragazzi chiediamo di dire «non funziona ancora, troviamo una strategia», e lo stesso vale per noi: le tue prime lezioni sono il tuo prototipo. Ognuna ti sembrerà più facile della precedente e ti sosterremo a ogni passo.",
+  "ready_two": "<b>Due cose che la formazione spiega nel dettaglio.</b> Prima, e più importante: dove troverai da ora in poi i contenuti delle lezioni, le <b>Teacher Notes nel BackOffice, la tua nuova stella polare</b>. Seconda: come prepararti alla tua prima lezione. Entrambe sono spiegate chiaramente, passo dopo passo, più avanti nella formazione.",
+  "never_p": "Il tuo mentor regionale conosce i nuovi corsi ed è lì per supportarti a ogni lancio. <b>Chiedere aiuto è ciò che fanno i professionisti:</b> è così che i bravi tutor diventano ottimi tutor. Non serve un problema né una segnalazione per scrivergli.",
+  "mentor_h": "Il tuo mentor",
+  "mentor_region": "Regione",
+  "mentors": [
+    [
+      "Italia",
+      "Gianfranco Barba"
+    ]
+  ],
+  "coaching": "<b>Preferisci una sessione più lunga?</b> Accedi all’LMS con il tuo account BackOffice → <b>Coaching</b> → scegli uno slot e scrivi in una riga di cosa vorresti essere aiutato/a (per esempio: «Prima lezione di [corso]»).",
+  "first_h": "Il tuo mentor è sempre il tuo primo contatto. Rivolgiti a lui per:",
+  "first_items": [
+    "Problemi di gestione della classe",
+    "Domande su un nuovo corso o formato",
+    "Supporto per condurre le lezioni con serenità",
+    "Preparare insieme una lezione o un rapido controllo di sicurezza prima della tua prima classe"
+  ],
+  "tl": "Per gruppi e orari, contatta il tuo <b>TL</b>.",
+  "notconf": "<b>Non ti senti sicuro/a, per qualsiasi motivo?</b> Scrivi un DM al tuo mentor. Basta così: nessun modulo, nessuna segnalazione, nessuna spiegazione.",
+  "voices_p": "I nuovi corsi non nascono dal nulla: rispondono a ciò che tutor, studenti e famiglie ci hanno detto. Ecco una parte di ciò che abbiamo ascoltato e di ciò che è cambiato di conseguenza.",
+  "tell_you": "Ci avete detto",
+  "tell_so": "Quindi le lezioni parallele…",
+  "rows": [
+    [
+      "Gli studenti aspettano troppo prima che un gruppo 1-to-1 o premium possa partire.",
+      "Permettono agli studenti di iniziare molto prima: segui da 2 a 5 studenti insieme, ciascuno con il proprio percorso."
+    ],
+    [
+      "Gli orari fissi rendono difficile riempire la settimana.",
+      "Ti danno più flessibilità: gli studenti entrano nella stessa fascia oraria anche se sono su lezioni diverse."
+    ],
+    [
+      "Gestire più studenti insieme sembra stressante.",
+      "Arrivano con una formazione sul formato e un simulatore, così ti eserciti prima della tua prima lezione dal vivo."
+    ],
+    [
+      "Gli studenti di un gruppo vanno a velocità diverse.",
+      "Lasciano che ogni studente proceda al proprio ritmo, con momenti individuali dedicati con te."
+    ]
+  ],
+  "new_courses": "<b>Alcuni corsi sono completamente nuovi e sei tra i primi a insegnarli.</b> Per questo la tua voce conta ancora di più: dopo le tue prime lezioni, racconta al tuo mentor che cosa ha funzionato e che cosa no. Il tuo feedback darà forma alla prossima versione.",
+  "students_h": "Che cosa dicono gli studenti",
+  "tutors_h": "Da tutor che l’hanno già insegnato",
+  "voices": [ /* REAL student/parent messages go here: { text: "…", who: "Parent · 3D Modeling · LATAM", img: "images/xxx.png" (optional) } */ ],
+  "tutors": [ /* OPTIONAL tutor quotes: { text: "…", who: "Tutor name" } */ ],
+  "closing_h": "Sai perché stiamo cambiando, che cosa significa «essere pronti» e chi c’è per te.",
+  "closing_p": "Ora tuffati nella formazione con curiosità: esercitati nei simulatori quante volte vuoi e goditi il fatto di essere tra i primi a portare qualcosa di nuovo ai nostri studenti.",
+  "closing_dm": "Se in qualsiasi momento non ti senti sicuro/a, basta un DM al tuo mentor."
+};
+/* <<< MODULE 0 END */
