@@ -9,7 +9,7 @@ const C = window.PL_CONTENT, U = C.ui, S = C.s;
 /* ---------- Config (not translated) ---------- */
 const CONFIG = {
   PASS: 0.7,                    // 70% to pass each module check
-  CLASSROOM_SIM: 'https://agathiceras.github.io/PL_simulation_test/Classroom_Simulator.html',
+  CLASSROOM_SIM: 'https://agathiceras.github.io/PL_Classroom_simulation/Classroom_Simulator.html',   // the training adds ?lang=en / ?lang=it
   BO_SIM: 'BO_simulator/Simulacion_BO_PL.html',
   SIM_CODE: 'PL-SIM-4827',      // shown at the end of the Classroom simulator
   BO_CODE: 'PL-BO-3815',        // shown at the end of the BO simulator
