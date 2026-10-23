@@ -9,7 +9,12 @@ const C = window.PL_CONTENT, U = C.ui, S = C.s;
 /* ---------- Config (not translated) ---------- */
 const CONFIG = {
   PASS: 0.7,                    // 70% to pass each module check
-  CLASSROOM_SIM: 'https://agathiceras.github.io/PL_Classroom_simulation/Classroom_Simulator.html',   // the training adds ?lang=en / ?lang=it
+  CLASSROOM_SIM: 'https://agathiceras.github.io/PL_Classroom_simulation/Classroom_Simulator.html',   // base: a language without its own link below gets ?lang=<code>
+  // Classroom simulator link of each training language (add pl, etc. here when their version is online)
+  CLASSROOM_SIM_BY_LANG: {
+    en: 'https://agathiceras.github.io/PL_Classroom_simulation/Classroom_Simulator.html?lang=en',
+    it: 'https://agathiceras.github.io/PL_Classroom_simulation/Classroom_Simulator.html?lang=it'
+  },
   BO_SIM: 'BO_simulator/Simulacion_BO_PL.html',
   SIM_CODE: 'PL-SIM-4827',      // shown at the end of the Classroom simulator
   BO_CODE: 'PL-BO-3815',        // shown at the end of the BO simulator
@@ -37,19 +42,32 @@ function setFlag(k, v){ P.flags = P.flags || {}; P.flags[k] = v; saveP(); }
    MODULES — structure only (texts come from C.modules)
    check: quiz | tf | chat | qa | sim      needs: a flag that must be set before the check opens
    ========================================================= */
+// Module 0 (mindset) comes from content/module0-<lang>.js + assets/module0.js, shared with the EM training
+// …and so does the final module (first-lesson mindset + reflection survey). Both surveys are saved in the Google Sheet.
+const M0MOD = window.M0 ? window.M0.build('pl', C.lang || 'en', {
+  flag, setFlag:k => setFlag(k, true), refresh:() => { const m = curModule(); if (m) refreshCTA(m); } }) : null;
+const MF = M0MOD && M0MOD.final;
+if (M0MOD){
+  const titles = list => Object.fromEntries(list.map(s => [s[0], s[2]]));
+  C.modules.m0 = { title:M0MOD.title, desc:M0MOD.desc, obj:M0MOD.obj, needs:M0MOD.lockMsg, sections:titles(M0MOD.sections) };
+  C.modules.mf = { title:MF.title, desc:MF.desc, obj:MF.obj, sections:titles(MF.sections) };
+  C.quiz.m0 = M0MOD.quiz;
+}
 const MODULES = [
-  { id:'m0', e:'💛', color:'#ff7a59', check:'quiz', sections:[['welcome','👋'],['ready','✅'],['never','🤝'],['voices','🗣️'],['closing','🚀']] },
+  ...(M0MOD ? [{ id:'m0', e:M0MOD.e, color:'#8fe3c4', check:'quiz', needs:M0MOD.surveyFlag, sections:M0MOD.sections.map(s => [s[0], s[1]]) }] : []),
   { id:'m1', e:'🌟', color:'#cdf24a', check:'quiz', needs:'metAll', sections:[['what','🧩'],['runs','📋'],['time','⏱️'],['why','🚀'],['students','🧒']] },
   { id:'m2', e:'🗺️', color:'#ffd34d', check:'tf', sections:[['structure','🗺️'],['matter','⭐'],['opening','🎬'],['closing','🏁']] },
   { id:'m3', e:'🧭', color:'#ec5fa6', check:'chat', sections:[['role','🧭'],['mindset','🌱'],['feedback','💬'],['notes','📝'],['first','🚀']] },
   { id:'m4', e:'🖥️', color:'#5b8cff', check:'quiz', needs:'boCode', sections:[['bo','🗂️'],['tnotes','📒'],['rules','📏']] },
   { id:'m5', e:'❓', color:'#3fd16b', check:'qa', sections:[['qa','❓']] },
-  { id:'m6', e:'🎮', color:'#f5a623', check:'sim', sections:[] }
-].map((m, i) => Object.assign({}, C.modules[m.id], m, { n:i }));   // Module 0 = "Start here", then 1..6   // structure wins over same-named content keys (needs, sections)
+  { id:'m6', e:'🎮', color:'#f5a623', check:'sim', sections:[] },
+  ...(MF ? [{ id:'mf', e:MF.e, color:'#ff9bd2', check:'survey', needs:MF.surveyFlag, sections:MF.sections.map(s => [s[0], s[1]]) }] : [])
+].map((m, i) => Object.assign({}, C.modules[m.id], m, { n:i + (M0MOD ? 0 : 1) }));   // structure wins over same-named content keys (needs, sections) · Module 0 keeps the others numbered 1–6
 const TOTAL = MODULES.length;
-const NUMBERED = MODULES.filter(x => x.n > 0).length;   // "Module n of NUMBERED" does not count Module 0
+const LASTN = MODULES[TOTAL - 1].n;   // "Module 3 of 6"
 const QA = C.qa;
-const unlocked = m => { const i = MODULES.indexOf(m); return i <= 0 || passed(MODULES[i - 1].id); };
+// A module already passed stays open (progress saved before Module 0 existed)
+const unlocked = m => { const i = MODULES.indexOf(m); return i <= 0 || passed(MODULES[i - 1].id) || passed(m.id); };
 const coreDone = () => MODULES.every(m => passed(m.id));
 
 /* Stage visuals (texts come from C.stages) */
@@ -256,6 +274,7 @@ qa:() => `<p class="p">${S.qa.intro}</p>
 /* =========================================================
    RENDERING
    ========================================================= */
+if (M0MOD) Object.assign(BODY, M0MOD.body);   // Module 0 section bodies
 const view = $('#view');
 function langSwitch(){
   const L = window.PL_LANGUAGES || [];
@@ -312,6 +331,11 @@ function ctaHTML(m){
   const ready = !m.needs || flag(m.needs);
   const n = (C.quiz[m.id] || []).length;
   const info = { quiz:[U.ctaQuizH, fmt(U.ctaQuizP, { n })], tf:[U.ctaTfH, fmt(U.ctaTfP, { n })], chat:[U.ctaChatH, U.ctaChatP], qa:[U.ctaQaH, U.ctaQaP] }[m.check];
+  // Final module: sending the reflection survey completes it
+  if (m.check === 'survey'){
+    return `<span class="e">${passed(m.id) ? '🏅' : '💬'}</span><div class="grow"><h3>${MF.ctaTitle}</h3><p>${MF.ctaText}</p></div>
+      <button class="btn-y" id="surveyDone" ${ready || passed(m.id) ? '' : 'disabled'}>${MF.ctaBtn}</button>`;
+  }
   if (m.check === 'qa'){
     return `<span class="e">${passed(m.id) ? '🏅' : '📖'}</span><div class="grow"><h3>${info[0]}</h3><p>${info[1]}</p></div>
       <button class="btn-y" id="qaDone" ${qaAllOpen() || passed(m.id) ? '' : 'disabled'}>${passed(m.id) ? U.ctaQaBtnDone : U.ctaQaBtn}</button>`;
@@ -329,7 +353,7 @@ function renderModule(m){
   if (m.check === 'sim'){ renderSim(m); return; }
   renderNav('module');
   view.innerHTML = `
-  <div class="mhead"><span class="eyebrow">${m.eyebrow || fmt(U.moduleEyebrow, { n:m.n, total:NUMBERED })}</span><h1>${m.e} ${m.title}</h1><div class="mobj">${m.obj}</div></div>
+  <div class="mhead"><span class="eyebrow">${fmt(U.moduleEyebrow, { n:m.n, total:LASTN })}</span><h1>${m.e} ${m.title}</h1><div class="mobj">${m.obj}</div></div>
   <div class="chips">${m.sections.map(s => `<button class="chip" data-jump="${s[0]}">${s[1]} ${m.sections_t[s[0]]}</button>`).join('')}</div>
   ${m.sections.map(s => `<section class="sec" id="sec-${s[0]}"><div class="sh"><span class="se">${s[1]}</span><h2>${m.sections_t[s[0]]}</h2></div>${BODY[s[0]]()}</section>`).join('')}
   <div class="mcta" id="mcta">${ctaHTML(m)}</div>`;
@@ -343,60 +367,14 @@ function renderSim(m){
   renderNav('module');
   const x = S.sim;
   view.innerHTML = `
-  <div class="mhead"><span class="eyebrow">${fmt(U.simEyebrow, { n:m.n, total:NUMBERED })}</span><h1>${x.title}</h1><div class="mobj">${m.obj}</div></div>
+  <div class="mhead"><span class="eyebrow">${fmt(U.simEyebrow, { n:m.n, total:LASTN })}</span><h1>${x.title}</h1><div class="mobj">${m.obj}</div></div>
   <section class="sec" style="margin-top:28px">
     ${trio(x.cards)}
     ${callout('warn', '⚠️', x.example)}
-    ${launch('🎮', x.launchTitle, x.launchText, x.steps, withLang(CONFIG.CLASSROOM_SIM), x.button)}
+    ${launch('🎮', x.launchTitle, x.launchText, x.steps, CONFIG.CLASSROOM_SIM_BY_LANG[C.lang] || withLang(CONFIG.CLASSROOM_SIM), x.button)}
     ${codeBox('simCode')}
   </section>`;
 }
-
-
-/* =========================================================
-   MODULE 0 — "Start here" (mindset). Texts come from content: zero
-   ========================================================= */
-const ZERO = C.zero;
-const ZICONS = { rows:['⚡', '🗓️', '🎮', '🧩'] };
-const zSplit = s => { const m = String(s).match(/^<b>([\s\S]*?)<\/b>\s*([\s\S]*)$/); return m ? [m[1].replace(/\s*[:：]\s*$/, ''), m[2]] : ['', s]; };
-const zCards = (items, icons) => `<div class="trio">${items.map((t, i) => { const [h, p] = zSplit(t); return `<div class="ti"><span class="tie">${icons[i] || '✨'}</span><h3>${h}</h3><p>${p}</p></div>`; }).join('')}</div>`;
-const zWhy = z => { const ss = String(z.why).match(/[^.!?]+[.!?]+/g) || [];
-  if (!z.why_cards || ss.length < 4) return `<p class="p">${z.why}</p>`;
-  return `<div class="defn"><span class="de">🧒</span><p>${ss.slice(0, 2).join(' ').trim()}</p></div>
-  <div class="trio">${z.why_cards.map((t, i) => `<div class="ti"><span class="tie">${['🎯', '🌱', '🤖'][i]}</span><h3>${t}</h3></div>`).join('')}</div>
-  ${callout('tip', '🔄', ss.slice(3).join(' ').trim())}`; };
-const zUL = (items, cls) => `<ul class="zl ${cls || ''}">${items.map(i => `<li><span>${i}</span></li>`).join('')}</ul>`;
-const zVoices = (title, list) => list && list.length ? `<h3 class="zh">${title}</h3><div class="voices">${list.map(v => `<figure class="voice">${v.img ? `<img src="${v.img}" alt="">` : ''}<blockquote>${v.text || ''}</blockquote>${v.who ? `<figcaption>${v.who}</figcaption>` : ''}</figure>`).join('')}</div>` : '';
-const ZERO_BODY = {
-welcome:() => { const z = ZERO; return `
-  <div class="defn"><span class="de">👋</span><p>${z.welcome_lead}</p></div>
-  <h3 class="zh">${z.how_h}</h3><p class="p">${z.how_p}</p>
-  <h3 class="zh">${z.prep_h}</h3><p class="p">${z.prep_intro}</p>${z.prep.length % 3 === 0 ? zCards(z.prep, ZICONS.prep) : zUL(z.prep)}
-  ${callout('tip', '🎮', z.sim)}
-  <h3 class="zh">${z.why_h}</h3>${zWhy(z)}
-  ${callout('good', '🌟', z.means)}`; },
-ready:() => { const z = ZERO; return `
-  <p class="p">${z.ready_p1}</p>
-  <p class="p">${z.ready_p2}</p>${zUL(z.ready_items, 'num')}
-  ${callout('good', '🌱', z.ready_perm)}
-  ${callout('warn', '📍', z.ready_two)}`; },
-never:() => { const z = ZERO; return `
-  <p class="p">${z.never_p}</p>
-  <div class="mentors" role="table"><div class="mh"><span>${z.mentor_region}</span><span>${z.mentor_h}</span></div>${z.mentors.map(r => `<div class="mr"><span class="mreg">${r[0]}</span><b>${r[1]}</b></div>`).join('')}</div>
-  ${callout('tip', '🗓️', z.coaching)}
-  <h3 class="zh">${z.first_h}</h3>${zUL(z.first_items)}
-  <p class="p">${z.tl}</p>
-  ${callout('good', '💬', z.notconf)}`; },
-voices:() => { const z = ZERO; return `
-  <p class="p">${z.voices_p}</p>
-  <div class="tell"><div class="th"><span>${z.tell_you}</span><i></i><span>${z.tell_so}</span></div>${z.rows.map((r, i) => `<div class="tr"><div class="t1"><span class="tq">“</span>${r[0]}</div><span class="tarr" aria-hidden="true">→</span><div class="t2"><span class="ticon">${(ZICONS.rows || [])[i] || '✨'}</span><div>${r[1]}</div></div></div>`).join('')}</div>
-  ${callout('warn', '🌟', z.new_courses)}
-  ${zVoices(z.students_h, z.voices)}${zVoices(z.tutors_h, z.tutors)}`; },
-closing:() => { const z = ZERO; return `
-  <div class="defn"><span class="de">🚀</span><p><b>${z.closing_h}</b><br>${z.closing_p}</p></div>
-  ${callout('tip', '💬', z.closing_dm)}`; }
-};
-Object.assign(BODY, ZERO_BODY);
 
 /* =========================================================
    WIDGETS
@@ -685,7 +663,7 @@ function showResult(m, ok, top){
   const next = MODULES[MODULES.indexOf(m) + 1];
   view.innerHTML = `<div class="result">
     <div class="re">${ok ? '🎉' : '😅'}</div>
-    <h1>${ok ? (m.check === 'qa' || m.check === 'sim' ? U.resultComplete : U.resultPassed) : U.resultAlmost}</h1>
+    <h1>${ok ? (m.check === 'qa' || m.check === 'sim' || m.check === 'survey' ? U.resultComplete : U.resultPassed) : U.resultAlmost}</h1>
     ${top} ${ok ? (next ? fmt(U.resultUnlocked, { n:next.n, title:next.title }) : '') : U.resultNeed}</p>
     <div class="btn-row">
       ${ok ? (next ? `<button class="btn-y" data-go="${next.id}">${fmt(U.resultGoModule, { n:next.n })}</button>` : `<button class="btn-y" data-go="done">${U.resultNextSteps}</button>`) : `<button class="btn-y" data-retake="${m.id}">${U.ctaRetake}</button>`}
@@ -759,7 +737,7 @@ function tryCode(id){
   if (norm(inp.value) !== norm(want)){ $('#err-' + id).textContent = U.codeError; inp.focus(); return; }
   setFlag(id, true);
   const m = curModule();
-  if (id === 'simCode'){ setResult('m6', 100, true); showResult(MODULES[5], true, `<p>${U.resultSimAccepted}`); return; }
+  if (id === 'simCode'){ setResult('m6', 100, true); showResult(MODULES.find(x => x.id === 'm6'), true, `<p>${U.resultSimAccepted}`); return; }
   $(`[data-codebox="${id}"]`).outerHTML = codeBox(id);
   if (m) refreshCTA(m);
   confetti(80);
@@ -776,7 +754,8 @@ document.addEventListener('click', e => {
   const cd = t.closest('[data-code]'); if (cd){ tryCode(cd.dataset.code); return; }
   const sc = t.closest('#startCheck');
   if (sc){ if (!sc.disabled) startCheck(curModule()); return; }
-  if (t.closest('#qaDone') && !t.closest('#qaDone').disabled){ const m = MODULES[4]; if (passed(m.id)) go('m6'); else { setResult(m.id, 100, true); showResult(m, true, `<p>${U.resultQaRead}`); } return; }
+  if (t.closest('#qaDone') && !t.closest('#qaDone').disabled){ const m = MODULES.find(x => x.id === 'm5'); if (passed(m.id)) go('m6'); else { setResult(m.id, 100, true); showResult(m, true, `<p>${U.resultQaRead}`); } return; }
+  if (t.closest('#surveyDone') && !t.closest('#surveyDone').disabled){ const m = MODULES.find(x => x.id === 'mf'); setResult(m.id, 100, true); showResult(m, true, `<p>${MF.done}`); return; }
   const r = t.closest('[data-retake]'); if (r){ startCheck(MODULES.find(x => x.id === r.dataset.retake)); return; }
   if (t.closest('[data-exit]')){ renderModule(curModule() || MODULES[0]); window.scrollTo(0, 0); }
 });
