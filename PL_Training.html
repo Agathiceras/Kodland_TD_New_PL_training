@@ -31,7 +31,18 @@
   // File missing? Fall back to English
   if (!window.PL_CONTENT) document.write('<script src="content/en.js"><\/script>');
 </script>
-<!-- 3) The engine (no texts inside) -->
+<!-- 3) Module 0 (mindset), shared with the EM training: content/module0-<lang>.js (falls back to English) + its builder -->
+<script>
+  (function(){
+    var q = ((location.search.match(/[?&]lang=([a-z-]+)/i) || [])[1] || 'en').toLowerCase();
+    document.write('<script src="content/module0-' + q + '.js"><\/script>');
+  })();
+</script>
+<script>
+  if (!window.M0_CONTENT) document.write('<script src="content/module0-en.js"><\/script>');
+</script>
+<script src="assets/module0.js"></script>
+<!-- 4) The engine (no texts inside) -->
 <script src="assets/engine.js"></script>
 </body>
 </html>
