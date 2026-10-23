@@ -7,7 +7,7 @@
    ===================================================================== */
 window.PL_LANGUAGES = [
   { code: "en", name: "English", flag: "🌐" },
-  { code: "it", name: "Italiano", flag: "🌐" }
-  // { code: "pl", name: "Polski",   flag: "🇵🇱" },
+  { code: "it", name: "Italiano", flag: "🌐" },
+  { code: "pl", name: "Polski",   flag: "🌐" }
   // { code: "tr", name: "Türkçe",   flag: "🇹🇷" }
 ];

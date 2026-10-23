@@ -13,7 +13,8 @@ const CONFIG = {
   // Classroom simulator link of each training language (add pl, etc. here when their version is online)
   CLASSROOM_SIM_BY_LANG: {
     en: 'https://agathiceras.github.io/PL_Classroom_simulation/Classroom_Simulator.html?lang=en',
-    it: 'https://agathiceras.github.io/PL_Classroom_simulation/Classroom_Simulator.html?lang=it'
+    it: 'https://agathiceras.github.io/PL_Classroom_simulation/Classroom_Simulator.html?lang=it',
+    pl: 'https://agathiceras.github.io/PL_Classroom_simulation/Classroom_Simulator.html?lang=pl'
   },
   BO_SIM: 'BO_simulator/Simulacion_BO_PL.html',
   SIM_CODE: 'PL-SIM-4827',      // shown at the end of the Classroom simulator
