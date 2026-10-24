@@ -20,7 +20,7 @@ window.PL_CONTENT = {
     opening: "https://drive.google.com/file/d/12DWDkaSE8c4OsHWtWDAc5iNd8jc6C60v/preview",
     closing: "https://drive.google.com/file/d/1R7gMdFGfdFtv1FRKGRn65-BJN13IYnmW/preview",
     checkin: "https://drive.google.com/file/d/1_4Opmv0hsAgKPbuEd6Y1HTP9ZJqGAXDA/preview",
-    content: "https://drive.google.com/file/d/14gOeQ7jc_vXp9OSmE7P-tsJu53BChcqd/preview"
+    content: "https://drive.google.com/file/d/1zCl6Y0upD6sn15jcTOiNlnBtreNKKsIM/preview"
   },
 
   /* ---------- General interface ---------- */

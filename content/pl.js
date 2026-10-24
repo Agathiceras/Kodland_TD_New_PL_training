@@ -17,10 +17,10 @@ window.PL_CONTENT = {
 
   /* ---------- Videos (Google Drive "preview" links). A region can replace them with its own video. ---------- */
   videos: {
-    opening: "https://drive.google.com/file/d/12DWDkaSE8c4OsHWtWDAc5iNd8jc6C60v/preview",
-    closing: "https://drive.google.com/file/d/1R7gMdFGfdFtv1FRKGRn65-BJN13IYnmW/preview",
-    checkin: "https://drive.google.com/file/d/1_4Opmv0hsAgKPbuEd6Y1HTP9ZJqGAXDA/preview",
-    content: "https://drive.google.com/file/d/14gOeQ7jc_vXp9OSmE7P-tsJu53BChcqd/preview"
+    opening: "https://drive.google.com/file/d/1IKPVH8lQy7ce2g6m5oBc7n9DK5UWbIKD/preview",
+    closing: "https://drive.google.com/file/d/19e-WNEJ2RYiwsJ0V_33ljGRwiNDt7PNG/preview",
+    checkin: "https://drive.google.com/file/d/1Uwgt_uU0pybz0Y5CJ4nhO1UuJAaHHA93/preview",
+    content: "https://drive.google.com/file/d/1rkhf_bRqz6RiCb1gHuUe1aHXhGqaB2mN/preview"
   },
 
   /* ---------- General interface ---------- */
