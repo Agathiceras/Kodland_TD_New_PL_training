@@ -29,10 +29,10 @@ window.M0_CONTENT = {
       ["💬", "Vedere come i nuovi corsi rispondono a ciò che tutor e studenti ci hanno detto."]
     ],
     sections: {
-      welcome: "Benvenuto, e perché stiamo cambiando",
+      welcome: "Benvenuto! Ecco perché stiamo cambiando",
       ready: "Che cosa significa «pronto» adesso",
       alone: "Non sei mai solo",
-      voice: "Creati con la tua voce, amati dagli studenti",
+      voice: "Creati con il tuo contributo, amati dagli studenti",
       start: "Sei pronto per iniziare",
       survey: "Come ti senti?"
     }
@@ -42,7 +42,7 @@ window.M0_CONTENT = {
   welcome: {
     intro: "<b>Benvenuto!</b> Fai parte di questo lancio perché sai già insegnare e creare un legame con i ragazzi. Questa formazione si basa su ciò che fai già bene. Non parte da zero, e nemmeno tu.",
     howTitle: "Come seguire questa formazione",
-    how: "Procedi con il tuo ritmo, con curiosità e senza pressione. Non devi memorizzare nulla né essere perfetto: l’obiettivo è sentirti a tuo agio con il metodo e sapere dove trovare ciò che ti serve. Un po’ di entusiasmo e un pizzico di incertezza sono del tutto naturali davanti a qualcosa di nuovo. Significa semplicemente che ci tieni a farlo bene.",
+    how: "Procedi al tuo ritmo, con curiosità e senza pressione. Non devi memorizzare nulla né essere perfetto: l’obiettivo è sentirti a tuo agio con il metodo e sapere dove trovare ciò che ti serve. Un po’ di entusiasmo e un pizzico di incertezza sono del tutto naturali davanti a qualcosa di nuovo. Significa semplicemente che ci tieni a farlo bene.",
     prepTitle: "A che cosa ti prepara questa formazione",
     prep: {
       em: {
@@ -84,13 +84,13 @@ window.M0_CONTENT = {
     items: [
       "<b>Capisco il metodo:</b> come si sviluppa una lezione e perché.",
       "<b>Conosco la struttura:</b> moduli, formato della lezione, dove si trova ogni elemento in Backoffice.",
-      "<b>Mi sento sicuro sulla parte tecnica:</b> Backoffice, Classroom e gli strumenti che uso in classe, provati nei simulatori finché non mi vengono naturali.",
+      "<b>Mi sento sicuro con gli strumenti:</b> ho fatto pratica con Backoffice, Classroom e gli strumenti che uso in classe grazie ai simulatori, fino a imparare a usarli con naturalezza.",
       "<b>Conosco la mia routine:</b> i contenuti della lezione ora sono mostrati direttamente in Backoffice, tutti in un unico posto, senza bisogno della Wiki. Leggere lì le note per il tutor prima di ogni lezione è una mia responsabilità.",
       "<b>So a chi chiedere:</b> prima al mio mentor regionale, e al mio TL per gruppi e orari."
     ],
-    allTicked: "🌟 Ecco che cosa significa essere «pronto», e lo sentirai sempre di più a ogni modulo.",
+    allTicked: "🌟 Ecco che cosa significa essere «pronto»: ti sentirai sempre più preparato a ogni modulo.",
     beginnerTitle: "Concediti di essere di nuovo un principiante",
-    beginner: "Anche il tutor più esperto insegna un nuovo corso per la prima volta, almeno una volta. Ai ragazzi chiediamo di dire <i>«non funziona ancora, troviamo una strategia»</i>, e lo stesso vale per noi: le tue prime lezioni sono il tuo prototipo. Ognuna ti sembrerà più facile della precedente, e ti sosterremo a ogni passo."
+    beginner: "Anche il tutor più esperto affronta una prima lezione quando inizia a insegnare un nuovo corso. Ai ragazzi chiediamo di dire <i>«non funziona ancora, troviamo una strategia»</i>, e lo stesso vale per noi: le tue prime lezioni sono il tuo prototipo. Ognuna ti sembrerà più facile della precedente, e ti sosterremo a ogni passo."
   },
 
   /* ---------- Section 3 ---------- */
@@ -115,14 +115,14 @@ window.M0_CONTENT = {
       ["🧑‍🏫", "Problemi di gestione della classe"],
       ["📚", "Domande su un nuovo corso o formato"],
       ["⚙️", "Supporto per condurre le tue lezioni senza intoppi"],
-      ["🤝", "Preparare insieme una lezione, o un rapido confronto per sentirti sicuro prima della tua prima lezione"]
+      ["🤝", "Preparare insieme una lezione o fare un rapido confronto per sentirti sicuro prima della tua prima lezione"]
     ],
     tl: "<b>Per gruppi e orari</b>, contatta il tuo TL.",
     sessionTitle: "Preferisci una sessione più lunga?",
     sessionSteps: [
       "Accedi all’<b>LMS</b> con il tuo account Backoffice.",
       "Vai su <b>Coaching</b> e scegli una fascia oraria.",
-      "Scrivi in una riga su che cosa vorresti aiuto, per esempio <i>«Prima lezione di [corso]»</i>."
+      "Descrivi in una riga per che cosa vorresti ricevere aiuto, per esempio <i>«Prima lezione di [corso]»</i>."
     ],
     dm: "<b>Non ti senti sicuro, per qualsiasi motivo?</b> Manda un messaggio privato al tuo mentor. Basta questo: nessun modulo, nessuna segnalazione, nessuna spiegazione necessaria."
   },
@@ -143,9 +143,9 @@ window.M0_CONTENT = {
       ],
       pl: [
         ["Gli studenti aspettano troppo prima che possa partire un corso individuale o un gruppo Premium.", "Permettono agli studenti di iniziare molto prima: segui 2–5 studenti contemporaneamente, ognuno con il proprio percorso."],
-        ["Gli orari fissi rendono difficile riempire la settimana.", "Ti danno più flessibilità: gli studenti partecipano alla stessa fascia oraria anche se sono a lezioni diverse."],
-        ["Gestire più studenti insieme sembra stressante.", "Arrivano con una formazione sul formato e un simulatore, così ti eserciti prima della tua prima lezione dal vivo."],
-        ["In un gruppo gli studenti procedono a velocità diverse.", "Permettono a ogni studente di avanzare con il proprio ritmo, con momenti individuali dedicati insieme a te."]
+        ["Gli orari fissi rendono difficile riempire la settimana.", "Ti danno più flessibilità: gli studenti seguono le lezioni nella stessa fascia oraria anche se sono a punti diversi del percorso."],
+        ["Gestire più studenti insieme sembra stressante.", "Prevedono una formazione sul formato e un simulatore, così ti eserciti prima della tua prima lezione dal vivo."],
+        ["In un gruppo gli studenti procedono a velocità diverse.", "Permettono a ogni studente di avanzare al proprio ritmo, con momenti di lavoro individuale insieme a te."]
       ]
     },
     firsts: "Alcuni corsi sono completamente nuovi e sei tra i primi a insegnarli. Per questo la tua voce è ancora più importante: dopo le tue prime lezioni, <b>racconta al tuo mentor che cosa ha funzionato e che cosa no</b>. Il tuo feedback darà forma alla prossima versione."
@@ -153,7 +153,7 @@ window.M0_CONTENT = {
 
   /* ---------- Closing ---------- */
   start: {
-    text: "Sai perché stiamo cambiando, che cosa significa «pronto» e chi c’è per te. Ora immergiti nella formazione con curiosità: esercitati nei simulatori tutte le volte che vuoi e goditi l’essere tra i primi a portare qualcosa di nuovo ai nostri studenti.",
+    text: "Sai perché stiamo cambiando, che cosa significa «pronto» e chi c’è per te. Ora immergiti nella formazione con curiosità: esercitati nei simulatori tutte le volte che vuoi e goditi questa opportunità di essere tra i primi a portare qualcosa di nuovo ai nostri studenti.",
     dm: "Se in qualsiasi momento non ti senti sicuro, <b>basta un messaggio privato al tuo mentor.</b>"
   },
 
@@ -165,7 +165,7 @@ window.M0_CONTENT = {
   survey: {
     emailLabel: "La tua e-mail aziendale Kodland",
     emailPlaceholder: "nome.cognome@kodland.org",
-    emailError: "Scrivi la tua e-mail aziendale Kodland (termina con @kodland…).",
+    emailError: "Inserisci il tuo indirizzo e-mail aziendale Kodland (ad esempio nome.cognome@kodland.org).",
     regionLabel: "La tua regione",
     regionPlaceholder: "Scegli la tua regione…",
     regionError: "Scegli la tua regione.",
@@ -178,8 +178,8 @@ window.M0_CONTENT = {
     high: "Completamente",
     optional: "facoltativa",
     openPlaceholder: "Scrivi quello che vuoi…",
-    lockMsg: "Invia il questionario di soddisfazione qui sopra per sbloccare la verifica.",
-    lockWhat: "il questionario di soddisfazione"
+    lockMsg: "Invia il questionario qui sopra per sbloccare la verifica.",
+    lockWhat: "il questionario"
   },
   /* Regions for the survey: [key, "label"]. Keys are not translated. */
   regions: [
@@ -193,11 +193,11 @@ window.M0_CONTENT = {
   /* ---------- Module 0 survey (section before the check) ---------- */
   startSurvey: {
     title: "Prima della verifica: come ti senti?",
-    intro: "Un breve momento per fare il punto: non ci sono risposte giuste o sbagliate. Aiuta il tuo mentor e il team a sostenerti meglio. Invialo per sbloccare la verifica del modulo.",
+    intro: "Un breve questionario per fare il punto: non ci sono risposte giuste o sbagliate. Le tue risposte aiutano il tuo mentor e il team a sostenerti meglio. Invia il questionario per sbloccare la verifica del modulo.",
     gifAlt: "Come ti senti?",
     questions: [
       { id: "feeling", type: "choice", q: "Come ti senti in questo momento rispetto a questo nuovo lancio?" },
-      { id: "confidence", type: "scale", q: "Quanto ti senti sicuro di insegnare questo nuovo corso o formato?" },
+      { id: "confidence", type: "scale", q: "Quanto ti senti sicuro nell’insegnare questo nuovo corso o formato?" },
       { id: "understand_why", type: "scale", q: "Capisco perché stiamo facendo questo cambiamento." },
       { id: "know_where", type: "scale", q: "So dove trovare ciò che mi serve e a chi chiedere aiuto." },
       { id: "worries", type: "open", optional: true, q: "Che cosa ti preoccupa di più di questo lancio?" }
@@ -209,7 +209,7 @@ window.M0_CONTENT = {
     e: "🌟",
     title: "Il tuo atteggiamento per la prima lezione",
     desc: "Immagina che la tua prima lezione vada bene, abbina ogni preoccupazione a una risorsa e raccontaci come ti senti ora.",
-    obj: "Immagina che la tua prima lezione vada bene: apri con il risultato finito, i ragazzi sono curiosi, segui le note con facilità e chiudi con qualcosa di cui sono orgogliosi. È un’immagine realistica, e questo modulo ti aiuta ad arrivarci.",
+    obj: "Immagina che la tua prima lezione vada bene: inizi mostrando il risultato finale, i ragazzi sono curiosi, segui le note con facilità e concludi con qualcosa di cui sono orgogliosi. È un’immagine realistica, e questo modulo ti aiuta ad arrivarci.",
     offer: [
       ["✨", "Immagina che la tua prima lezione vada bene."],
       ["🧩", "Abbina ogni preoccupazione a una risorsa."],
@@ -225,9 +225,9 @@ window.M0_CONTENT = {
       resources: [["📒", "Note per il tutor"], ["🎮", "Simulatori"], ["💬", "Messaggio o sessione con il mentor"], ["👥", "TL"]],
       resourcesHint: "Tocca le risorse che rispondono alle tue preoccupazioni:",
       answerTitle: "Ogni preoccupazione ha una risposta",
-      answer: "Gli imprevisti fanno parte di qualsiasi nuova lezione: una domanda su cui non sei sicuro, un’attività che si comporta in modo diverso, un gruppo che va più veloce o più lento del previsto. Li hai già provati nei simulatori, e puoi tornarci tutte le volte che ti serve. Per tutto il resto, il tuo mentor è a un messaggio di distanza.",
+      answer: "Gli imprevisti fanno parte di qualsiasi nuova lezione: una domanda a cui non sai bene come rispondere, un’attività che funziona in modo diverso dal previsto, un gruppo che procede più velocemente o più lentamente del previsto. Hai già fatto pratica nei simulatori e puoi tornarci tutte le volte che ti serve. Per tutto il resto, basta un messaggio al tuo mentor.",
       afterTitle: "Dopo le tue prime lezioni",
-      after: "Nota <b>che cosa è andato bene</b> prima di che cosa migliorare, poi racconta entrambe le cose al tuo mentor. Il tuo feedback arriva al team Product e dà forma alla prossima versione del corso.",
+      after: "Individua prima <b>che cosa è andato bene</b>, poi che cosa puoi migliorare, e parla di entrambi gli aspetti con il tuo mentor. Il tuo feedback arriva al team Product e dà forma alla prossima versione del corso.",
       ready: "<b>Sei pronto.</b> Conosci il perché, il metodo, la tua routine e chi contattare. E se in qualsiasi momento non ti senti pronto, basta un messaggio privato al tuo mentor."
     },
     survey: {
@@ -236,7 +236,7 @@ window.M0_CONTENT = {
       groups: [
         { title: "Come ti senti", questions: [
           { id: "feeling", type: "choice", q: "Come ti senti ora rispetto a questo nuovo lancio?" },
-          { id: "confidence", type: "scale", q: "Quanto ti senti sicuro di insegnare questo nuovo corso o formato?" },
+          { id: "confidence", type: "scale", q: "Quanto ti senti sicuro nell’insegnare questo nuovo corso o formato?" },
           { id: "understand_why", type: "scale", q: "Capisco perché stiamo facendo questo cambiamento." },
           { id: "know_where", type: "scale", q: "So dove trovare ciò che mi serve e a chi chiedere aiuto." }
         ] },
@@ -274,7 +274,7 @@ window.M0_CONTENT = {
       o: ["Mando un messaggio privato al mio mentor regionale, oppure prenoto una sessione nell’LMS.",
           "Aspetto di ricevere una segnalazione.",
           "Chiedo un feedback al genitore di uno studente."],
-      a: 0, e: "Non serve un problema o una segnalazione per farti avanti: scrivi al tuo mentor, oppure prenota una fascia oraria di Coaching nell’LMS." },
+      a: 0, e: "Non serve un problema o una segnalazione per chiedere aiuto: scrivi al tuo mentor oppure prenota una sessione di Coaching nell’LMS." },
     { q: "Un passaggio della formazione non ti è ancora chiaro. Qual è la scelta migliore?",
       o: ["Interrompo la formazione finché qualcuno non mi contatta.",
           "Ripeto il simulatore e, se non è ancora chiaro, scrivo al mio mentor.",
@@ -282,7 +282,7 @@ window.M0_CONTENT = {
       a: 1, e: "È nei simulatori che si costruisce la sicurezza: ripetili tutte le volte che ti serve, e il tuo mentor c’è sempre per ciò che non è ancora chiaro." },
     { q: "La tua prima lezione non è andata come previsto. Quale atteggiamento è più adatto?",
       o: ["«Questo corso non fa per me.»",
-          "«Non funziona ancora: annoto un miglioramento e ne parlo con il mio mentor.»",
+          "«Non funziona ancora: annoto un aspetto da migliorare e ne parlo con il mio mentor.»",
           "«Aspetto che qualcun altro sistemi le cose.»"],
       a: 1, e: "Le tue prime lezioni sono il tuo prototipo: ognuna ti sembra più facile della precedente, e il tuo feedback dà forma alla prossima versione." }
   ]
