@@ -30,10 +30,40 @@ const withLang = url => url + (url.indexOf('?') >= 0 ? '&' : '?') + 'lang=' + en
 const norm = s => String(s || '').trim().toUpperCase().replace(/\s+/g, '');
 const fmt = (s, o) => String(s).replace(/\{(\w+)\}/g, (m, k) => (k in o ? o[k] : m));
 
-/* ---------- Progress (localStorage) ---------- */
+/* ---------- Safe storage ----------
+   Inside the LMS iframe the browser treats this site's storage as third-party:
+   Safari and strict privacy settings can block or wipe it. Every value is kept
+   in memory + localStorage + sessionStorage and reads never throw, so the
+   training keeps its progress for the whole visit even when storage is blocked. */
+const STORE = (function(){
+  const mem = {};
+  function areas(){ const a = []; try { a.push(window.localStorage); } catch(e){} try { a.push(window.sessionStorage); } catch(e){} return a; }
+  return {
+    get(k){ for (const st of areas()){ try { const v = st.getItem(k); if (v !== null) return v; } catch(e){} } return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null; },
+    getAll(k){ const out = []; for (const st of areas()){ try { const v = st.getItem(k); if (v !== null) out.push(v); } catch(e){} } if (Object.prototype.hasOwnProperty.call(mem, k)) out.push(mem[k]); return out; },
+    set(k, v){ v = String(v); mem[k] = v; for (const st of areas()){ try { st.setItem(k, v); } catch(e){} } },
+    remove(k){ delete mem[k]; for (const st of areas()){ try { st.removeItem(k); } catch(e){} } }
+  };
+})();
+/* ---------- Progress (memory + localStorage + sessionStorage) ---------- */
+// Progress only moves forward: a module passed anywhere stays passed, best score wins, flags stay on.
+function mergeP(a, b){
+  a = a || {}; b = b || {};
+  const out = Object.assign({}, b, a);
+  Object.keys(b).forEach(k => {
+    const x = a[k], y = b[k];
+    if (k === 'flags' && y && typeof y === 'object'){
+      out.flags = Object.assign({}, x || {}); Object.keys(y).forEach(f => { if (y[f] && !out.flags[f]) out.flags[f] = y[f]; });
+    } else if (y && typeof y === 'object' && ('passed' in y || 'score' in y)){
+      const xo = (x && typeof x === 'object') ? x : {};
+      out[k] = Object.assign({}, y, xo, { passed: !!(xo.passed || y.passed), score: Math.max(Number(xo.score) || 0, Number(y.score) || 0) });
+    }
+  });
+  return out;
+}
 let P = {};
-function loadP(){ try { P = JSON.parse(localStorage.getItem(PKEY) || '{}') || {}; } catch(e){ P = {}; } }
-function saveP(){ try { localStorage.setItem(PKEY, JSON.stringify(P)); } catch(e){} }
+function loadP(){ P = {}; STORE.getAll(PKEY).forEach(raw => { try { P = mergeP(P, JSON.parse(raw || '{}') || {}); } catch(e){} }); }
+function saveP(){ STORE.set(PKEY, JSON.stringify(P)); lmsSync(); }
 const passed = id => !!(P[id] && P[id].passed);
 function setResult(id, pct, ok){ const o = P[id] || {}; P[id] = Object.assign(o, { passed: ok || !!o.passed, score: Math.max(pct, o.score || 0) }); saveP(); }
 const flag = k => !!(P.flags && P.flags[k]);
@@ -70,6 +100,38 @@ const QA = C.qa;
 // A module already passed stays open (progress saved before Module 0 existed)
 const unlocked = m => { const i = MODULES.indexOf(m); return i <= 0 || passed(MODULES[i - 1].id) || passed(m.id); };
 const coreDone = () => MODULES.every(m => passed(m.id));
+
+/* ---------- LMS bridge ----------
+   Talks to the LMS (parent frame) via postMessage. Outside an iframe it does nothing.
+   Training -> LMS: {source:'kodland-training', training, lang, event:'ready'|'progress'|'completed', progress, done, total, score}
+   The LMS unlocks the test (DST) when it receives 'completed' ("Material first, then the test" on).
+   LMS -> Training (optional): {source:'kodland-lms', event:'progress', progress:{...}} restores saved progress. */
+const TRAINING_ID = 'pl-core';
+const IN_LMS = (function(){ try { return window.parent !== window; } catch(e){ return true; } })();
+let lmsReady = false, completedSent = false;
+function lmsSummary(){
+  const list = MODULES, done = list.filter(m => P[m.id] && P[m.id].passed).length;
+  const score = Math.round(list.map(m => (P[m.id] && Number(P[m.id].score)) || 0).reduce((a, b) => a + b, 0) / (list.length || 1));
+  return { progress:P, done, total:list.length, score };
+}
+function lmsSend(event){
+  try { if (!IN_LMS || !lmsReady || P.dev) return;
+    window.parent.postMessage(Object.assign({ source:'kodland-training', training:TRAINING_ID, lang:C.lang || 'en', event }, lmsSummary()), '*'); } catch(e){}
+}
+// 'completed' is sent once per page load, as soon as every module is passed (also on load, if it was already done).
+function lmsSync(){ if (!lmsReady) return; lmsSend('progress'); if (!completedSent && !P.dev && coreDone()){ completedSent = true; lmsSend('completed'); } }
+addEventListener('message', e => {
+  try { if (!IN_LMS || e.source !== window.parent) return;
+    const d = e.data; if (!d || d.source !== 'kodland-lms' || d.event !== 'progress' || !d.progress || typeof d.progress !== 'object') return;
+    P = mergeP(P, d.progress); STORE.set(PKEY, JSON.stringify(P)); lmsSync(); } catch(err){}
+});
+// Progress carried in the URL (?p=...) by a language switch: merge it, then clean the URL.
+function takeUrlProgress(){
+  try { const q = new URLSearchParams(location.search), raw = q.get('p'); if (!raw) return;
+    try { P = mergeP(P, JSON.parse(raw)); STORE.set(PKEY, JSON.stringify(P)); } catch(e){}
+    q.delete('p'); history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q.toString() : '') + location.hash); } catch(e){}
+}
+function progressParam(){ return 'p=' + encodeURIComponent(JSON.stringify(P)); }
 
 /* Stage visuals (texts come from C.stages) */
 const STAGE_LOOK = [['🔌','#3e5bb5'],['😊','#3e5bb5'],['📓','#3e5bb5'],['🎯','#2f8a4f'],['🎬','#b36b12'],['🪞','#b36b12'],['📌','#b36b12']];
@@ -289,7 +351,7 @@ function renderNav(kind){
     ${kind === 'core' ? `<button class="nbtn" data-go="">${U.navHome}</button>` : ''}
     ${kind === 'module' ? `<button class="nbtn" data-go="core1">${U.navModules}</button>` : ''}
     ${kind === 'quiz' ? `<button class="nbtn" data-exit>${U.navBackModule}</button>` : ''}`;
-  const ls = $('#langSel'); if (ls) ls.onchange = () => { location.search = '?lang=' + ls.value; };
+  const ls = $('#langSel'); if (ls) ls.onchange = () => { location.search = '?lang=' + ls.value + '&' + progressParam(); };
 }
 
 function renderHome(){
@@ -822,5 +884,7 @@ document.documentElement.lang = C.lang || 'en';
 $('#footText').textContent = U.footer;
 $('#devLink').textContent = U.devLink;
 loadP();
+takeUrlProgress();
+lmsReady = true; lmsSend('ready'); lmsSync();
 devBadge();
 route();

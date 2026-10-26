@@ -124,8 +124,11 @@ window.M0 = (function(){
   const pick = (v, track) => (v && typeof v === 'object' && !Array.isArray(v) && ('em' in v || 'pl' in v)) ? v[track] : v;
   const callout = (type, icon, html) => `<div class="callout ${type}"><span class="ci">${icon}</span><div>${html}</div></div>`;
   const initials = n => n.split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
-  const store = { get(k){ try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch(e){ return null; } },
-                  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} } };
+  // memory + localStorage + sessionStorage: keeps working inside the LMS iframe even when storage is blocked
+  const memStore = {};
+  const areas = () => { const a = []; try { a.push(window.localStorage); } catch(e){} try { a.push(window.sessionStorage); } catch(e){} return a; };
+  const store = { get(k){ for (const st of areas()){ try { const v = st.getItem(k); if (v !== null) return JSON.parse(v); } catch(e){} } return k in memStore ? memStore[k] : null; },
+                  set(k, v){ memStore[k] = v; for (const st of areas()){ try { st.setItem(k, JSON.stringify(v)); } catch(e){} } } };
 
   let CTX = null;   // { track, lang, opts } of the training that built the module
 
