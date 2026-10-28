@@ -131,7 +131,19 @@ function takeUrlProgress(){
     try { P = mergeP(P, JSON.parse(raw)); STORE.set(PKEY, JSON.stringify(P)); } catch(e){}
     q.delete('p'); history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q.toString() : '') + location.hash); } catch(e){}
 }
-function progressParam(){ return 'p=' + encodeURIComponent(JSON.stringify(P)); }
+function progressParam(){ return 'p=' + encodeURIComponent(JSON.stringify(P)) + (DEV_ALLOWED ? '&dev=1' : ''); }
+
+/* ---------- Developer mode: reviewers only ----------
+   Shift+D and the "Developer" link work only when the page is opened with ?dev=1
+   (same rule as the Attendance training). Turning developer mode off restores the
+   real progress saved before it was turned on, so it can never be used to skip modules. */
+const DEV_ALLOWED = /[?&]dev=1(&|$)/.test(location.search);
+const DEV_BACKUP = PKEY + '-devbackup';
+function restoreRealProgress(){
+  const b = STORE.get(DEV_BACKUP); let real = {};
+  try { real = b ? (JSON.parse(b) || {}) : {}; } catch(e){ real = {}; }
+  delete real.dev; P = real; STORE.remove(DEV_BACKUP);
+}
 
 /* Stage visuals (texts come from C.stages) */
 const STAGE_LOOK = [['🔌','#3e5bb5'],['😊','#3e5bb5'],['📓','#3e5bb5'],['🎯','#2f8a4f'],['🎬','#b36b12'],['🪞','#b36b12'],['📌','#b36b12']];
@@ -838,9 +850,11 @@ document.addEventListener('keydown', e => {
    "🛠 Developer" link at the bottom of the page (code: CONFIG.DEV_CODE), or Shift+D three times.
    ========================================================= */
 function setDev(on){
-  if (on){ MODULES.forEach(m => { if (!passed(m.id)) P[m.id] = { passed:true, score:100 }; });
+  if (on && !DEV_ALLOWED) return;
+  if (on){ STORE.set(DEV_BACKUP, JSON.stringify(P));
+    MODULES.forEach(m => { if (!passed(m.id)) P[m.id] = { passed:true, score:100 }; });
     P.flags = Object.assign({}, P.flags, { metAll:true, boCode:true, simCode:true }); QA.forEach((_, i) => P.flags['qa' + i] = true); P.dev = true; }
-  else delete P.dev;
+  else restoreRealProgress();
   saveP(); devBadge(); route();
 }
 function resetProgress(){ P = {}; saveP(); devBadge(); go(''); route(); }
@@ -871,10 +885,11 @@ function openDev(unlockedPanel){
   $('#devToggle').onclick = () => { closeModal(); setDev(!P.dev); };
   $('#devReset').onclick = () => { closeModal(); resetProgress(); };
 }
-document.addEventListener('click', e => { if (e.target.closest('#devLink') || e.target.closest('#devBadge')) openDev(false); });
+document.addEventListener('click', e => { if (!DEV_ALLOWED) return; if (e.target.closest('#devLink') || e.target.closest('#devBadge')) openDev(false); });
 let dk = [];
 document.addEventListener('keydown', e => {
   if (!(e.shiftKey && e.key.toLowerCase() === 'd')) return;
+  if (!DEV_ALLOWED) return;
   const now = Date.now(); dk = dk.filter(x => now - x < 1200); dk.push(now);
   if (dk.length >= 3){ dk = []; openDev(true); }
 });
@@ -883,8 +898,10 @@ document.addEventListener('keydown', e => {
 document.documentElement.lang = C.lang || 'en';
 $('#footText').textContent = U.footer;
 $('#devLink').textContent = U.devLink;
+{ const dl = document.getElementById('devLink'); if (dl && !DEV_ALLOWED) dl.style.display = 'none'; }
 loadP();
 takeUrlProgress();
+if (P.dev && !DEV_ALLOWED){ restoreRealProgress(); STORE.set(PKEY, JSON.stringify(P)); }
 lmsReady = true; lmsSend('ready'); lmsSync();
 devBadge();
 route();
